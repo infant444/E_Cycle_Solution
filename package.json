@@ -15,8 +15,9 @@
     "url": "https://github.com/infant444/E_Cycle_Solution/issues"
   },
   "homepage": "https://github.com/infant444/E_Cycle_Solution#readme",
-  "description": "",
   "dependencies": {
     "npm": "^11.4.2"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
