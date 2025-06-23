@@ -1,0 +1,19 @@
+.content{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-left: 1rem;
+  margin-top: .5rem;
+}
+h1{
+  font-family:Arial, Helvetica, sans-serif;
+  color: #0e0e0e;
+}
+p{
+  font-family: 'Times New Roman', Times, serif;
+  color:gray
+}
+h3{
+  font-family: 'Times New Roman', Times, serif;
+  color: #363535;
+}

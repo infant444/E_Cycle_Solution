@@ -1,1 +1,49 @@
-<p>time-sheet works!</p>
+<div class="container">
+  <div class="content">
+    <app-title title="Time Sheet" sub_title="Track your time and manage projects efficiently"></app-title>
+      <div class="sub-nav">
+        <ul>
+          <li><a routerLink="/time-sheet" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }"><mat-icon>add</mat-icon><span>Timer</span></a></li>
+          <li><a routerLink="/time-sheet/weak-view"routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }"><mat-icon>insert_invitation</mat-icon> <span>Weekly View</span></a></li>
+          <li><a routerLink=""  routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" ><mat-icon>poll</mat-icon><span>Report</span></a></li>
+        </ul>
+      </div>
+      <div class="div1">
+        <div class="sub1">
+          <app-title sub_title="Today's Hours"></app-title>
+          <div class="sDiv1 red">5hr</div>
+        </div>
+        <div class="sub1">
+          <app-title sub_title="This Week"></app-title>
+          <div class="sDiv1 green">16.4hr</div>
+
+        </div>
+        <div class="sub1">
+          <app-title sub_title="Assigned project"></app-title>
+          <div class="sDiv1 blue">3</div>
+
+        </div>
+      </div>
+      <div class="div2">
+        <div class="start-work">
+          <app-title h3_title="Timer Entry"></app-title>
+          <form [formGroup]="timeSheetForm">
+            <div class="input">
+              <div class="lab">
+                Project
+              </div>
+              <div class="intp">
+
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="recent-work">
+          <app-title h3_title="Recent Work"></app-title>
+          <div>
+
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

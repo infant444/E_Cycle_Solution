@@ -1,0 +1,128 @@
+.container{
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  background-color: #eff6f9;
+}
+.content{
+  height: 100%;
+  width: 100%;
+}
+.sub-nav{
+  max-width: 450px;
+  margin-top: 1rem;
+  margin-left: .5rem;
+  display: flex;
+  justify-content: center;
+}
+.sub-nav>ul{
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sub-nav>ul>li{
+  border: 2px solid lightgray;
+  border-radius: 1rem;
+  padding:.5rem 1rem;
+  cursor: pointer;
+  background-color: #fff;
+}
+.sub-nav>ul>li>a{
+  padding: 1rem .5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.sub-nav>ul>li>a>mat-icon{
+  margin-right: 1;
+}
+.sub-nav>ul>li:hover{
+  background-color: #000;
+  color: #fff;
+}
+.sub-nav>ul>li:hover>a{
+  color: #fff;
+}
+.div1{
+display: flex;
+justify-content: space-around;
+margin: 0 1rem;
+padding: 1rem;
+}
+
+.sub1{
+  width: 25rem;
+  height: 8rem;
+  box-shadow: 0px 0px 15px 2px lightgray;
+  background-color: white;
+  border-radius: .5rem;
+  padding: 1rem;
+}
+.sDiv1{
+  margin-left: 1.5rem;
+  margin-top: .5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.red{
+  color:rgb(252, 71, 71);
+}
+.green{
+  color: rgb(71, 252, 71);
+}
+.blue{
+  color:rgb(71,71,252)
+}
+.div2{
+  display: flex;
+  justify-content:space-between;
+  margin: .5rem 1rem;
+  flex-wrap: wrap;
+}
+.start-work{
+  width: 40%;
+  background-color: #fff;
+  box-shadow:  0px 0px 15px 2px lightgray;
+  border-radius: .4rem;
+
+}
+.recent-work{
+  width: 40%;
+  background-color: #fff;
+  box-shadow:  0px 0px 15px 2px lightgray;
+  border-radius: .4rem;
+  min-height: 100px;
+  max-height: 400px;
+  overflow-x:hidden;
+  overflow-y:scroll;
+}
+.recent-work::-webkit-scrollbar{
+width: 0;
+}
+.recent-work{
+  padding: .3rem;
+}
+.start-work{
+  padding: .3rem;
+}
+
+
+
+
+@media (max-width:1296px) {
+.sub1{
+   width: 20rem;
+  height: 9rem;
+}
+}
+@media (max-width:1047px) {
+  .sub1{
+   width: 14rem;
+  height: 7rem;
+}
+}
