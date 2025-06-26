@@ -1,13 +1,7 @@
 <div class="container">
   <div class="content">
     <app-title title="Time Sheet" sub_title="Track your time and manage projects efficiently"></app-title>
-      <div class="sub-nav">
-        <ul>
-          <li><a routerLink="/time-sheet" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }"><mat-icon>add</mat-icon><span>Timer</span></a></li>
-          <li><a routerLink="/time-sheet/weak-view"routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }"><mat-icon>insert_invitation</mat-icon> <span>Weekly View</span></a></li>
-          <li><a routerLink=""  routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" ><mat-icon>poll</mat-icon><span>Report</span></a></li>
-        </ul>
-      </div>
+    <app-timesheet-base-nav></app-timesheet-base-nav>
       <div class="div1">
         <div class="sub1">
           <app-title sub_title="Today's Hours"></app-title>
@@ -27,21 +21,77 @@
       <div class="div2">
         <div class="start-work">
           <app-title h3_title="Timer Entry"></app-title>
-          <form [formGroup]="timeSheetForm">
+          <form [formGroup]="timeSheetForm" (ngSubmit)="add()">
             <div class="input">
               <div class="lab">
                 Project
               </div>
               <div class="intp">
-
+                <select formControlName="project">
+                  <option value="" selected>Select Project</option>
+                  <option value="project1" >sample Project 1</option>
+                  <option value="project2" >sample Project 2</option>
+                </select>
               </div>
             </div>
+             <div class="input">
+              <div class="lab">
+                Task
+              </div>
+              <div class="intp">
+                <select formControlName="task">
+                  <option value="" selected>Select task</option>
+                  <option value="task1" >sample task 1</option>
+                  <option value="task2" >sample task 2</option>
+                </select>
+              </div>
+            </div>
+             <div class="input">
+              <div class="lab">
+                Description
+              </div>
+              <div class="intp">
+                <textarea placeholder="Describe about task.." formControlName="describe" rows="4" cols="20"></textarea>
+              </div>
+            </div>
+             <div class="input">
+              <div class="lab">
+                Date
+              </div>
+              <div class="intp">
+               <input type="date" [max]="today" formControlName="date">
+              </div>
+            </div>
+            <div class="div3">
+          <div class="input">
+              <div class="lab">
+                Start Time
+              </div>
+              <div class="intp">
+               <input type="time" formControlName="start_time">
+              </div>
+            </div>
+            <div class="input">
+              <div class="lab">
+                End Time
+              </div>
+              <div class="intp">
+               <input type="time" formControlName="end_time">
+              </div>
+            </div>
+        </div>
+        <div class="div4">
+          <input type="submit" value="Add" >
+        </div>
           </form>
         </div>
-        <div class="recent-work">
-          <app-title h3_title="Recent Work"></app-title>
-          <div>
 
+        <div class="recent-work">
+          <app-title h3_title="Recent Work" sub_title="see your recent work"></app-title>
+          <app-recent-works></app-recent-works>
+          <app-recent-works></app-recent-works>
+          <app-recent-works></app-recent-works>
+          <div>
           </div>
         </div>
       </div>

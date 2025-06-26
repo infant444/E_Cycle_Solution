@@ -3,11 +3,15 @@
   height: 100%;
   justify-content: center;
   background-color: #eff6f9;
+  overflow: hidden;
 }
+
 .content{
   height: 100%;
   width: 100%;
+  overflow-y: scroll;
 }
+
 .sub-nav{
   max-width: 450px;
   margin-top: 1rem;
@@ -27,6 +31,7 @@
   padding:.5rem 1rem;
   cursor: pointer;
   background-color: #fff;
+  list-style: none;
 }
 .sub-nav>ul>li>a{
   padding: 1rem .5rem;
@@ -85,14 +90,38 @@ padding: 1rem;
   flex-wrap: wrap;
 }
 .start-work{
-  width: 40%;
+  width: 45%;
+  height: 500px;
   background-color: #fff;
   box-shadow:  0px 0px 15px 2px lightgray;
   border-radius: .4rem;
+  overflow-y:scroll ;
+  margin: .3rem;
+  overflow-x: hidden;
+}
+.input{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin:.5rem 1rem ;
+  width: 100%;
+}
+.lab{
+  font-size: 1.1rem;
+  font-weight: 300;
+  padding-left:.9rem ;
+}
+.intp>input,.intp>textarea,.intp>select{
+font-size: 1.1rem;
+padding: .5rem;
+width: 80%;
+margin: .2rem .7rem;
 
+}.div3{
+  display: flex;
 }
 .recent-work{
-  width: 40%;
+  width: 45%;
   background-color: #fff;
   box-shadow:  0px 0px 15px 2px lightgray;
   border-radius: .4rem;
@@ -100,6 +129,26 @@ padding: 1rem;
   max-height: 400px;
   overflow-x:hidden;
   overflow-y:scroll;
+
+}
+.div4{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.div4>input{
+  width: 7rem;
+  height: 3rem;
+  border-radius: .4rem;
+  background-color:#000;
+    color:  blanchedalmond;
+  box-shadow:  0px 0px 15px 2px lightgray;
+  border-color: #eff6f9;
+  font-weight: 500;
+  transform: scale(1.1);
+}
+.div4>input:hover{
+  transform: scale(1);
 }
 .recent-work::-webkit-scrollbar{
 width: 0;
@@ -125,4 +174,9 @@ width: 0;
    width: 14rem;
   height: 7rem;
 }
+}
+
+.start-work::-webkit-scrollbar,
+.content::-webkit-scrollbar{
+  width: 0;
 }
