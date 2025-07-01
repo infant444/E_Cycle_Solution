@@ -17,6 +17,7 @@ export const routes: Routes = [
     path: "time-sheet",
     loadComponent: () => import("./Components/time-sheet/time-sheet").then(m => m.TimeSheet,),
   },
+
   {
     path: "time-sheet/weak-view",
     loadComponent: () => import("./Components/time-sheet-week-view/time-sheet-week-view").then(m => m.TimeSheetWeekView)
@@ -25,4 +26,13 @@ export const routes: Routes = [
     path:"time-sheet/report",
     loadComponent:()=>import("./Components/time-report/time-report").then(m=>m.TimeReport)
   },
+
+
+
+  {
+    path: "time-sheet/**",
+    redirectTo:"/time-sheet"
+  },
+  {path:"**",redirectTo:''},
+
 ];

@@ -1,0 +1,95 @@
+.container{
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  background-color: #eff6f9;
+  overflow: hidden;
+}
+
+.content{
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+.content::-webkit-scrollbar{
+  width: 0;
+}
+
+.div1{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding: .5rem 1rem;
+}
+.p1{
+  margin: .3rem .5rem;
+  font-size: large;
+  font-weight: bold;
+}
+.div1>button{
+  padding: .3rem .7rem;
+  justify-content: center;
+  font-size: 1.1rem;
+  background-color: white;
+  color: rgb(0, 45, 19);
+  font-weight: bold;
+  text-transform: capitalize;
+  border: 1px solid white;
+  box-shadow: 0px 0px 10px 1px lightgrey;
+  border-radius: .3em;
+  cursor: pointer;
+}
+.div1>button:hover{
+  background-color: black;
+  color: wheat;
+}
+
+.div2{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  justify-content: space-around;
+  align-items: center;
+}
+.div3{
+    width: 35rem;
+  height: 15rem;
+  box-shadow: 0px 0px 15px 2px lightgray;
+  background-color: white;
+  border-radius: .5rem;
+  margin: 1.5rem;
+  overflow: hidden;
+
+}
+
+.sub-header{
+  width: 100%;
+  height: 3rem;
+  background-color: lightgray;
+  padding: .9rem;
+  display: flex;
+  justify-content: space-between;
+}
+.p3{
+  font-weight: bold;
+  color: green;
+
+}
+
+@media (max-width:1255px) {
+  .div3{
+    width: 30rem;
+  height: 12rem;}
+}
+
+@media (max-width:1095px) {
+  .div3{
+    width: 25rem;
+  height: 10rem;}
+}
+@media (max-width:920px) {
+  .div3{
+    width: 95%;
+  height: 12rem;}
+}
