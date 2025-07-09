@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
@@ -10,5 +10,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './timesheet-base-nav.css'
 })
 export class TimesheetBaseNav {
+
 
 }

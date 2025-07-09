@@ -1,9 +1,105 @@
 .container{
   width: 100%;
-  height: 4rem;
+  height: 5rem;
   border-bottom:1px solid gray ;
+  overflow: hidden;
 }
-h1{
-  color: darkgreen;
-  margin-top: 1rem;
+.content{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+}
+.title{
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+}
+.tit{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-family: "Roboto", sans-serif;
+  font-weight:bold;
+  color: rgb(0, 52, 0);
+
+}
+
+.title>img{
+  width: 4rem;
+  margin-right: .5rem;
+}
+.div1{
+  display: flex;
+  margin: 0 1rem;
+  height: 100%;
+}
+.notification{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin-right: 1rem;
+}
+.notification>span{
+  position: absolute;
+  top: 1.5rem;
+  right: -.5rem;
+  z-index: 2;
+  width: 1rem;
+  height: 1rem;
+  background-color: red;
+  color: #fff;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: .7rem;
+}
+hr{
+  margin: 1.3rem .5rem;
+}
+.profile{
+  display: flex;
+  justify-content: center;
+  margin-right: 1rem;
+}
+.pic{
+  width: 4rem;
+  border-radius: 5rem;
+  height: 4rem;
+  overflow: hidden;
+  margin-top: .5rem;
+}
+.profile>.pic>img{
+  width: 4rem;
+  height: 4rem;
+
+}
+.profile>.detail{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.p1{
+  font-size: .9rem;
+  font-weight: bold;
+}
+.p2{
+  font-size: .8rem;
+
+}
+.logout{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.logout>mat-icon,.notification>mat-icon,.profile,.title{
+  cursor: pointer;
+
 }
