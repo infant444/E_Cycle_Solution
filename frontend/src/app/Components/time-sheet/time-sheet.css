@@ -2,7 +2,6 @@
   width: 100%;
   height: 100%;
   justify-content: center;
-  background-color: #eff6f9;
   overflow: hidden;
 }
 
@@ -61,7 +60,7 @@ padding: 1rem;
 }
 
 .sub1{
-  width: 25rem;
+  width: 20rem;
   height: 8rem;
   box-shadow: 0px 0px 15px 2px lightgray;
   background-color: white;
@@ -163,16 +162,25 @@ width: 0;
 
 
 
-@media (max-width:1296px) {
-.sub1{
-   width: 20rem;
-  height: 9rem;
-}
-}
-@media (max-width:1047px) {
+@media (max-width:1346px) {
+
   .sub1{
    width: 14rem;
   height: 7rem;
+}
+
+}
+@media (max-width:1024px) {
+.start-work{
+  width: 90%;
+  margin: .5rem;
+}
+.recent-work{
+  width: 90%;
+}
+.div2{
+  flex-direction: column;
+  align-items: center;
 }
 }
 

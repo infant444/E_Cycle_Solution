@@ -4,5 +4,6 @@ export class Client{
   email!:string;
   contactNumber!:string;
   address!:string;
+  noProject!:number;
   isCurrentProject!:string;
 }

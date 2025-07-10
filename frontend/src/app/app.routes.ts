@@ -34,8 +34,6 @@ export const routes: Routes = [
     loadComponent: () => import("./Components/time-report/time-report").then(m => m.TimeReport)
   },
 
-
-
   {
     path: "time-sheet/**",
     redirectTo: "/time-sheet"
