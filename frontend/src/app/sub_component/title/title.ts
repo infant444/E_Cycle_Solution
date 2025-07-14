@@ -15,4 +15,9 @@ export class Title {
 
   @Input()
   h3_title="";
+
+  @Input()
+  tit_pos="left";
+  @Input()
+  sub_tit_pos="left";
 }

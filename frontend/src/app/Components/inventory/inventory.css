@@ -16,6 +16,9 @@ display: flex;
 justify-content: space-between;
 margin: .5rem;
 }
+.div1{
+  display: flex;
+}
 .add{
     width: 7rem;
   height: 3rem;
@@ -26,4 +29,8 @@ margin: .5rem;
   border-color: #eff6f9;
   font-weight: 500;
   transform: scale(1.1);
+  margin: 0 .5rem;
+}
+.scan{
+  background-color: blue;
 }

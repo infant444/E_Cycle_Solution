@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="container">
+  <div class="content">
+    <div class="login-title">
+      <img src="./assets/images/logo.png" alt="">
+      <app-title title="E-Cycle Solution" sub_title="sign to your account" sub_tit_pos="center">
+      </app-title>
+    </div>
+      <div class="div1">
+        <form (ngSubmit)="submit()" [formGroup]="loginForm">
+          <div class="input">
+            <label for="">Email</label>
+            <input type="text" formControlName="email" [className]="(isSubmitted && FC.email.invalid)?'error':''" placeholder="Enter your email">
+          </div>
+          <div class="input">
+            <label for="">Password</label>
+            <div class="pass">
+              <input [type]="passType" formControlName="password" placeholder="Enter your password"
+                [className]="(isSubmitted && FC.password.invalid)?'error':''">
+              <mat-icon class="vis" (click)="passShows()">{{passIcon}}</mat-icon>
+            </div>
+          </div>
+           <div class="input sub1">
+            <input type="submit" class="submit1" value="Login">
+          </div>
+        </form>
+        <p class="mess">Need help? Contact your system administrator</p>
+      </div>
+
+  </div>
+</div>

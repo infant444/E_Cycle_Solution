@@ -2,7 +2,7 @@
 <div class="container">
 <app-header></app-header>
 <div class="content">
-  <div class="nav" [style]="{'width': navSize}">
+  <div class="nav" [style]="{'width': navSize}" *ngIf="user.email">
     <div (click)="smallNavbar()" [class]="show?'hide':'show'" class="abc"><span class="s1"></span> <span class="s2"></span></div>
     <app-navbar></app-navbar>
   </div>

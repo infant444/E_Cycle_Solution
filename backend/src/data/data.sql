@@ -15,18 +15,20 @@ CREATE TABLE IF NOT EXISTS Staff (
     dob DATE,
     contact VARCHAR(15),
     role staff_type,
-    isLogin BOOLEAN,
-    login_time TIMESTAMP,
-    createdAt TIMESTAMP,
-    updatedAt TIMESTAMP
+    isLogin BOOLEAN DEFAULT FALSE,
+    login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
 
 -- Sample data
-INSERT INTO staff (name,email,PASSWORD,dob,contact,role,isLogin)
+INSERT INTO staff (name, email, password, dob, contact, role) 
+VALUES ('infant', 'infant0467@gmail.com', '1234', '2004-01-15', '9342199741', 'admin');
 
 
 
 -- Drop Tables
 
 -- DROP TABLE staff;
+Drop TABLE staff;
