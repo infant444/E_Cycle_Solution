@@ -1,37 +1,49 @@
 import { Routes } from '@angular/router';
 import { Home } from './Components/home/home';
 import { Dashboard } from './Components/dashboard/dashboard';
+import { LoginGuard } from './guard/login/login-guard';
+import { AuthGuard } from './guard/auth/auth-guard';
 
 
 export const routes: Routes = [
   {
     path: "",
-    component: Home
+    component: Home,
+    canActivate:[AuthGuard]
   },
   {
     path: "admin",
-    component: Dashboard
+    component: Dashboard,
+    canActivate:[AuthGuard]
   },
   {
     path: "login",
-    loadComponent: () => import("./Components/login/login").then(m => m.Login)
+    loadComponent: () => import("./Components/login/login").then(m => m.Login),
+    canActivate: [LoginGuard]
   },
   {
     path: "inventory",
-    loadComponent: () => import("./Components/inventory/inventory").then(m => m.Inventory)
+    loadComponent: () => import("./Components/inventory/inventory").then(m => m.Inventory),
+    canActivate:[AuthGuard]
+
   },
   {
     path: "time-sheet",
     loadComponent: () => import("./Components/time-sheet/time-sheet").then(m => m.TimeSheet,),
+    canActivate:[AuthGuard]
   },
 
   {
     path: "time-sheet/weak-view",
-    loadComponent: () => import("./Components/time-sheet-week-view/time-sheet-week-view").then(m => m.TimeSheetWeekView)
+    loadComponent: () => import("./Components/time-sheet-week-view/time-sheet-week-view").then(m => m.TimeSheetWeekView),
+    canActivate:[AuthGuard]
+
   },
   {
     path: "time-sheet/report",
-    loadComponent: () => import("./Components/time-report/time-report").then(m => m.TimeReport)
+    loadComponent: () => import("./Components/time-report/time-report").then(m => m.TimeReport),
+    canActivate:[AuthGuard]
+
   },
 
   {

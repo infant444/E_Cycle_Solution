@@ -6,7 +6,7 @@
         <p>E-cycle Solution</p>
       </div>
     </div>
-    <div class="div1">
+    <div class="div1" *ngIf="user.email">
     <div class="notification">
       <mat-icon>notifications</mat-icon>
       <span>1</span>
@@ -18,10 +18,10 @@
       </div>
       <div class="detail">
           <p class="p1">
-           Infant Raj
+           {{user.name}}
           </p>
           <p class="p2">
-            Admin
+            {{user.role}}
           </p>
         </div>
     </div>

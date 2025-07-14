@@ -2,11 +2,11 @@
 <div class="container">
 <app-header></app-header>
 <div class="content">
-  <div class="nav" [style]="{'width': navSize}" *ngIf="user.email">
+  <div class="nav" [style]="{'width': user.email?navSize:'0px'}" *ngIf="user.email">
     <div (click)="smallNavbar()" [class]="show?'hide':'show'" class="abc"><span class="s1"></span> <span class="s2"></span></div>
     <app-navbar></app-navbar>
   </div>
-  <div class="con" [style.width]="'calc(100% - ' + navSize + ')'">
+  <div class="con" [style.width]="user.email?'calc(100% - ' + navSize + ')':'100%'">
 <router-outlet></router-outlet>
 
   </div>

@@ -29,11 +29,6 @@ export class App implements OnInit {
         this.navSizex="200px"
       }}
       this.user=this.userService.currentUser;
-      if(this.user.email){
-        this.navSize=this.navSizex;
-      }else{
-        this.navSize="0px";
-      }
   }
   smallNavbar(){
     this.child.showx();

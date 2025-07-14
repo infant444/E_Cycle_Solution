@@ -48,8 +48,7 @@ export class Login implements OnInit {
     }
     this.user.login({ email: this.FC.email.value, password: this.FC.password.value }).subscribe(() => {
       this.router.navigateByUrl(this.returnUrl);
-    window.location.reload();
-
+      window.location.reload();
     });
   }
   passShows() {
