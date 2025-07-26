@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { errorHandler } from './middleware/error.handler';
 import userRouter from './router/user.router';
+import tableRouter from './router/table.router';
 // config
 dotenv.config();
 const port=process.env.PORT||5000;
@@ -19,6 +20,7 @@ app.use(express.json());
 
 // router
 app.use("/api/user",userRouter);
+app.use("/api/table",tableRouter);
 
 // middleware
 app.use(errorHandler);

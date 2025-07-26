@@ -1,12 +1,12 @@
 export class TimeSheet{
   id!:string;
-  user!:string;
+  staff!:string;
   task!:string;
   project!:string;
-  task_name!:string;
-  project_name!:string;
+  taskName!:string;
+  projectName!:string;
   description!:string;
   date!:string;
-  start_time!:string;
-  end_time!:string;
+  startTime!:string;
+  endTime!:string;
 }

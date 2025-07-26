@@ -1,10 +1,10 @@
 export class Project{
   id!:string;
   projectName!:string;
-  company!:string;
+  client_id!:string;
   startDate!:string;
   status!:string;
   level_complete!:number;
-  noTask!:string;
-  completedTask!:string;
+  noTask!:number;
+  completedTask!:number;
 }

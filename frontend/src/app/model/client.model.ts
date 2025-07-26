@@ -1,9 +1,10 @@
 export class Client{
   id!:string;
-  companyName!:string;
+  name!:string;
   email!:string;
   contactNumber!:string;
   address!:string;
   noProject!:number;
-  isCurrentProject!:string;
+  isCurrentProject!:boolean;
+  currentProject!:string;
 }

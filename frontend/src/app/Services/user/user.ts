@@ -33,6 +33,7 @@ export class UserServices {
     return this.http.post<User>(LOGIN,x).pipe(
        tap({
         next:(user)=>{
+          console.log(user);
           this.userSubject.next(user);
           this.toasterService.success("Welcome back to E cycle Solution")
           console.log(user.token);
@@ -70,7 +71,6 @@ logout() {
     }
   }
   public get currentUser(): User {
-    console.log(this.userSubject.value);
     return this.userSubject?.value;
   }
 
