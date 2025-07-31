@@ -13,7 +13,9 @@ export const LOGIN=EMPLOYEE_BASE_URL+"/login";
 
 
 // Client
-
+export const CLIENT_BASE_URL=BASEURL+"/api/client";
+export const ADD_CLIENT=CLIENT_BASE_URL+"/addClient";
+export const GET_ALL_CLIENT=CLIENT_BASE_URL+"/getAll";
 
 
 // Project

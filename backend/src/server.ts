@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { errorHandler } from './middleware/error.handler';
 import userRouter from './router/user.router';
 import tableRouter from './router/table.router';
+import clientRouter from './router/client.router';
 // config
 dotenv.config();
 const port=process.env.PORT||5000;
@@ -18,9 +19,10 @@ app.use(cors(
 );
 app.use(express.json());
 
-// router
-app.use("/api/user",userRouter);
+// router   http://localhost:5000/api/client/addClient
 app.use("/api/table",tableRouter);
+app.use("/api/client",clientRouter);
+app.use("/api/user",userRouter);
 
 // middleware
 app.use(errorHandler);

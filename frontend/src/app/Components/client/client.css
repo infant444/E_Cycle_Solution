@@ -1,0 +1,59 @@
+.container{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 3;
+}
+.content{
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+.content::-webkit-scrollbar{
+  width: 0;
+}
+.header{
+display: flex;
+justify-content: space-between;
+margin: .5rem;
+}
+
+.btn{
+    width: 7rem;
+  height: 3rem;
+  border-radius: .4rem;
+  background-color:#000;
+    color:  blanchedalmond;
+  box-shadow:  0px 0px 15px 2px lightgray;
+  border-color: #eff6f9;
+  font-weight: 500;
+  transform: scale(1.1);
+  margin: 0 .5rem;
+  cursor: pointer;
+}
+form{
+  width: 100%;
+  padding: .5rem 1.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+input,select{
+  margin: 0 .5rem;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+.div1{
+  display: flex;
+}
+.icon{
+margin-top: .4rem;
+}
+
+form>p{
+  display: flex;
+  text-transform: capitalize;
+}
+.search{
+  width: 25rem;
+}

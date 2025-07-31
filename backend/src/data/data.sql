@@ -9,6 +9,8 @@ CREATE TYPE staff_type AS ENUM ('admin', 'staff', 'worker');
 CREATE TYPE project_type AS ENUM('completed','processed','pending','accepted');
 CREATE TYPE task_type AS ENUM('completed','processed','pending','accepted');
 
+
+
 -- Created tables
 CREATE TABLE IF NOT EXISTS Staff (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
@@ -31,9 +33,14 @@ CREATE TABLE IF NOT EXISTS client (
     email TEXT NOT NULL UNIQUE,
     contactNumber VARCHAR(15) UNIQUE,
     address TEXT,
+    website TEXT,
     noProject NUMERIC,
+    totalCollection NUMERIC,
+    value NUMERIC,
     isCurrentProject BOOLEAN,
     currentProject TEXT,
+    lastCollectionDate DATE,
+    specialInstruction TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -55,9 +62,12 @@ CREATE TABLE IF NOT EXISTS project (
 CREATE TABLE IF NOT EXISTS task(
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
     task TEXT NOT NULL,
+    description TEXT,
     project UUID,
     projectName TEXT,
-    status project_type,
+    status task_type,
+    priority NUMERIC,
+    due Date,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (project) REFERENCES project(id)
@@ -76,6 +86,7 @@ CREATE TABLE IF NOT EXISTS timeSheet(
     date DATE,
     startTime TIME,
     endTime TIME,
+    totalHours NUMERIC,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (project) REFERENCES project(id),
@@ -94,26 +105,33 @@ CREATE TABLE IF NOT EXISTS timeSheet(
 
 
 -- Sample data
-INSERT INTO
-    staff (
-        name,
-        email,
-        password,
-        dob,
-        contact,
-        role
-    )
-VALUES (
-        'infant',
-        'infant0467@gmail.com',
-        '1234',
-        '2004-01-15',
-        '9342199741',
-        'admin'
-    );
+-- INSERT INTO
+--     staff (
+--         name,
+--         email,
+--         password,
+--         dob,
+--         contact,
+--         role
+--     )
+-- VALUES (
+--         'infant',
+--         'infant0467@gmail.com',
+--         '1234',
+--         '2004-01-15',
+--         '9342199741',
+--         'admin'
+--     );
 
--- Drop Tables
+-- -- Drop Tables
 
--- DROP TABLE staff;
-Drop TABLE staff;
-Drop TABLE client;
+-- -- DROP TABLE staff;
+-- Drop TABLE staff;
+
+-- DROP TABLE timeSheet;
+-- DROP TABLE task;
+-- DROP TABLE project;
+-- Drop TABLE client;
+
+ALTER TABLE client ADD COLUMN contactPerson TEXT; 
+-- ALTER TABLE client RENAME COLUMN vale to value; 

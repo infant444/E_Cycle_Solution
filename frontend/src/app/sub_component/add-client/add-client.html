@@ -1,0 +1,78 @@
+<div class="container" [ngStyle]="{'display': display}">
+  <div class="close" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </div>
+  <div class="content">
+    <app-title [title]="type=='edit'?'Edit Client':'Add Client'"></app-title>
+
+    <form (submit)="submit()" [formGroup]="client">
+      <div class="input">
+        <div class="lab">
+          Client Name
+        </div>
+        <div class="intp">
+          <input type="text" formControlName="name" [className]="(isSubmitted && FC.name.invalid)?'error':''">
+        </div>
+      </div>
+      <div class="input">
+        <div class="lab">
+          Organization Type
+        </div>
+        <div class="intp">
+          <select formControlName="type" [className]="(isSubmitted && FC.type.invalid)?'error':''">
+            <option value="">Choose type</option>
+            <option value="Software_Company">SoftWare Company</option>
+            <option value="Hotel">Hotel</option>
+            <option value="Collage">Collage</option>
+            <option value="Government">Government</option>
+            <option value="Individual">Individual</option>
+            <option value="Apartment">Apartment</option>
+          </select>
+        </div>
+      </div>
+      <div class="input">
+        <div class="lab">
+          Email
+        </div>
+        <div class="intp">
+          <input type="email" formControlName="email" [className]="(isSubmitted && FC.email.invalid)?'error':''">
+        </div>
+      </div>
+      <div class="input">
+        <div class="lab">
+          Contact Number
+        </div>
+        <div class="intp">
+          <input type="tel" formControlName="phone" [className]="(isSubmitted && FC.phone.invalid)?'error':''">
+        </div>
+      </div>
+      <div class="input">
+        <div class="lab">
+          Address
+        </div>
+        <div class="intp">
+          <textarea formControlName="address" rows="4" cols="15"></textarea>
+        </div>
+      </div>
+      <div class="input">
+        <div class="lab">
+          Website
+        </div>
+        <div class="intp">
+          <input type="text" formControlName="website">
+        </div>
+      </div>
+      <div class="input" *ngIf="FC.type.value!='Individual'">
+        <div class="lab">
+          Contact Person's Name
+        </div>
+        <div class="intp" >
+          <input type="text" formControlName="person">
+        </div>
+      </div>
+      <div class="div4">
+        <input type="submit" [value]="type=='edit'?'Update':'Add'">
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="content">
+    <div class="header">
+      <app-title title="Client Management" sub_title="Manage your E-cycle collection of client"></app-title>
+      <div class="add">
+        <button class="btn" (click)="dis()">Add</button>
+      </div>
+    </div>
+   <app-client-info [total_client]="4" [active_client]="3" [collection]="30" [value]="39999"></app-client-info>
+
+   <div class="filter" style="margin-bottom: .5rem;">
+<form>
+    <input type="text" [(ngModel)]="name" placeholder="Search" [ngModelOptions]="{ standalone: true }" class="search" (change)="search()">
+    <div class="div1">
+     <p> <span class="icon"><mat-icon style="padding-top:.4rem ;">filter_list</mat-icon></span><span class="text">Filter</span></p>
+    <select [(ngModel)]="type" [ngModelOptions]="{ standalone: true }" (change)="typeChange()">
+      <option value="">All Type</option>
+    </select>
+     <select [(ngModel)]="active" [ngModelOptions]="{ standalone: true }" (change)="activeChange()">
+      <option value="">All Status</option>
+      <option value="active">Active</option>
+      <option value="active">InActive</option>
+    </select>
+    </div>
+</form>
+  </div >
+  <hr width="100%">
+  <div class="client-info">
+    <div class="div2" *ngFor="let x of clients">
+<div class="div21">
+  <div class="div23">
+     <mat-icon>{{x.type=="Individual"?'person':'apartment'}}</mat-icon>
+  </div>
+  <h1>{{x.name}}</h1>
+</div>
+    </div>
+  </div>
+  </div>
+</div>
+<app-add-client [display]='display'></app-add-client>
