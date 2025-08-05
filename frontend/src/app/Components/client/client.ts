@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Title } from "../../sub_component/title/title";
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, CurrencyPipe } from '@angular/common';
@@ -20,15 +20,16 @@ export class Client implements OnInit {
   name = "";
   type = "";
   active = "";
-  display="none";
+  display = "none";
   clients?: ClientModel[] = [];
-  constructor(private clientServices:ClientServices) {
+  constructor(private clientServices: ClientServices,private cd: ChangeDetectorRef) {
 
   }
   ngOnInit(): void {
-    this.clientServices.getAllClient().subscribe((res)=>{
-this.clients=res;
-console.log(this.clients);
+    this.clientServices.getAllClient().subscribe((res) => {
+      this.clients = res;
+      console.log(this.clients);
+       this.cd.detectChanges();
     })
   }
   search() {
@@ -56,10 +57,10 @@ console.log(this.clients);
 
   }
   dis() {
-    if(this.display=='none'){
-      this.display='flex';
-    }else{
-      this.display='none'
+    if (this.display == 'none') {
+      this.display = 'flex';
+    } else {
+      this.display = 'none'
     }
-}
+  }
 }

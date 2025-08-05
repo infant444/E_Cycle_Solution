@@ -5,7 +5,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { USER_KEY } from '../../constant/localStorage.key';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { LOGIN } from '../../constant/url';
+import { GET_ALL_STAFF, LOGIN } from '../../constant/url';
+import { App } from '../../app';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class UserServices {
   constructor(
     private http:HttpClient,
     private toasterService:ToastrService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     this.userSubject = new BehaviorSubject<User>(new User());
     this.userObservable = this.userSubject.asObservable();
@@ -45,7 +46,9 @@ export class UserServices {
       })
     );
   }
-
+  getAll():Observable<User[]>{
+    return this.http.get<User[]>(GET_ALL_STAFF);
+  }
 
 logout() {
     this.userSubject.next(new User());

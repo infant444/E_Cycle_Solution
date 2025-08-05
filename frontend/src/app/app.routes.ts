@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { Home } from './Components/home/home';
 import { Dashboard } from './Components/dashboard/dashboard';
-import { LoginGuard } from './guard/login/login-guard';
 import { AuthGuard } from './guard/auth/auth-guard';
+import { LoginGuard } from './guard/login/login-guard';
 
 
 export const routes: Routes = [
@@ -19,7 +19,6 @@ export const routes: Routes = [
   {
     path: "login",
     loadComponent: () => import("./Components/login/login").then(m => m.Login),
-    canActivate: [LoginGuard]
   },
   {
     path: "inventory",

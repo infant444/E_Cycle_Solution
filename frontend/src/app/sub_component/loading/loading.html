@@ -1,1 +1,7 @@
-<p>loading works!</p>
+<div class="container" *ngIf="isLoading">
+  <div class="content">
+    <!-- <img src="./assets/images/loading.gif" alt="" srcset=""> -->
+     <ng-lottie [options]="options"  />
+     {{isLoading}}
+  </div>
+</div>

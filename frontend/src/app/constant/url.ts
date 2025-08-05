@@ -4,6 +4,7 @@ const BASEURL="http://localhost:5000"
 // employee
 export const EMPLOYEE_BASE_URL=BASEURL+"/api/user";
 export const LOGIN=EMPLOYEE_BASE_URL+"/login";
+export const GET_ALL_STAFF=EMPLOYEE_BASE_URL+"/getAll";
 
 
 

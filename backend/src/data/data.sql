@@ -29,9 +29,10 @@ CREATE TABLE IF NOT EXISTS Staff (
 CREATE TABLE IF NOT EXISTS client (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
     name TEXT NOT NULL,
-    type TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
+    type TEXT NOT NULL,
     contactNumber VARCHAR(15) UNIQUE,
+    contactPerson TEXT,
     address TEXT,
     website TEXT,
     noProject NUMERIC,
@@ -133,5 +134,5 @@ CREATE TABLE IF NOT EXISTS timeSheet(
 -- DROP TABLE project;
 -- Drop TABLE client;
 
-ALTER TABLE client ADD COLUMN contactPerson TEXT; 
--- ALTER TABLE client RENAME COLUMN vale to value; 
+-- ALTER TABLE client ADD COLUMN contactPerson TEXT; 
+-- ALTER TABLE client RENAME COLUMN contctnumber to contactNumber; 

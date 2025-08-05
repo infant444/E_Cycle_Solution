@@ -31,7 +31,7 @@ export class AddClient implements OnInit,OnChanges {
 
   }
     ngOnInit(): void {
-    console.log(this.clientInfo);
+    // console.log(this.clientInfo);
       this.client=this.formBuilder.group({
         name:['',Validators.required],
         email:['',[Validators.required,Validators.email]],
@@ -81,11 +81,13 @@ export class AddClient implements OnInit,OnChanges {
       address: Fx.address,
       website: Fx.website,
       noProject: 0,
-      collection: 0,
+      totalCollection: 0,
       value: 0,
       isCurrentProject: false,
       currentProject: '',
-      contactPerson: Fx.type=='Individual'?'':Fx.person,
+      contactPerson: Fx.type == 'Individual' ? '' : Fx.person,
+      lastCollectionDate: '',
+      specialInstruction: ''
     }
     console.log(sent)
     if(this.type=="edit"){

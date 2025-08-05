@@ -8,6 +8,8 @@ import { interval, Subscription } from 'rxjs';
 import { describe } from 'node:test';
 import { RecentWorks } from "../../sub_component/recent-works/recent-works";
 import { TimesheetBaseNav } from "../../sub_component/timesheet-base-nav/timesheet-base-nav";
+import { ClientServices } from '../../Services/client/client';
+import { UserServices } from '../../Services/user/user';
 
 @Component({
   selector: 'app-time-sheet',
@@ -22,8 +24,14 @@ export class TimeSheet implements OnInit{
  countdown!:any;
  isSubmitted:boolean=false;
  today = new Date().toISOString().split('T')[0];
-  constructor(private formBuilder:FormBuilder,private ngZone: NgZone){}
+  constructor(private formBuilder:FormBuilder,private client:ClientServices, private user:UserServices){}
   ngOnInit(): void {
+    // this.client.getAllClient().subscribe((a)=>{
+    //   console.log(a);
+    // })
+    this.user.getAll().subscribe((a)=>{
+      console.log(a)
+    })
     this.timeSheetForm=this.formBuilder.group({
       project:["",[Validators.required]],
       task:["",[Validators.required]],

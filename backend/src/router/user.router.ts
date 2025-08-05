@@ -36,26 +36,16 @@ rout.post("/login", asyncHandler(
     }
 ));
 
-// rout.post("/add", asyncHandler(
-
-//     async (req, res, next: NextFunction) => {
-//         console.log("AJ");
-//         const { name, email, type, contactNumber, address, website } = req.body;
-//         try {
-//             const client = await pool.query(
-//                 `INSERT INTO client(name, type, email, contactNumber, address, website)
-//    VALUES ($1, $2, $3, $4, $5, $6)
-//    RETURNING *`,
-//                 [name, type, email, contactNumber, address, website]
-//             );
-//             console.log(client.rows[0])
-
-//             res.json(client.rows[0])
-//         } catch (e) {
-//             next(e);
-//         }
-//     }
-// ));
+rout.get("/getAll",asyncHandler(
+    async(req,res,next:NextFunction)=>{
+        try{
+            const staff=await pool.query("select * from staff");
+            res.send(staff.rows);
+        }catch(err){
+            next(err);
+        }
+    }
+))
 
 
 export default rout;

@@ -17,7 +17,9 @@ constructor(private router:Router,private userServices:UserServices){
 
 }
 ngOnInit(): void {
-  this.user=this.userServices.currentUser;
+  this.userServices.userObservable.subscribe((newUser) => {
+      this.user = newUser;
+    })
 }
 home(){
   this.router.navigateByUrl("/");
