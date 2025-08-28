@@ -3,15 +3,15 @@ export class ClientModel{
   name!:string;
   email!:string;
   type!:string;
-  contactNumber!:string;
-  contactPerson!:string;
+  contact_number!:string;
+  contact_person!:string;
   address!:string;
   website!:string;
-  noProject!:number;
-  totalCollection!:number;
+  no_project!:number;
+  total_collection!:number;
   value!:number;
-  isCurrentProject!:boolean;
-  currentProject!:string;
-  lastCollectionDate!:string;
-  specialInstruction!:string;
+  is_current_project!:boolean;
+  current_project!:string;
+  last_collection_date!:string;
+  special_instruction!:string;
 }

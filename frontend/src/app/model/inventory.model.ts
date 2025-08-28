@@ -1,7 +1,7 @@
 export class Inventory{
   id!:string;
   company!:string;
-  itemName!:string;
+  item_name!:string;
   category!:string;
   condition!:string;
   quantity!:number;

@@ -60,7 +60,15 @@ export class Client implements OnInit {
     if (this.display == 'none') {
       this.display = 'flex';
     } else {
-      this.display = 'none'
+      this.display = 'none';
+      this.reAssign()
     }
+  }
+  reAssign(){
+    this.clientServices.getAllClient().subscribe((res) => {
+      this.clients = res;
+      console.log(this.clients);
+       this.cd.detectChanges();
+    })
   }
 }

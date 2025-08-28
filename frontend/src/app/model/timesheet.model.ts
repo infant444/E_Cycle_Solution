@@ -3,10 +3,10 @@ export class TimeSheet{
   staff!:string;
   task!:string;
   project!:string;
-  taskName!:string;
-  projectName!:string;
+  task_name!:string;
+  project_name!:string;
   description!:string;
   date!:string;
-  startTime!:string;
-  endTime!:string;
+  start_time!:string;
+  end_time!:string;
 }

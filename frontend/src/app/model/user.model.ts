@@ -6,6 +6,6 @@ password!:string;
 dob!:string;
 contact!:string;
 role!:string;
-isLogin!:boolean;
+is_login!:boolean;
 token!:string;
 }

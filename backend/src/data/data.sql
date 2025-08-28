@@ -20,80 +20,79 @@ CREATE TABLE IF NOT EXISTS Staff (
     dob DATE,
     contact VARCHAR(15),
     role staff_type,
-    isLogin BOOLEAN DEFAULT FALSE,
+    is_login BOOLEAN DEFAULT FALSE,
     login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS client (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     type TEXT NOT NULL,
-    contactNumber VARCHAR(15) UNIQUE,
-    contactPerson TEXT,
+    contact_number VARCHAR(15) UNIQUE,
+    contact_person TEXT,
     address TEXT,
     website TEXT,
-    noProject NUMERIC,
-    totalCollection NUMERIC,
+    no_project NUMERIC,
+    total_collection NUMERIC,
     value NUMERIC,
-    isCurrentProject BOOLEAN,
-    currentProject TEXT,
-    lastCollectionDate DATE,
-    specialInstruction TEXT,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    is_current_project BOOLEAN,
+    current_project TEXT,
+    last_collection_date DATE,
+    special_instruction TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS project (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
-    projectName Text NOT NULL,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    project_name TEXT NOT NULL,
     client_id UUID,
-    startDate DATE,
+    start_date DATE,
     status project_type,
     level_complete NUMERIC,
-    noTask NUMERIC,
-    completedTask NUMERIC,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    no_task NUMERIC,
+    completed_task NUMERIC,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (client_id) REFERENCES client(id)
 );
 
-CREATE TABLE IF NOT EXISTS task(
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
+CREATE TABLE IF NOT EXISTS task (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     task TEXT NOT NULL,
     description TEXT,
     project UUID,
-    projectName TEXT,
+    project_name TEXT,
     status task_type,
     priority NUMERIC,
-    due Date,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    due DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (project) REFERENCES project(id)
 );
 
-
-
-CREATE TABLE IF NOT EXISTS timeSheet(
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
+CREATE TABLE IF NOT EXISTS timesheet (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     staff UUID NOT NULL,
     task UUID NOT NULL,
     project UUID NOT NULL,
-    taskName TEXT NOT NULL,
-    projectName TEXT NOT NULL,
+    task_name TEXT NOT NULL,
+    project_name TEXT NOT NULL,
     description TEXT,
     date DATE,
-    startTime TIME,
-    endTime TIME,
-    totalHours NUMERIC,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    start_time TIME,
+    end_time TIME,
+    total_hours NUMERIC,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (project) REFERENCES project(id),
     FOREIGN KEY (staff) REFERENCES staff(id),
     FOREIGN KEY (task) REFERENCES task(id)
 );
+
 
 
 
@@ -129,10 +128,10 @@ CREATE TABLE IF NOT EXISTS timeSheet(
 -- -- DROP TABLE staff;
 -- Drop TABLE staff;
 
--- DROP TABLE timeSheet;
--- DROP TABLE task;
--- DROP TABLE project;
--- Drop TABLE client;
+DROP TABLE timeSheet;
+DROP TABLE task;
+DROP TABLE project;
+Drop TABLE client;
 
 -- ALTER TABLE client ADD COLUMN contactPerson TEXT; 
--- ALTER TABLE client RENAME COLUMN contctnumber to contactNumber; 
+-- ALTER TABLE staff RENAME COLUMN isLogin to is_login; 

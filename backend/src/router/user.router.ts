@@ -21,7 +21,7 @@ rout.post("/login", asyncHandler(
             }
             if (user.rows[0].password == password) {
                 const now = new Date().toISOString();
-                await pool.query('UPDATE staff set login_time=$1,isLogin=$2,updatedAt=$3 where id=$4', [now, true, now, user.rows[0].id]);
+                await pool.query('UPDATE staff set login_time=$1,is_login=$2,updatedAt=$3 where id=$4', [now, true, now, user.rows[0].id]);
                  res.send(generateUserToken(user.rows[0]))
                 return;
             }

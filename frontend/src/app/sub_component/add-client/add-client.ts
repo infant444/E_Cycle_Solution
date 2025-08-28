@@ -7,6 +7,7 @@ import { Client } from '../../Components/client/client';
 import { Title } from "../title/title";
 import { ClientServices } from '../../Services/client/client';
 import { ToastrService } from 'ngx-toastr';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-client',
@@ -27,7 +28,7 @@ export class AddClient implements OnInit,OnChanges {
 
   client!:FormGroup;
   isSubmitted:boolean=false;
-  constructor(private formBuilder:FormBuilder,private clientx:Client,private clientServices:ClientServices, private toaster:ToastrService) {
+  constructor(private formBuilder:FormBuilder,private clientx:Client,private clientServices:ClientServices, private toaster:ToastrService, private router:Router) {
 
   }
     ngOnInit(): void {
@@ -60,7 +61,7 @@ export class AddClient implements OnInit,OnChanges {
       this.FC.name.setValue(this.clientInfo?.name || '');
       this.FC.email.setValue(this.clientInfo?.email || '');
       this.FC.type.setValue(this.clientInfo?.type || '');
-      this.FC.phone.setValue(this.clientInfo?.contactNumber || '');
+      this.FC.phone.setValue(this.clientInfo?.contact_number || '');
       this.FC.address.setValue(this.clientInfo?.address || '');
       this.FC.website.setValue(this.clientInfo?.website || '');
       this.FC.person.setValue(this.clientInfo?.website || '');
@@ -77,24 +78,24 @@ export class AddClient implements OnInit,OnChanges {
       name: Fx.name,
       email: Fx.email,
       type: Fx.type,
-      contactNumber: Fx.phone,
+      contact_number: Fx.phone,
       address: Fx.address,
       website: Fx.website,
-      noProject: 0,
-      totalCollection: 0,
+      no_project: 0,
+      total_collection: 0,
       value: 0,
-      isCurrentProject: false,
-      currentProject: '',
-      contactPerson: Fx.type == 'Individual' ? '' : Fx.person,
-      lastCollectionDate: '',
-      specialInstruction: ''
+      is_current_project: false,
+      current_project: '',
+      contact_person: Fx.type == 'Individual' ? '' : Fx.person,
+      last_collection_date: '',
+      special_instruction: ''
     }
     console.log(sent)
     if(this.type=="edit"){
     }else{
       this.clientServices.addClient(sent).subscribe((res)=>{
         this.toaster.success("Add Successfully")
-        this.clientx.dis();
+       this.clientx.dis();
       })
 
     }

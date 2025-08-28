@@ -41,7 +41,7 @@ export class UserServices {
           this.setUserToLocalStorage(user);
           console.log(this.userSubject.value);
         } , error: (errorResponse) => {
-          this.toasterService.error(errorResponse.error, 'Login Fails')
+          this.toasterService.error(errorResponse.error.message, 'Login Fails')
         }
       })
     );
