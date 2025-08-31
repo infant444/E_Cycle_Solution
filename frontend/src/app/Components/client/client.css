@@ -57,3 +57,107 @@ form>p{
 .search{
   width: 25rem;
 }
+.client-info{
+  margin: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.div2{
+  width: 300px;
+  height: 400px;
+  overflow: hidden;
+  padding: 1rem;
+  border-radius: 2rem;
+  box-shadow: 0px 0px 2px 5px lightgray;
+}
+.div22{
+  display: flex;
+  position: relative;
+}
+
+.div22>h3{
+  margin-top: .2rem;
+  display: flex;
+  overflow-wrap: break-word;
+  margin-left: .2rem;
+}
+.div22>mat-icon{
+  margin-top: .5rem;
+  cursor: pointer;
+  position: absolute;
+  right: -5px;
+}
+.div23{
+  height: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.div24{
+  margin: .5rem;
+  margin-left: 2rem;
+}
+.div24>span{
+  padding: .3rem .5rem;
+  border: 2px solid green;
+  background-color: rgba(144, 238, 144, 0.405);
+  color: green;
+  border-radius: 2rem;
+}
+.div25{
+  display: flex;
+  margin: .25rem;
+  margin-left:1rem;
+}
+.div25>mat-icon{
+  width: 2rem;
+}
+.div25>span{
+  margin-left: .4rem;
+  margin-top: .2rem;
+  font-size: 1.2em;
+  overflow-wrap: break-word;
+}
+
+.div25>span>a{
+  text-overflow: ellipsis;
+}
+.div26{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+.div27{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.div28{
+  display: flex;
+  margin: 1rem;
+  justify-content: space-between;
+}
+.div29{
+padding: .2rem .4rem;
+border-radius: .3rem;
+}
+.inactive{
+background-color: rgba(255, 0, 0, 0.379);
+color: red;
+font-weight: bold;
+}
+.active{
+background-color: rgba(0, 255, 68, 0.379);
+color: rgba(0, 255, 68);
+}
+.div30{
+  display: flex;
+
+}
+.div30>mat-icon{
+  margin: 0 .5rem;
+  cursor: pointer;
+}

@@ -6,7 +6,7 @@
         <button class="btn" (click)="dis()">Add</button>
       </div>
     </div>
-    <app-client-info [total_client]="4" [active_client]="3" [collection]="30" [value]="39999"></app-client-info>
+    <app-client-info [total_client]="totalCount" [active_client]="totalActive" [collection]="totalCollection" [value]="totalValue"></app-client-info>
 
     <div class="filter" style="margin-bottom: .5rem;">
       <form>
@@ -17,11 +17,17 @@
               class="text">Filter</span></p>
           <select [(ngModel)]="type" [ngModelOptions]="{ standalone: true }" (change)="typeChange()">
             <option value="">All Type</option>
+         <option value="Software_Company">SoftWare Company</option>
+            <option value="Hotel">Hotel</option>
+            <option value="Collage">Collage</option>
+            <option value="Government">Government</option>
+            <option value="Individual">Individual</option>
+            <option value="Apartment">Apartment</option>
           </select>
           <select [(ngModel)]="active" [ngModelOptions]="{ standalone: true }" (change)="activeChange()">
             <option value="">All Status</option>
             <option value="active">Active</option>
-            <option value="active">InActive</option>
+            <option value="inactive">InActive</option>
           </select>
         </div>
       </form>
@@ -35,22 +41,56 @@
               <mat-icon>{{x.type=="Individual"?'person':'apartment'}}</mat-icon>
             </div>
             <h3>{{x.name}}</h3>
+            <mat-icon>more_vert</mat-icon>
           </div>
           <div class="div24">
-            {{x.type}}
+           <span> {{x.type}}</span>
           </div>
         </div>
         <div class="div25" *ngIf="x.contact_person">
           <mat-icon>person</mat-icon>
-          {{x.contact_person}}
+          <span>{{x.contact_person}}</span>
         </div>
         <div class="div25" *ngIf="x.email">
           <mat-icon>mail_outline</mat-icon>
-          {{x.email}}
+          <span>{{x.email}}</span>
         </div>
         <div class="div25" *ngIf="x.contact_number">
           <mat-icon>phone</mat-icon>
-          {{x.contact_number}}
+          <span>{{x.contact_number}}</span>
+        </div>
+        <div class="div25" *ngIf="x.address">
+          <mat-icon>location_on</mat-icon>
+          <span>{{x.address}}</span>
+        </div>
+        <div class="div25" *ngIf="x.website">
+          <mat-icon>cloud</mat-icon>
+          <span><a [href]="x.website" target="_blank">{{x.website}}</a></span>
+        </div>
+        <div class="div25" *ngIf="x.last_collection_date">
+          <mat-icon>schedule</mat-icon>
+          <span>Last Collection:{{x.last_collection_date}}</span>
+        </div>
+        <div class="div26">
+          <div class="div27">
+            <h4>{{x.total_collection?x.total_collection:'0'}}</h4>
+            collections
+          </div>
+            <div class="div27">
+            <h4 *ngIf="x.value">{{x.value|currency:'INR'}}</h4>
+            <h4 *ngIf="!x.value">{{0|currency:'INR'}}</h4>
+            Total Value
+          </div>
+        </div>
+        <div class="div28">
+          <div class="div29" [ngClass]="x.is_current_project ? 'active' : 'inactive'">
+            {{x.is_current_project ? 'Active' : 'Inactive'}}
+          </div>
+          <div class="div30">
+            <mat-icon>visibility
+</mat-icon>
+            <mat-icon>edit</mat-icon>
+          </div>
         </div>
       </div>
     </div>

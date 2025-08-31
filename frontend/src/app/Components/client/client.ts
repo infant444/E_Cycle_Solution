@@ -11,7 +11,7 @@ import { ClientServices } from '../../Services/client/client';
 
 @Component({
   selector: 'app-client',
-  imports: [Title, MatIconModule, CommonModule, FormsModule, ClientInfo, AddClient],
+  imports: [Title, MatIconModule, CommonModule, FormsModule, ClientInfo, AddClient, CurrencyPipe],
   templateUrl: './client.html',
   styleUrl: './client.css'
 })
@@ -19,42 +19,63 @@ export class Client implements OnInit {
 
   name = "";
   type = "";
-  active = "";
+  active = '';
+  totalActive = 0;
+  totalValue = 0;
+  totalCollection = 0;
+  totalCount!: number;
   display = "none";
   clients?: ClientModel[] = [];
-  constructor(private clientServices: ClientServices,private cd: ChangeDetectorRef) {
+  sample?: ClientModel[] = [];
+  constructor(private clientServices: ClientServices, private cd: ChangeDetectorRef) {
 
   }
   ngOnInit(): void {
     this.clientServices.getAllClient().subscribe((res) => {
       this.clients = res;
-      console.log(this.clients);
-       this.cd.detectChanges();
+      this.sample = res;
+      this.totalCount = res.length;
+      for (let r of this.clients) {
+        if (r.is_current_project) {
+          this.totalActive += 1;
+        }
+        if (r.total_collection) {
+          this.totalCollection += parseInt(r.total_collection.toString());
+        }
+        if (r.value) {
+          this.totalValue += parseInt(r.value.toString());
+        }
+
+      }
+      // console.log(this.clients);
+      this.cd.detectChanges();
     })
   }
   search() {
     if (this.name.length > 2) {
-
+      this.clients=this.sample?.filter(s=>s.name.toLowerCase().includes(this.name.toLowerCase()))
     } else {
       this.getAll();
     }
   }
   typeChange() {
     if (this.type != "") {
-
+      this.clients = this.sample?.filter(s => s.type === this.type);
     } else {
       this.getAll();
     }
   }
   activeChange() {
-    if (this.active != "") {
-
+    if (this.active === "active") {
+      this.clients = this.sample?.filter(s => s.is_current_project);
+    } else if (this.active === "inactive") {
+      this.clients = this.sample?.filter(s => !s.is_current_project);
     } else {
       this.getAll();
     }
   }
   getAll() {
-
+    this.clients = this.sample;
   }
   dis() {
     if (this.display == 'none') {
@@ -64,11 +85,11 @@ export class Client implements OnInit {
       this.reAssign()
     }
   }
-  reAssign(){
+  reAssign() {
     this.clientServices.getAllClient().subscribe((res) => {
       this.clients = res;
       console.log(this.clients);
-       this.cd.detectChanges();
+      this.cd.detectChanges();
     })
   }
 }

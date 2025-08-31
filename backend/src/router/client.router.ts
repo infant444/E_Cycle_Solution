@@ -2,34 +2,12 @@ import { Router, NextFunction } from "express";
 import asyncHandler from 'express-async-handler';
 import { pool } from "../config/postgersql.config";
 import { ClientModel } from "../model/client.model";
+import auth from "../middleware/auth.middleware";
 const rout = Router();
-
+rout.use(auth);
 rout.get("/getAll", asyncHandler(
-    async(req,res,next:NextFunction)=>{
+    async(req:any,res,next:NextFunction)=>{
         const clients=await pool.query(`select * from client`,);
-        // const clientInfo:ClientModel[]=[]
-        // for (let i=0;i<clients.rows.length;i++){
-        //     const clientX=clients.rows[i];
-        //     const dataModel:ClientModel={
-        //         id: clientX.id,
-        //         name: clientX.name,
-        //         email: clientX.email,
-        //         type: clientX.type,
-        //         contactNumber: clientX.contactNumber,
-        //         contactPerson: clientX.contactPerson||'',
-        //         address: clientX.address||'',
-        //         website: clientX.website||'',
-        //         noProject: clientX.noProject||'',
-        //         totalCollection: clientX.totalCollection||0,
-        //         value: clientX.value||0,
-        //         isCurrentProject: false,
-        //         currentProject: clientX.currentProject||'',
-        //         lastCollectionDate: clientX.lastCollectionDate||'',
-        //         specialInstruction: clientX.specialInstruction||''
-        //     }
-        //     clientInfo.push(dataModel);
-        // }
-        // res.status(200).send(clientInfo);
         res.status(200).json(clients.rows);
     }
 ))

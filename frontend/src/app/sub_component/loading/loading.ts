@@ -24,7 +24,7 @@ export class Loading implements OnInit{
  this.loadingService.isLoading.subscribe((isLoadingX)=>{
       this.isLoading=isLoadingX;
       this.cdRef.markForCheck();
-      // console.log(this.isLoading);
+
     })
   }
 }

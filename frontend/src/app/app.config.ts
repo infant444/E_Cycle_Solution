@@ -9,6 +9,7 @@ import { provideToastr } from 'ngx-toastr';
 import { provideLottieOptions } from 'ngx-lottie';
 import player from 'lottie-web';
 import { LoadingInterceptor } from './interceptor/loading/loading-interceptor';
+import { AuthInterceptor } from './interceptor/auth/auth-interceptor';
 
 export function playerFactory() {
   return player;
@@ -31,6 +32,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
+      multi: true
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true
     },
   ]

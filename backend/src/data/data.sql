@@ -9,7 +9,13 @@ CREATE TYPE staff_type AS ENUM ('admin', 'staff', 'worker');
 CREATE TYPE project_type AS ENUM('completed','processed','pending','accepted');
 CREATE TYPE task_type AS ENUM('completed','processed','pending','accepted');
 
-
+CREATE OR REPLACE FUNCTION set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+   NEW.updated_at = NOW();
+   RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
 -- Created tables
 CREATE TABLE IF NOT EXISTS Staff (
@@ -65,13 +71,15 @@ CREATE TABLE IF NOT EXISTS task (
     task TEXT NOT NULL,
     description TEXT,
     project UUID,
+    staff UUID NOT NULL,
     project_name TEXT,
-    status task_type,
-    priority NUMERIC,
+    status task_type DEFAULT 'pending',
+    priority NUMERIC DEFAULT 1,
     due DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (project) REFERENCES project(id)
+    FOREIGN KEY (project) REFERENCES project(id),
+    FOREIGN KEY (staff) REFERENCES staff(id)
 );
 
 CREATE TABLE IF NOT EXISTS timesheet (
@@ -85,7 +93,7 @@ CREATE TABLE IF NOT EXISTS timesheet (
     date DATE,
     start_time TIME,
     end_time TIME,
-    total_hours NUMERIC,
+    total_hours NUMERIC DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (project) REFERENCES project(id),
@@ -97,12 +105,28 @@ CREATE TABLE IF NOT EXISTS timesheet (
 
 
 
+-- Update Function
+
+CREATE TRIGGER trigger_set_updated_at
+BEFORE UPDATE ON task
+FOR EACH ROW
+EXECUTE FUNCTION set_updated_at();
 
 
+CREATE TRIGGER trigger_set_client_updated_at
+BEFORE UPDATE ON client
+FOR EACH ROW
+EXECUTE FUNCTION set_updated_at();
 
+CREATE TRIGGER trigger_set_project_updated_at
+BEFORE UPDATE ON project
+FOR EACH ROW
+EXECUTE FUNCTION set_updated_at();
 
-
-
+CREATE TRIGGER trigger_set_time_sheet_updated_at
+BEFORE UPDATE ON timesheet
+FOR EACH ROW
+EXECUTE FUNCTION set_updated_at();
 
 -- Sample data
 -- INSERT INTO
@@ -128,10 +152,10 @@ CREATE TABLE IF NOT EXISTS timesheet (
 -- -- DROP TABLE staff;
 -- Drop TABLE staff;
 
-DROP TABLE timeSheet;
-DROP TABLE task;
-DROP TABLE project;
-Drop TABLE client;
+-- DROP TABLE timeSheet;
+-- DROP TABLE task;
+-- DROP TABLE project;
+-- Drop TABLE client;
 
 -- ALTER TABLE client ADD COLUMN contactPerson TEXT; 
 -- ALTER TABLE staff RENAME COLUMN isLogin to is_login; 

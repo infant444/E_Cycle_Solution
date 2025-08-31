@@ -6,6 +6,7 @@ import { errorHandler } from './middleware/error.handler';
 import userRouter from './router/user.router';
 import tableRouter from './router/table.router';
 import clientRouter from './router/client.router';
+import projectRouter from './router/project.router';
 // config
 dotenv.config();
 const port=process.env.PORT||5000;
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/api/table",tableRouter);
 app.use("/api/client",clientRouter);
 app.use("/api/user",userRouter);
+app.use("/api/project",projectRouter);
 
 // middleware
 app.use(errorHandler);
