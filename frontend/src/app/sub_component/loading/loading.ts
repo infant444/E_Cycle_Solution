@@ -11,7 +11,7 @@ import { LottieComponent,AnimationOptions } from 'ngx-lottie';
 })
 export class Loading implements OnInit{
     options: AnimationOptions = {
-    path: './assets/images/loading.json',
+    path: './assets/animation/loading.json',
     loop:true,
     autoplay:true
 

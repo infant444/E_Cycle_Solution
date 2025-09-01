@@ -37,6 +37,11 @@ export const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {
+     path:"project",
+    loadComponent:()=>import("./Components/project/project").then(m=>m.Project),
+    canActivate:[AuthGuard]
+  },
+  {
     path: "time-sheet/weak-view",
     loadComponent: () => import("./Components/time-sheet-week-view/time-sheet-week-view").then(m => m.TimeSheetWeekView),
     canActivate:[AuthGuard]

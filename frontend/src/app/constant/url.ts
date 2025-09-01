@@ -1,6 +1,9 @@
 const BASEURL="http://localhost:5000"
 
+import { environment } from "../../environment/environment.pord";
 
+
+// const BASEURL=environment.production?'':'http://localhost:5000';
 // employee
 export const EMPLOYEE_BASE_URL=BASEURL+"/api/user";
 export const LOGIN=EMPLOYEE_BASE_URL+"/login";

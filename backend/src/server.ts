@@ -7,6 +7,7 @@ import userRouter from './router/user.router';
 import tableRouter from './router/table.router';
 import clientRouter from './router/client.router';
 import projectRouter from './router/project.router';
+import path from 'path';
 // config
 dotenv.config();
 const port=process.env.PORT||5000;
@@ -29,6 +30,10 @@ app.use("/api/project",projectRouter);
 // middleware
 app.use(errorHandler);
 
+// app.use(express.static('public/browser'))
+// app.get("*",(req,res)=>{
+//     res.sendFile(path.join(__dirname,'public','browser','index.html'))
+// })
 // listen
 app.listen(port,()=>{
     console.log("http://localhost:"+port);

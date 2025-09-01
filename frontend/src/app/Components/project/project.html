@@ -1,1 +1,11 @@
-<p>project works!</p>
+<div class="container">
+  <div class="content">
+    <div class="header">
+      <app-title title="Project Management" sub_title="Manage your E-cycle Project"></app-title>
+      <div class="add">
+        <button class="btn" (click)="dis()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-add-project [display]='display'></app-add-project>

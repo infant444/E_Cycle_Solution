@@ -4,14 +4,14 @@ import { pool } from "../config/postgersql.config";
 import auth from "../middleware/auth.middleware";
 const rout = Router();
 
-rout.use(auth);
+// rout.use(auth);
 
 rout.post("/add", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
             const { project_name, client_id, start_date } = req.body;
 
-            const project = await pool.query("insert into project (project_name,client_id,start_date,status,level_complete,no_task,complete_task) values ($1,$2,$3,$4,$5,$6,$7) returning *", [project_name, client_id, start_date, "pending", 0, 0, 0]);
+            const project = await pool.query("insert into project (project_name,client_id,start_date,status,level_complete,no_task,completed_task) values ($1,$2,$3,$4,$5,$6,$7) RETURNING*", [project_name, client_id, start_date, "pending", 0, 0, 0]);
             res.json(project.rows[0]);
         } catch (error) {
             next(error);
@@ -39,7 +39,7 @@ rout.get("/get/:id", asyncHandler(
         }
     }
 ));
-rout.get("/task/add", asyncHandler(
+rout.post("/task/add", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
             const { task, description, project, staff, project_name, priority, due } = req.body;
@@ -48,14 +48,14 @@ rout.get("/task/add", asyncHandler(
             const task_count = parseInt(project_data.rows[0].no_task) + 1;
             const complete_task = parseInt(project_data.rows[0].complete_task);
             const score = (complete_task / task_count) * 100;
-            await pool.query("update project set no_task=$1,complete_task=$2,level_complete=$3 where id=$4 ", [task_count, complete_task, score, project]);
-            res.send(task);
+            await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3 where id=$4 ", [task_count, complete_task, score, project]);
+            res.send(tasks);
         } catch (error) {
             next(error);
         }
     }
 ));
-rout.get("task/getall/:projectid", asyncHandler(
+rout.get("/task/getall/:projectid", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
             const tasks = await pool.query("select * from task where project=$1", [req.params.projectid]);
@@ -65,7 +65,7 @@ rout.get("task/getall/:projectid", asyncHandler(
         }
     }
 ));
-rout.get("task/get/:id", asyncHandler(
+rout.get("/task/get/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
             const task = await pool.query("select * from task where id=$1", [req.params.id]);
@@ -75,7 +75,7 @@ rout.get("task/get/:id", asyncHandler(
         }
     }
 ));
-rout.put("task/status/update/:taskId", asyncHandler(
+rout.put("/task/status/update/:taskId", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
 
@@ -89,9 +89,9 @@ rout.put("task/status/update/:taskId", asyncHandler(
                 const complete_task = parseInt(project_data.rows[0].complete_task) + 1;
                 const score = (complete_task / task_count) * 100;
                 if (score == 100) {
-                    await pool.query("update project set no_task=$1,complete_task=$2,level_complete=$3,status=$4 where id=$5 ", [task_count, complete_task, score, "completed", task.rows[0].project]);
+                    await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3,status=$4 where id=$5 ", [task_count, complete_task, score, "completed", task.rows[0].project]);
                 } else {
-                    await pool.query("update project set no_task=$1,complete_task=$2,level_complete=$3,status=$4 where id=$5 ", [task_count, complete_task, score, "processed", task.rows[0].project]);
+                    await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3,status=$4 where id=$5 ", [task_count, complete_task, score, "processed", task.rows[0].project]);
                 }
             }
             res.send(task.rows[0]);

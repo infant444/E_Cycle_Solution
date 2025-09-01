@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd src && nodemon server.ts"
+    "start": "cd src && nodemon server.ts",
+     "build": "npm install && tsc"
   },
   "author": "Infant Raj S",
   "license": "ISC",
@@ -18,16 +19,16 @@
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.1",
-    "nodemon": "^3.1.10",
     "pg": "^8.16.3",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
-  },
-  "devDependencies": {
-    "@types/body-parser": "^1.19.6",
+    "typescript": "^5.8.3",   
+     "@types/body-parser": "^1.19.6",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/pg": "^8.15.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2"
   }
 }

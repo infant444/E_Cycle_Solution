@@ -8,10 +8,11 @@ import { ClientInfo } from "../../sub_component/client-info/client-info";
 import { ClientModel } from '../../model/client.model';
 import { AddClient } from "../../sub_component/add-client/add-client";
 import { ClientServices } from '../../Services/client/client';
+import { NotFound } from "../../sub_component/not-found/not-found";
 
 @Component({
   selector: 'app-client',
-  imports: [Title, MatIconModule, CommonModule, FormsModule, ClientInfo, AddClient, CurrencyPipe],
+  imports: [Title, MatIconModule, CommonModule, FormsModule, ClientInfo, AddClient, CurrencyPipe, NotFound],
   templateUrl: './client.html',
   styleUrl: './client.css'
 })
@@ -27,6 +28,7 @@ export class Client implements OnInit {
   display = "none";
   clients?: ClientModel[] = [];
   sample?: ClientModel[] = [];
+  editClient!:ClientModel;
   constructor(private clientServices: ClientServices, private cd: ChangeDetectorRef) {
 
   }
@@ -84,6 +86,9 @@ export class Client implements OnInit {
       this.display = 'none';
       this.reAssign()
     }
+  }
+  edit(x:ClientModel){
+
   }
   reAssign() {
     this.clientServices.getAllClient().subscribe((res) => {
