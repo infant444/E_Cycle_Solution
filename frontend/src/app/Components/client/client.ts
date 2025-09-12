@@ -82,13 +82,22 @@ export class Client implements OnInit {
   dis() {
     if (this.display == 'none') {
       this.display = 'flex';
+      this.type="add";
+      this.editClient=new ClientModel;
     } else {
       this.display = 'none';
       this.reAssign()
     }
   }
   edit(x:ClientModel){
-
+    if (this.display == 'none') {
+      this.display = 'flex';
+      this.type="edit";
+      this.editClient=x;
+    } else {
+      this.display = 'none';
+      this.reAssign()
+    }
   }
   reAssign() {
     this.clientServices.getAllClient().subscribe((res) => {

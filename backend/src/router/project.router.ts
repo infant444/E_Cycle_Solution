@@ -4,7 +4,7 @@ import { pool } from "../config/postgersql.config";
 import auth from "../middleware/auth.middleware";
 const rout = Router();
 
-// rout.use(auth);
+rout.use(auth);
 
 rout.post("/add", asyncHandler(
     async (req, res, next: NextFunction) => {

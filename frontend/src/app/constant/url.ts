@@ -20,6 +20,8 @@ export const GET_ALL_STAFF=EMPLOYEE_BASE_URL+"/getAll";
 export const CLIENT_BASE_URL=BASEURL+"/api/client";
 export const ADD_CLIENT=CLIENT_BASE_URL+"/addClient";
 export const GET_ALL_CLIENT=CLIENT_BASE_URL+"/getAll";
+export const UPDATE_CLIENT=CLIENT_BASE_URL+"/update/";
+export const GET_CLIENT_BY_ID=CLIENT_BASE_URL+"/get/";
 
 
 // Project

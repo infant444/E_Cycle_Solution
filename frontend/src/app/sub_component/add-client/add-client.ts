@@ -42,6 +42,9 @@ export class AddClient implements OnInit,OnChanges {
         website:[''],
         person:[''],
     });
+    if(this.type=='edit'){
+      this.changeValue()
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -64,7 +67,7 @@ export class AddClient implements OnInit,OnChanges {
       this.FC.phone.setValue(this.clientInfo?.contact_number || '');
       this.FC.address.setValue(this.clientInfo?.address || '');
       this.FC.website.setValue(this.clientInfo?.website || '');
-      this.FC.person.setValue(this.clientInfo?.website || '');
+      this.FC.person.setValue(this.clientInfo?.contact_person || '');
 
   }
   submit(){
@@ -92,6 +95,11 @@ export class AddClient implements OnInit,OnChanges {
     }
     console.log(sent)
     if(this.type=="edit"){
+      this.clientServices.updateClient(sent,this.clientInfo.id).subscribe((res)=>{
+        this.toaster.success("Updated Successfully")
+       this.clientx.dis();
+
+      })
     }else{
       this.clientServices.addClient(sent).subscribe((res)=>{
         this.toaster.success("Add Successfully")

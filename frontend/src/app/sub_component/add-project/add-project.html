@@ -1,1 +1,132 @@
-<p>add-project works!</p>
+<div class="container" [ngStyle]="{'display': display}">
+  <div class="close" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </div>
+  <div class="content">
+    <app-title [h3_title]="type=='edit'?'Edit Project':'Add Project'"></app-title>
+    <hr class="hr">
+    <form (ngSubmit)="submit()" [formGroup]="projectForm">
+      <div class="div1">
+        <app-title sub_title="Basic Information"></app-title>
+        <div class="input-all">
+          <div class="label">
+            Project's Name
+          </div>
+          <div class="input">
+            <input type="text" formControlName="name" [className]="(isSubmitted && FC.name.invalid)?'error':''">
+          </div>
+        </div>
+        <div class="input-all">
+          <div class="label">
+            Description
+          </div>
+          <div class="input">
+            <textarea formControlName="description" cols="30" rows="5"
+              [className]="(isSubmitted && FC.description.invalid)?'error':''"></textarea>
+          </div>
+        </div>
+        <div class="div11">
+          <div class="input-all">
+            <div class="label">
+              Client
+            </div>
+            <div class="input">
+              <select formControlName="client" [className]="(isSubmitted && FC.client.invalid)?'error':''">
+                <option value="" selected>Select Client</option>
+                <option *ngFor="let client of clientData" [value]="client.id">{{client.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-all">
+            <div class="label">
+              Manager
+            </div>
+            <div class="input">
+              <select formControlName="manager" [className]="(isSubmitted && FC.manager.invalid)?'error':''">
+                <option value="" selected>Select Manager</option>
+                <option *ngFor="let staff of manager" [value]="staff.id">{{staff.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="div11">
+          <div class="input-all">
+            <div class="label">
+              Start Date
+            </div>
+            <div class="input">
+              <input type="date" [min]="now" formControlName="start_date"
+                [className]="(isSubmitted && FC.start_date.invalid)?'error':''">
+            </div>
+          </div>
+          <div class="input-all">
+            <div class="label">
+              Priority
+            </div>
+            <div class="input">
+              <select formControlName="priority" [className]="(isSubmitted && FC.priority.invalid)?'error':''">
+                <option value="" selected>Select Priority</option>
+                <option value="3">High</option>
+                <option value="2">Medium</option>
+                <option value="1">low</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="div2">
+        <app-title sub_title="Budger (₹)"></app-title>
+        <div class="input">
+          <input type="text" formControlName="budget" [className]="(isSubmitted && FC.budget.invalid)?'error':''">
+        </div>
+      </div>
+      <div class="div3">
+        <div class="div30">
+          <app-title sub_title="Team Member"></app-title>
+          <div class="search">
+            <input type="text" (change)="searchTeam()" placeholder="Search a Staff" [(ngModel)]="search"
+              [ngModelOptions]="{ standalone: true }">
+          </div>
+        </div>
+        <div class="div31">
+          <div *ngFor="let member of teamX">
+            <label class="lable1">
+              <input type="checkbox" [value]="member.id" (change)="onCheckboxChange($event, member)" [checked]="selectedMembers.value.includes(member.id)" >
+              <div class="check">
+                <div class="profile">
+                  <img [src]="member.profile?member.profile:'./assets/images/profile_pic.png'" alt="" srcset="">
+                </div>
+                <div class="detail">
+                  <h3>{{member.name}}</h3>
+                  <p>{{member.position?member.position:member.role}}</p>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="div4">
+        <app-title sub_title="Tags">
+
+        </app-title>
+        <div class="input">
+          <input type="text" [(ngModel)]="newTag" placeholder="Add a tag" (keyup.enter)="addTag()" [ngModelOptions]="{ standalone: true }">
+          <button type="button" (click)="addTag()" class="add">+</button>
+        </div>
+        <div class="tag-list">
+          <span *ngFor="let tag of tags.controls; let i = index" class="tag-chip">
+            {{ tag.value }}
+            <button type="button" (click)="removeTag(i)" class="remove">X</button>
+          </span>
+        </div>
+      </div>
+      <div class="div5">
+        <input type="button" value="Cancel" class="button cancel">
+        <input type="submit" value="Submit" class="button submit">
+      </div>
+    </form>
+  </div>
+
+
+</div>

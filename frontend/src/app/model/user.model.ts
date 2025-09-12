@@ -7,5 +7,7 @@ dob!:string;
 contact!:string;
 role!:string;
 is_login!:boolean;
+profile!:string;
+position!:string;
 token!:string;
 }

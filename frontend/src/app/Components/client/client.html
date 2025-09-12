@@ -94,11 +94,11 @@
           <div class="div30">
             <mat-icon>visibility
 </mat-icon>
-            <mat-icon>edit</mat-icon>
+            <mat-icon (click)="edit(x)">edit</mat-icon>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<app-add-client [display]='display'></app-add-client>
+<app-add-client [display]='display' [type]="type" [clientInfo]="editClient"></app-add-client>

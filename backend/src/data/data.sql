@@ -27,6 +27,8 @@ CREATE TABLE IF NOT EXISTS Staff (
     contact VARCHAR(15),
     role staff_type,
     is_login BOOLEAN DEFAULT FALSE,
+    profile TEXT,
+    position TEXT,
     login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -55,15 +57,22 @@ CREATE TABLE IF NOT EXISTS client (
 CREATE TABLE IF NOT EXISTS project (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     project_name TEXT NOT NULL,
+    description TEXT,
     client_id UUID,
+    manager_id UUID,
     start_date DATE,
     status project_type,
-    level_complete NUMERIC,
-    no_task NUMERIC,
-    completed_task NUMERIC,
+    priority NUMERIC DEFAULT 0,
+    budget NUMERIC,
+    team_member UUID[],
+    tags TEXT[] DEFAULT '{}'::TEXT[],
+    level_complete NUMERIC DEFAULT 0,
+    no_task NUMERIC DEFAULT 0,
+    completed_task NUMERIC DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (client_id) REFERENCES client(id)
+    FOREIGN KEY (client_id) REFERENCES client(id),
+    FOREIGN KEY (manager_id) REFERENCES staff(id)
 );
 
 CREATE TABLE IF NOT EXISTS task (
@@ -139,12 +148,12 @@ EXECUTE FUNCTION set_updated_at();
 --         role
 --     )
 -- VALUES (
---         'infant',
---         'infant0467@gmail.com',
+--         'ram',
+--         'ram7@gmail.com',
 --         '1234',
---         '2004-01-15',
---         '9342199741',
---         'admin'
+--         '2014-11-12',
+--         '9342198941',
+--         'staff'
 --     );
 
 -- -- Drop Tables
@@ -152,10 +161,10 @@ EXECUTE FUNCTION set_updated_at();
 -- -- DROP TABLE staff;
 -- Drop TABLE staff;
 
--- DROP TABLE timeSheet;
--- DROP TABLE task;
--- DROP TABLE project;
+DROP TABLE timeSheet;
+DROP TABLE task;
+DROP TABLE project;
 -- Drop TABLE client;
 
--- ALTER TABLE client ADD COLUMN contactPerson TEXT; 
+-- ALTER TABLE staff ADD COLUMN position TEXT; 
 -- ALTER TABLE staff RENAME COLUMN isLogin to is_login; 

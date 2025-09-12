@@ -7,27 +7,27 @@
       </div>
     </div>
     <div class="div1" *ngIf="user.email">
-    <div class="notification">
-      <mat-icon>notifications</mat-icon>
-      <span>1</span>
-    </div>
-    <hr>
-    <div class="profile">
-      <div class="pic">
-        <img src="./assets/images/profile_pic.png" alt="">
+      <div class="notification">
+        <mat-icon>notifications</mat-icon>
+        <span>1</span>
       </div>
-      <div class="detail">
+      <hr>
+      <div class="profile">
+        <div class="pic">
+          <img src="./assets/images/profile_pic.png" alt="">
+        </div>
+        <div class="detail">
           <p class="p1">
-           {{user.name}}
+            {{user.name}}
           </p>
           <p class="p2">
             {{user.role}}
           </p>
         </div>
-    </div>
-    <div class="logout">
-      <mat-icon (click)="logout()">logout</mat-icon>
-    </div>
+      </div>
+      <div class="logout">
+        <mat-icon (click)="logout()">logout</mat-icon>
+      </div>
     </div>
   </div>
 </div>
