@@ -1,0 +1,116 @@
+.container {
+  width: 100%;
+        margin: auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .back{
+      margin-top: .4em;
+      cursor: pointer;
+    }
+    .part1{
+      display: flex;
+      padding: 1rem;
+    }
+    .sub{
+      display: flex;
+      margin-left: 1rem;
+    }
+    .sub>mat-icon{
+      width: 2rem;
+      height: 2rem;
+      font-size: 2rem;
+    }
+    .sub>h2{
+      padding-top: .2rem;
+      font-size: 1.5rem;
+      margin-left: .5rem;
+      text-transform: capitalize;
+    }
+    .tag{
+      padding: .2rem .5rem;
+      background-color: #3b72f39f;
+      color: #002792;
+      border: 1px solid #002792;
+      margin-top: .5rem;
+      margin-left: 2.2rem;
+    }
+    .status_main{
+      padding-left:1rem ;
+    }
+    .status {
+      font-size: 1.2rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+
+    }
+    .active{
+       background: #d4f7d4;
+      color: #1a7e1a;
+    }
+    .inactive{
+      background: #f7d4d4;
+      color: #7e1a1a;
+    }
+    .actions button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+    .edit { background: #e9ecef; }
+    .delete { background: #e74c3c; color: white; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .section h4 {
+      margin-bottom: 10px;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .progress {
+      background: #eee;
+      border-radius: 8px;
+      height: 8px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .progress .bar {
+      height: 100%;
+      background: #3498db;
+      width: 30%;
+    }
+    .tag {
+      background: #eef3ff;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 12px;
+    }

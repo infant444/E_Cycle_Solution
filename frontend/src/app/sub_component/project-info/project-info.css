@@ -1,0 +1,54 @@
+
+.min-dashboard{
+  width: 100%;
+  padding: .3rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.div1{
+  width: 100%;
+  display: flex;
+  border-radius: .5rem;
+  box-shadow: 0px 0px 10px 2px lightgray;
+  background-color: #fff;
+  padding: 1.4rem .5rem;
+  justify-content: space-around;
+}
+
+.div2{
+  width: 15rem;
+  height: 7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tit>p{
+  color: gray;
+  text-transform: capitalize;
+}
+.tit>h4{
+  font-size: 1.4rem;
+  padding-left: .1rem;
+}
+.icon{
+  padding: .4rem;
+  border-radius: .4rem;
+}
+.blue{
+  background-color: rgba(173, 216, 230, 0.53);
+  color: rgb(0, 106, 255);
+
+}
+.green{
+  background-color: rgba(173, 230, 192, 0.53);
+  color: rgb(0, 255, 102);
+}
+.orange{
+  background-color: rgba(236, 210, 143, 0.53);
+  color: rgb(255, 162, 0);
+}
+.red{
+  background-color: rgba(230, 173, 173, 0.53);
+  color: rgb(255, 51, 0);
+}

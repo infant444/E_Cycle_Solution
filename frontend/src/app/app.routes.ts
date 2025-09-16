@@ -9,12 +9,12 @@ export const routes: Routes = [
   {
     path: "",
     component: Home,
-    canActivate:[AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: "admin",
     component: Dashboard,
-    canActivate:[AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: "login",
@@ -23,34 +23,60 @@ export const routes: Routes = [
   {
     path: "inventory",
     loadComponent: () => import("./Components/inventory/inventory").then(m => m.Inventory),
-    canActivate:[AuthGuard]
+    canActivate: [AuthGuard]
 
+  },
+
+  {
+    path: "client",
+    children: [
+      {
+        path: '',
+        loadComponent: () => import("./Components/client/client").then(m => m.Client),
+      },
+      {
+        path:'view/:clientId',
+        loadComponent:()=>import("./Components/view-client/view-client.component").then(m=>m.ViewClientComponent),
+      }
+    ],
+        canActivate: [AuthGuard]
+
+  },
+  {
+    path: "project",
+    children: [
+      {
+        path: '',
+        loadComponent: () => import("./Components/project/project").then(m => m.Project),
+        canActivate: [AuthGuard]
+      }, {
+        path: "view/:projectid",
+        loadComponent: () => import("./Components/view-project/view-project.component").then(m => m.ViewProjectComponent),
+        canActivate: [AuthGuard]
+      },
+    ]
   },
   {
     path: "time-sheet",
-    loadComponent: () => import("./Components/time-sheet/time-sheet").then(m => m.TimeSheet,),
-    canActivate:[AuthGuard]
-  },
-  {
-    path:"client",
-    loadComponent:()=>import("./Components/client/client").then(m=>m.Client),
-    canActivate:[AuthGuard]
-  },
-  {
-     path:"project",
-    loadComponent:()=>import("./Components/project/project").then(m=>m.Project),
-    canActivate:[AuthGuard]
-  },
-  {
-    path: "time-sheet/weak-view",
-    loadComponent: () => import("./Components/time-sheet-week-view/time-sheet-week-view").then(m => m.TimeSheetWeekView),
-    canActivate:[AuthGuard]
+    children: [
+      {
+        path: '',
+        loadComponent: () => import("./Components/time-sheet/time-sheet").then(m => m.TimeSheet,),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "weak-view",
+        loadComponent: () => import("./Components/time-sheet-week-view/time-sheet-week-view").then(m => m.TimeSheetWeekView),
+        canActivate: [AuthGuard]
 
-  },
-  {
-    path: "time-sheet/report",
-    loadComponent: () => import("./Components/time-report/time-report").then(m => m.TimeReport),
-    canActivate:[AuthGuard]
+      },
+      {
+        path: "report",
+        loadComponent: () => import("./Components/time-report/time-report").then(m => m.TimeReport),
+        canActivate: [AuthGuard]
+
+      },
+    ]
 
   },
 

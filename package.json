@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cd backend/built && node server.js",
     "prebuild": "cd backend && npm run build",
-    "build":"cd frontend && npm run build"
+    "build": "cd frontend && npm run build"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/infant444/E_Cycle_Solution#readme",
   "dependencies": {
+    "lucide-angular": "^0.544.0",
     "npm": "^11.4.2"
   },
-  "devDependencies": {},
   "description": ""
 }

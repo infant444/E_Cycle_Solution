@@ -1,16 +1,26 @@
 <div class="container">
   <div class="content">
     <div class="nav" *ngIf="true">
-     <a routerLink="/admin" routerLinkActive="active"  class="link"><mat-icon>dashboard</mat-icon><span *ngIf="show">DashBoard</span> </a>
-     <a routerLink="/inventory" routerLinkActive="active"  class="link"><mat-icon>inventory</mat-icon><span *ngIf="show">Inventory</span> </a>
-     <a routerLink="/client" routerLinkActive="active"  class="link"><mat-icon>person</mat-icon><span *ngIf="show">Client</span> </a>
-     <a routerLink="/project" routerLinkActive="active"  class="link"><mat-icon>build</mat-icon><span *ngIf="show">Project</span> </a>
-     <a routerLink="/task" routerLinkActive="active"  class="link"><mat-icon>task_alt</mat-icon><span *ngIf="show">Task</span> </a>
-     <a routerLink="/time-sheet" routerLinkActive="active"  class="link"><mat-icon>access_time</mat-icon><span *ngIf="show">Time sheet</span> </a>
-     <a routerLink="/report" routerLinkActive="active"  class="link"><mat-icon>description</mat-icon><span *ngIf="show">Report</span> </a>
-     <a routerLink="/meeting" routerLinkActive="active"  class="link"><mat-icon>event</mat-icon><span *ngIf="show">Meeting</span> </a>
-     <a routerLink="/employee" routerLinkActive="active"  class="link"><mat-icon>groups</mat-icon><span *ngIf="show">Employees</span> </a>
+      <a [routerLink]="user.role=='admin'?'/admin':'/user'" routerLinkActive="active"
+        class="link"><mat-icon>dashboard</mat-icon><span *ngIf="show">DashBoard</span> </a>
+      <a routerLink="/inventory" routerLinkActive="active" class="link"><lucide-angular [img]="package"
+          class="my-icon"></lucide-angular><span *ngIf="show">Inventory</span> </a>
+      <a *ngIf="user.role=='admin'" routerLink="/client" routerLinkActive="active"
+        class="link"><mat-icon>person</mat-icon><span *ngIf="show">Client</span> </a>
+      <a [routerLink]="user.role=='admin'?'/project':'/myProject'" routerLinkActive="active"
+        class="link"><lucide-angular [img]="FolderOpen" class="my-icon"></lucide-angular><span
+          *ngIf="show">{{user.role=='admin'?'Project':'My Project'}}</span> </a>
+      <a [routerLink]="user.role=='admin'?'/task':'/myTask'" routerLinkActive="active"
+        class="link"><mat-icon>task_alt</mat-icon><span *ngIf="show">{{user.role=='admin'?'Task':'My Task'}}</span> </a>
+      <a [routerLink]="user.role=='admin'?'/time-sheet':'/my-time-sheet'" routerLinkActive="active"
+        class="link"><mat-icon>access_time</mat-icon><span *ngIf="show">{{user.role=='admin'?'Time sheet':'My Time Sheet'}}</span> </a>
+      <a *ngIf="user.role=='admin'" routerLink="/report" routerLinkActive="active"
+        class="link"><mat-icon>description</mat-icon><span *ngIf="show">Report</span> </a>
+      <a [routerLink]="user.role=='admin'?'/meeting':'/myMeeting'" routerLinkActive="active"
+        class="link"><mat-icon>event</mat-icon><span *ngIf="show">Meeting</span> </a>
+      <a *ngIf="user.role=='admin'" routerLink="/employee" routerLinkActive="active"
+        class="link"><mat-icon>groups</mat-icon><span *ngIf="show">Employees</span> </a>
     </div>
 
-     </div>
+  </div>
 </div>

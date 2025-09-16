@@ -64,7 +64,7 @@ form>p{
   justify-content: space-around;
   position: relative;
 }
-.div2{
+/* .div2{
   width: 300px;
   height: 400px;
   overflow: hidden;
@@ -161,4 +161,153 @@ color: rgba(0, 255, 68);
 .div30>mat-icon{
   margin: 0 .5rem;
   cursor: pointer;
+} */
+.div2 {
+  width: 350px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 16px;
+  margin: 15px auto;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+.div21 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.div22 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.div23 mat-icon {
+  font-size: 28px;
+  margin-right: 8px;
+
+}
+
+.div22 h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.div22>mat-icon {
+  cursor: pointer;
+    position: absolute;
+  top :1rem;
+  right :.5rem;
+}
+.nav{
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 102%;
+  top: 6px;
+  background-color: white;
+  box-shadow: 0px 0px 10px 1px rgb(142, 142, 142);
+  border-radius: 1rem;
+}
+.nav>ul{
+  margin: 1rem;
+}
+.nav>ul>li{
+  margin: .5rem 0rem;
+  padding: .5rem .2rem;
+  cursor: pointer;
+}
+.delete{
+  color: red;
+}
+.nav>ul>li:hover{
+  transform: scale(1.1);
+}
+.div24{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+.div24 span {
+  background: #e3e9ff;
+  color: #3b57f0;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  margin-top: 8px;
+
+  display: inline-block;
+}
+
+.div25 {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.div25 mat-icon {
+  font-size: 18px;
+  margin-right: 8px;
+  color: #666;
+}
+
+.div25 a {
+  color: #3b57f0;
+  text-decoration: none;
+}
+
+.div26 {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.div27 {
+  text-align: center;
+}
+
+.div27 h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #000;
+}
+
+.div28 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.div29 {
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.div29.active {
+  background: #d4f7dc;
+  color: #0a8a2a;
+}
+
+.div29.inactive {
+  background: #fddede;
+  color: #a12323;
+}
+
+.div30 mat-icon {
+  margin-left: 8px;
+  cursor: pointer;
+  color: #444;
 }

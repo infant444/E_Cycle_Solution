@@ -68,4 +68,15 @@ rout.put("/update/:clientId", asyncHandler(
     }
 ))
 
+rout.delete("/delete/:id",asyncHandler(
+    async(req,res,next:NextFunction)=>{
+        try{
+            const result=await pool.query("delete from client where id=$1 RETURNING *",[req.params.id,]);
+            res.json(result);
+        }catch(err){
+            next(err);
+        }
+    }
+))
+
 export default rout;

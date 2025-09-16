@@ -9,6 +9,9 @@ import { ClientModel } from '../../model/client.model';
 import { ProjectModel } from '../../model/project.model';
 import { User } from '../../model/user.model';
 import { UserServices } from '../../Services/user/user';
+import { ProjectServices } from '../../Services/project/project.services';
+import { error } from 'console';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-project',
@@ -26,7 +29,6 @@ export class AddProject implements OnInit, OnChanges {
 
   @Input()
   Project!: ProjectModel;
-
   clientData?: ClientModel[];
   projectForm!: FormGroup;
   user?: User[];
@@ -39,7 +41,14 @@ export class AddProject implements OnInit, OnChanges {
   search: string = "";
   newTag: string = '';
 
-  constructor(private project: Project, private formBuilder: FormBuilder, private clientServices: ClientServices, private userServices: UserServices) { }
+  constructor(private project: Project,
+    private formBuilder: FormBuilder,
+     private clientServices: ClientServices,
+     private userServices: UserServices,
+     private projectServices:ProjectServices,
+     private toastServices:ToastrService
+
+  ) { }
 
   ngOnInit(): void {
     this.clientServices.getAllClient().subscribe((res) => {
@@ -49,6 +58,7 @@ export class AddProject implements OnInit, OnChanges {
       this.user = res;
       this.team = this.user.filter(s => s.role == 'staff');
       this.teamX = this.team;
+      console.log(this.teamX)
       this.manager = this.user.filter(s => s.role == 'admin');
     })
     this.projectForm = this.formBuilder.group({
@@ -56,7 +66,7 @@ export class AddProject implements OnInit, OnChanges {
       description: ["", Validators.required],
       client: ["", Validators.required],
       manager: ["", Validators.required],
-      start_date: ["", Validators.required],
+      due_date: ["", Validators.required],
       priority: [""],
       budget: [0, Validators.required],
       team: this.formBuilder.array([]),
@@ -111,7 +121,7 @@ export class AddProject implements OnInit, OnChanges {
     this.FC.description.setValue(this.Project?.description || '');
     this.FC.client.setValue(this.Project?.client_id || "");
     this.FC.manager.setValue(this.Project?.manager_id || "");
-    this.FC.start_date.setValue(this.Project?.start_date || "");
+    this.FC.due_date.setValue(this.Project?.due_date || "");
     this.FC.budget.setValue(this.Project.budget || "");
     this.FC.priority.setValue(this.Project.priority || "");
     (this.Project.team_member || []).forEach((member: any) => {
@@ -134,17 +144,37 @@ export class AddProject implements OnInit, OnChanges {
       description: fv.description,
       manager_id: fv.manager,
       client_id: fv.client,
-      start_date: fv.start_date,
+      due_date: fv.due_date,
       status: '',
       priority: parseInt(fv.priority),
       budget: fv.budget,
       level_complete: 0,
-      noTask: 0,
+      no_task: 0,
       completed_task: 0,
       tags:fv.tag,
       team_member:fv.team
     }
-    console.log(pro)
+    if(this.type=='edit'){
+      this.projectServices.updateProject(this.Project.id,pro).subscribe(
+         (res)=>{
+        this.toastServices.success("Successfully Updated");
+               this.project.dis();
+      },(error)=>{
+        this.toastServices.error(error.message)
+      }
+      )
+    }
+    else{
+    this.projectServices.addProject(pro).subscribe(
+      (res)=>{
+        this.toastServices.success("Successfully add");
+        this.project.dis();
+      },(error)=>{
+        this.toastServices.error(error.message)
+      }
+    )
+    }
+
   }
   searchTeam() {
     if (this.search.length >= 2) {

@@ -4,13 +4,13 @@ export class ProjectModel{
   description!:string;
   manager_id!:string;
   client_id!:string;
-  start_date!:string;
+  due_date!:string;
   status!:string;
   priority!:number;
   budget!:number;
   team_member?:string[];
   tags?:string[];
   level_complete!:number;
-  noTask!:number;
+  no_task!:number;
   completed_task!:number;
 }

@@ -6,6 +6,66 @@
         <button class="btn" (click)="dis()">Add</button>
       </div>
     </div>
+    <app-project-info [total_project]="total_project" [my_project]="manged_project" [value]="value_project"></app-project-info>
+    <div class="filter" style="margin-bottom: .5rem;">
+      <form>
+        <input type="text" [(ngModel)]="name" placeholder="Search" [ngModelOptions]="{ standalone: true }"
+          class="search" (change)="search()">
+        <div class="div1">
+          <p> <span class="icon"><mat-icon style="padding-top:.4rem ;">filter_list</mat-icon></span><span
+              class="text">Filter</span></p>
+          <select [(ngModel)]="active" [ngModelOptions]="{ standalone: true }" (change)="activeChange()">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="processed">Processed</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+      </form>
+    </div>
+        <div class="client-info" *ngIf="!projects?.length">
+      <app-not-found></app-not-found>
+    </div>
+    <div class="projects" *ngIf="projects?.length">
+      <div class="card" *ngFor="let i of projects">
+  <div class="card-header">
+    <h2>{{i.project_name}}</h2>
+    <span class="priority high" *ngIf="i.priority==3">high</span>
+    <span class="priority middle" *ngIf="i.priority==2">medium</span>
+    <span class="priority low" *ngIf="i.priority==1">low</span>
+  </div>
+  <p class="description">
+{{i.description}}
+  </p>
+
+  <ul class="details">
+    <li><span class="icon">👥</span> Client: {{getClient(i.client_id)}}</li>
+    <li><span class="icon">📅</span> Due {{i.due_date|date:'dd-MM-yyyy'}} <span class="warning" >⚠️</span></li>
+    <li><span class="icon">👤</span> Manager: {{getUser(i.manager_id)}}</li>
+    <li><span class="icon">🎯</span> Team: {{i.team_member?.length}} members</li>
+    <li><span class="icon">💲</span> Budget: {{i.budget|currency:'INR'}}</li>
+  </ul>
+
+  <div class="progress">
+    <div class="progress-bar" style.width="{{i.level_complete}}%"></div>
+  </div>
+  <div class="progress-info">
+    <span>Progress <b>{{i.completed_task}}%</b></span>
+    <span>Tasks: {{i.completed_task}}/{{i.no_task}} &nbsp;</span>
+  </div>
+  <div class="div28">
+          <div class="div29" [ngClass]="i.status">
+            {{i.status}}
+          </div>
+          <div class="div30">
+            <mat-icon>visibility
+</mat-icon>
+            <mat-icon (click)="edit(i)">edit</mat-icon>
+          </div>
+        </div>
+</div>
+    </div>
   </div>
 </div>
-<app-add-project [display]='display'></app-add-project>
+<app-add-project [display]='display' [type]="type" [Project]="editProject"></app-add-project>

@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="content">
+    <div class="header">
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div>
+
+        <div class="part1">
+          <div class="back">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </div>
+         <div class="title">
+          <div class="sub">
+ <mat-icon>{{client.type=="Individual"?'person':'apartment'}}</mat-icon>
+          <h2>{{client.name}}</h2>
+         </div>
+        <span class="tag">{{client.type}}</span>
+
+         </div>
+        </div>
+      </div>
+      <div>
+
+        <div class="actions">
+          <button class="edit">Edit</button>
+          <button class="delete">Delete</button>
+        </div>
+      </div>
+    </div>
+    <div class="status_main">
+      <span class="status" [ngClass]="client.is_current_project?'active':'inactive'">{{client.is_current_project?'Active':'Inactive'}}</span>
+
+    </div>
+    <!-- Stats Cards -->
+    <div class="cards">
+      <div class="card">
+        <h3>6</h3>
+        <p>Total Collections</p>
+      </div>
+      <div class="card">
+        <h3>$12,000</h3>
+        <p>Total Value</p>
+      </div>
+      <div class="card">
+        <h3>1</h3>
+        <p>Inventory Items</p>
+      </div>
+      <div class="card">
+        <h3>1</h3>
+        <p>Scheduled</p>
+      </div>
+    </div>
+
+    <!-- Contact + Preferences -->
+    <div class="two-col">
+      <div class="section">
+        <h4>Contact Information</h4>
+        <p><b>Email:</b> procurement.gmail.gov</p>
+        <p><b>Phone:</b> (555) 456-7890</p>
+        <p><b>Contact Person:</b> Michael Brown</p>
+        <p><b>Member Since:</b> 11/20/2023</p>
+      </div>
+      <div class="section">
+        <h4>Preferences</h4>
+        <p><b>Pickup Time:</b> Morning (8-11 AM)</p>
+        <p><b>Last Collection:</b> 2024-01-16</p>
+      </div>
+    </div>
+
+    <!-- Address + Instructions -->
+    <div class="two-col">
+      <div class="section">
+        <h4>Address</h4>
+        <p>789 Government Plaza<br>Springfield, IL 62701</p>
+      </div>
+      <div class="section">
+        <h4>Special Instructions</h4>
+        <p>Security clearance required, contact 24h in advance</p>
+      </div>
+    </div>
+
+    <!-- Recent Collections + Summary -->
+    <div class="two-col">
+      <div class="section">
+        <h4>Recent Collections</h4>
+        <p>Collection #col-3 (2024-01-20) <span class="tag">scheduled</span></p>
+      </div>
+      <div class="section">
+        <h4>Collection Summary</h4>
+        <p>Completed: 0</p>
+        <div class="progress"><div class="bar" style="width:0%"></div></div>
+        <p>Scheduled: 1</p>
+        <div class="progress"><div class="bar" style="width:40%"></div></div>
+        <p><b>Total Value Generated: $12,000</b></p>
+      </div>
+    </div>
+
+    <!-- Inventory -->
+    <div class="section">
+      <h4>Inventory Items</h4>
+      <p>Samsung Galaxy Tab S7 • Qty: 2 <span class="tag">received</span> — $150</p>
+    </div>
+  </div>
+    </div>
+  </div>
+</div>

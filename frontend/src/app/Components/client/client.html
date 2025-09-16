@@ -39,14 +39,20 @@
     <div class="client-info" *ngIf="clients?.length">
 
 
-      <div class="div2" *ngFor="let x of clients" >
+      <div class="div2" *ngFor="let x of clients;let i=index" >
         <div class="div21">
           <div class="div22">
             <div class="div23">
               <mat-icon>{{x.type=="Individual"?'person':'apartment'}}</mat-icon>
             </div>
             <h3>{{x.name}}</h3>
-            <mat-icon>more_vert</mat-icon>
+            <mat-icon (click)="show(i)">more_vert</mat-icon>
+            <div class="nav" *ngIf="isshow && showValue==i">
+              <ul>
+                <li class="option delete" (click)="delete(x.id)">Delete</li>
+                <li class="option" (click)="edit(x)">Update</li>
+              </ul>
+            </div>
           </div>
           <div class="div24">
            <span> {{x.type}}</span>
@@ -92,8 +98,8 @@
             {{x.is_current_project ? 'Active' : 'Inactive'}}
           </div>
           <div class="div30">
-            <mat-icon>visibility
-</mat-icon>
+           <a routerLink="/client/view/{{x.id}}"> <mat-icon>visibility
+</mat-icon></a>
             <mat-icon (click)="edit(x)">edit</mat-icon>
           </div>
         </div>

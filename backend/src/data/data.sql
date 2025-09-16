@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS project (
     description TEXT,
     client_id UUID,
     manager_id UUID,
-    start_date DATE,
+    due_date DATE,
     status project_type,
     priority NUMERIC DEFAULT 0,
     budget NUMERIC,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS project (
     completed_task NUMERIC DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (client_id) REFERENCES client(id),
+    FOREIGN KEY (client_id) REFERENCES client(id) ON DELETE CASCADE,
     FOREIGN KEY (manager_id) REFERENCES staff(id)
 );
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS task (
     due DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (project) REFERENCES project(id),
+    FOREIGN KEY (project) REFERENCES project(id) ON DELETE CASCADE,
     FOREIGN KEY (staff) REFERENCES staff(id)
 );
 
@@ -105,9 +105,9 @@ CREATE TABLE IF NOT EXISTS timesheet (
     total_hours NUMERIC DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (project) REFERENCES project(id),
-    FOREIGN KEY (staff) REFERENCES staff(id),
-    FOREIGN KEY (task) REFERENCES task(id)
+    FOREIGN KEY (project) REFERENCES project(id) ON DELETE CASCADE,
+    FOREIGN KEY (staff) REFERENCES staff(id) ON DELETE CASCADE,
+    FOREIGN KEY (task) REFERENCES task(id) ON DELETE CASCADE
 );
 
 
@@ -167,4 +167,4 @@ DROP TABLE project;
 -- Drop TABLE client;
 
 -- ALTER TABLE staff ADD COLUMN position TEXT; 
--- ALTER TABLE staff RENAME COLUMN isLogin to is_login; 
+-- ALTER TABLE project RENAME COLUMN start_date to due_date; 

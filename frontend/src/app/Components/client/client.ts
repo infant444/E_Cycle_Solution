@@ -9,10 +9,11 @@ import { ClientModel } from '../../model/client.model';
 import { AddClient } from "../../sub_component/add-client/add-client";
 import { ClientServices } from '../../Services/client/client';
 import { NotFound } from "../../sub_component/not-found/not-found";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-client',
-  imports: [Title, MatIconModule, CommonModule, FormsModule, ClientInfo, AddClient, CurrencyPipe, NotFound],
+  imports: [CommonModule, Title, MatIconModule, FormsModule, ClientInfo, AddClient, CurrencyPipe, NotFound, RouterModule],
   templateUrl: './client.html',
   styleUrl: './client.css'
 })
@@ -29,6 +30,9 @@ export class Client implements OnInit {
   clients?: ClientModel[] = [];
   sample?: ClientModel[] = [];
   editClient!:ClientModel;
+  isshow=false;
+  showValue!:number;
+
   constructor(private clientServices: ClientServices, private cd: ChangeDetectorRef) {
 
   }
@@ -104,6 +108,19 @@ export class Client implements OnInit {
       this.clients = res;
       console.log(this.clients);
       this.cd.detectChanges();
+    })
+  }
+  show(i:number){
+    if(this.showValue==i){
+    this.isshow=!this.isshow;
+    }else{
+      this.isshow=true;
+    }
+    this.showValue=i;
+  }
+  delete(id:string){
+    this.clientServices.deleteClientById(id).subscribe(_=>{
+      this.reAssign();
     })
   }
 }

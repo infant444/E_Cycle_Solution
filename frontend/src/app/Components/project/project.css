@@ -32,10 +32,156 @@ margin: .5rem;
   margin: 0 .5rem;
   cursor: pointer;
 }
+
 form{
   width: 100%;
   padding: .5rem 1.5rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+input,select{
+  margin: 0 .5rem;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+.div1{
+  display: flex;
+}
+.icon{
+margin-top: .4rem;
+}
+
+form>p{
+  display: flex;
+  text-transform: capitalize;
+}
+.search{
+  width: 25rem;
+}
+.client-info{
+  width: 100%;
+  margin: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  position: relative;
+}.projects{
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  padding: 20px;
+  margin: 1rem;
+  width: 340px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.card-header h2 {
+  font-size: 18px;
+  margin: 0;
+  color: #222;
+}
+
+.priority {
+
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+.high{
+    background: #ffe5e5;
+  color: #c00;
+}
+.middle,.pending,.processed{
+    background: #fffae5;
+  color: rgb(204, 156, 0);
+}
+.low,.accepted,.completed{
+    background: #eaffe5;
+  color: rgb(3, 204, 0);
+}
+.description {
+  font-size: 14px;
+  color: #555;
+  margin: 10px 0 15px;
+  overflow-wrap: break-word;
+}
+
+.details {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.details li {
+  margin: .5rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.details .icon {
+  margin-right: 6px;
+  font-size: 15px;
+}
+
+.warning {
+  color: red;
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+.progress {
+  background: #eee;
+  border-radius: 6px;
+  height: 8px;
+  margin-top: .5rem;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: #28a745;
+  height: 100%;
+  border-radius: 6px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #444;
+}
+
+.div28 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.div29 {
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.div30 mat-icon {
+  margin-left: 8px;
+  cursor: pointer;
+  color: #444;
 }
