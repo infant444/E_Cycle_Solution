@@ -47,5 +47,24 @@ rout.get("/getAll",asyncHandler(
     }
 ))
 
+rout.post("/get-data/project-member", asyncHandler(
+    async (req, res,next:NextFunction) => {
+        try{
+  const { ids } = req.body;
+  const placeholders = ids.map((_: any, i:any) => `$${i + 1}`).join(',');
+  const query = `SELECT * FROM staff WHERE id IN (${placeholders})`;
+  const result = await pool.query(query, ids);
+  res.json(result.rows);
+        }catch(e){
+            next(e)
+        }
+}));
+
+rout.get("/getById/:id",asyncHandler(
+    async(req,res,next:NextFunction)=>{
+        const result=await pool.query("SELECT * FROM staff WHERE id=$1",[req.params.id,]);
+        res.json(result.rows[0])
+    }
+))
 
 export default rout;

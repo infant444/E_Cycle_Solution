@@ -35,11 +35,15 @@ export const routes: Routes = [
         loadComponent: () => import("./Components/client/client").then(m => m.Client),
       },
       {
-        path:'view/:clientId',
-        loadComponent:()=>import("./Components/view-client/view-client.component").then(m=>m.ViewClientComponent),
+        path: 'edit/:id',
+        loadComponent: () => import("./Components/client/client").then(m => m.Client),
+      },
+      {
+        path: 'view/:clientId',
+        loadComponent: () => import("./Components/view-client/view-client.component").then(m => m.ViewClientComponent),
       }
     ],
-        canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
 
   },
   {
@@ -54,6 +58,39 @@ export const routes: Routes = [
         loadComponent: () => import("./Components/view-project/view-project.component").then(m => m.ViewProjectComponent),
         canActivate: [AuthGuard]
       },
+      {
+        path: 'edit/:projectid',
+        loadComponent: () => import("./Components/project/project").then(m => m.Project),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "myProject",
+        loadComponent: () => import("./Components/my-project/my-project.component").then(m => m.MyProjectComponent),
+        canActivate: [AuthGuard]
+      }
+    ]
+  },
+  {
+    path: "task",
+    children: [
+      {
+        path: '',
+        loadComponent: () => import("./Components/task/task.component").then((m => m.TaskComponent)),
+        canActivate: [AuthGuard]
+      }, {
+        path: 'view/:taskId',
+        loadComponent: () => import("./Components/view-task/view-task.component").then((m => m.ViewTaskComponent)),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'edit/:taskId',
+        loadComponent: () => import("./Components/task/task.component").then((m => m.TaskComponent)),
+        canActivate: [AuthGuard]
+      }, {
+        path: 'myTask',
+        loadComponent: () => import("./Components/my-task/my-task.component").then(m => m.MyTaskComponent),
+        canActivate: [AuthGuard]
+      }
     ]
   },
   {

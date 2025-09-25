@@ -35,21 +35,21 @@ rout.post("/add", asyncHandler(
                         html: mail,
                     }
                     transporter.sendMail(message).then(() => {
-                        console.log("Successfully send to "+staff.rows[0].name)
+                        console.log("Successfully send to " + staff.rows[0].name)
                     })
                     staffX.push(staff.rows[0].name);
                 }
                 const managerMail = ProjectAssignedManager(manager.rows[0].name, project_name, client.rows[0].name, due_date, staffX);
-                 const mail = mailGenerator.generate(managerMail);
-                    let message = {
-                        from: '"RI planIt " <riplanit@gmail.com>',
-                        to: '<' + manager.rows[0].email + '>',
-                        subject: "Project Assignment Notification",
-                        html: mail,
-                    }
-                    transporter.sendMail(message).then(() => {
-                        console.log("Successfully send to "+manager.rows[0].name)
-                    })
+                const mail = mailGenerator.generate(managerMail);
+                let message = {
+                    from: '"RI planIt " <riplanit@gmail.com>',
+                    to: '<' + manager.rows[0].email + '>',
+                    subject: "Project Assignment Notification",
+                    html: mail,
+                }
+                transporter.sendMail(message).then(() => {
+                    console.log("Successfully send to " + manager.rows[0].name)
+                })
             }
 
             res.json(project.rows[0]);
@@ -79,6 +79,16 @@ rout.get("/get/:id", asyncHandler(
         }
     }
 ));
+rout.get("/get-by-client/:clientId", asyncHandler(
+    async (req, res, next: NextFunction) => {
+        try {
+            const project = await pool.query("select * from project where client_id=$1", [req.params.clientId]);
+            res.send(project.rows);
+        } catch (e) {
+            next(e);
+        }
+    }
+))
 rout.put("/update/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
@@ -115,7 +125,16 @@ rout.put("/update/:id", asyncHandler(
         }
     }
 ));
-
+rout.put("/update/status/:id",asyncHandler(
+    async(req,res,next:NextFunction)=>{
+        try{
+        const result= await pool.query("update project set status=$1 where id=$2 RETURNING *",[req.body.status,req.params.id])
+        res.json(result.rows[0]);
+        }catch(err){
+            next(err);
+        }
+    }
+))
 rout.delete("/delete/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
@@ -190,4 +209,27 @@ rout.put("/task/status/update/:taskId", asyncHandler(
         }
     }
 ));
+
+rout.delete("/task/delete/:id", asyncHandler(
+    async (req, res, next: NextFunction) => {
+        try {
+            const data = await pool.query("select * from task where id=$1", [req.params.id,]);
+            if (data.rowCount != null && data.rowCount > 0) {
+                const projectData = await pool.query("select * from project where id=$1;"[data.rows[0].project]);
+                if (projectData.rowCount != null && projectData.rowCount > 0) {
+                    const noTask = parseInt(projectData.rows[0].no_task) - 1;
+                    await pool.query("update project set no_task=$1 where id=$2", [noTask, data.rows[0].project])
+                    if (data.rows[0].status == 'completed') {
+                        const completedTask = parseInt(projectData.rows[0].completed_task) - 1;
+                        await pool.query("update project set completed_task=$1 where id=$2", [noTask, data.rows[0].project])
+                    }
+                    await pool.query("delete from task where id=$1", [req.params.id]);
+                }
+            }
+            res.json(data);
+        } catch (err) {
+            next(err);
+        }
+    }
+))
 export default rout;

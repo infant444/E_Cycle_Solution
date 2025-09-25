@@ -1,6 +1,7 @@
 .container {
   width: 100%;
         margin: auto;
+
     }
     .header {
       display: flex;
@@ -113,4 +114,14 @@
       padding: 3px 8px;
       border-radius: 10px;
       font-size: 12px;
+    }
+    .schedule{
+      margin: 1rem 1.8rem;
+      padding: .3rem .6rem;
+      border-radius: .5rem;
+      font-size: 1.2rem;
+      background-color: #8fff8f7b;
+      color: #1a7e1a;
+      border:none;
+      cursor: pointer;
     }

@@ -41,6 +41,7 @@ export class AddClient implements OnInit,OnChanges {
         address:[''],
         website:[''],
         person:[''],
+        special_info:[''],
     });
     if(this.type=='edit'){
       this.changeValue()
@@ -68,7 +69,7 @@ export class AddClient implements OnInit,OnChanges {
       this.FC.address.setValue(this.clientInfo?.address || '');
       this.FC.website.setValue(this.clientInfo?.website || '');
       this.FC.person.setValue(this.clientInfo?.contact_person || '');
-
+      this.FC.special_info.setValue(this.clientInfo.special_instruction||'');
   }
   submit(){
     this.isSubmitted=true;
@@ -91,7 +92,7 @@ export class AddClient implements OnInit,OnChanges {
       current_project: '',
       contact_person: Fx.type == 'Individual' ? '' : Fx.person,
       last_collection_date: '',
-      special_instruction: ''
+      special_instruction: Fx.special_info
     }
     console.log(sent)
     if(this.type=="edit"){

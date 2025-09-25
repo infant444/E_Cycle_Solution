@@ -1,1 +1,113 @@
-<p>view-project.component works!</p>
+<div class="project-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="add-back">
+      <div class="back">
+        <a routerLink="/project">
+            <mat-icon color="#000">keyboard_backspace</mat-icon>
+            </a>
+      </div>
+      <div>
+      <h1>Downtown E-Waste Initiative</h1>
+      <p class="subtitle">
+        Comprehensive e-waste collection and processing project for downtown district
+      </p>
+
+      <div class="tags">
+        <span *ngIf="project.level_complete<100" class="tag active">active</span>
+        <span *ngIf="project.level_complete==100" class="tag inactive">Inactive</span>
+        <span *ngIf="project.priority==3" class="tag high">high priority</span>
+        <span *ngIf="project.priority==2" class="tag medium">medium priority</span>
+        <span *ngIf="project.priority==1" class="tag low">low priority</span>
+        <!-- <span class="tag blue">collection</span> -->
+        <span class="tag indigo">{{project.status}}</span>
+        <!-- <span class="tag purple">urban</span> -->
+      </div>
+    </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" (click)="edit(project.id)">Edit</button>
+      <button class="btn danger" (click)="delete(project.id)">Delete</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="card">
+      <p>Progress</p>
+      <h2>{{project.level_complete||0}}%</h2>
+    </div>
+    <div class="card">
+      <p>Tasks</p>
+      <h2>{{project.completed_task}}/{{project.no_task}}</h2>
+    </div>
+    <div class="card">
+      <p>Budget</p>
+      <h2>{{project.budget|currency:'INR'}}</h2>
+    </div>
+    <div class="card">
+      <p>Days Left</p>
+      <h2 *ngIf="calculateDate(project.due_date)>0" class="">{{calculateDate(project.due_date)}} days</h2>
+      <h2 *ngIf="calculateDate(project.due_date)<=0" class="overdue">Overdue</h2>
+    </div>
+  </div>
+
+  <!-- Project Info -->
+  <div class="grid">
+    <div class="part1">
+    <div class="card col-2">
+      <h3>Project Information</h3>
+      <div class="grid">
+              <p class="info"><b>Project Name:&nbsp;</b><span>{{project.project_name}}</span></p>
+      <p class="info"><b>End Date:&nbsp;</b> {{ (project.due_date | date:'yyyy-MM-dd') }}</p>
+      </div>
+      <div class="grid">
+        <p class="info"><b>Client:&nbsp;</b><a [routerLink]="'/Client/view/'+projectClient.id">{{projectClient.name}}</a></p>
+      <p class="info"><b>Manager:&nbsp;</b> <a [routerLink]="'/staff/view/'+projectManager.id">{{projectManager.name}}</a></p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Project Tasks</h3>
+      <div class="task">
+        <p>Downtown E-Waste Collection</p>
+        <span class="status complete">completed</span>
+      </div>
+      <div class="task">
+        <p>Computer Equipment Processing</p>
+        <span class="status progress">in progress</span>
+      </div>
+    </div>
+    </div>
+<div class="part2">
+    <div class="card">
+      <h3>Team Members</h3>
+      <div class="member" *ngFor="let x of projectMember">
+        <img src="https://i.pravatar.cc/40?img=1" alt="Michael Chen" />
+        <div>
+          <p class="name"><b>{{x.name}}</b></p>
+          <p class="muted">{{x.position||'Na'}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Progress Overview</h3>
+      <p>Tasks Completed ({{project.completed_task}}/{{project.completed_task}})</p>
+      <div class="progress blue">
+      <div class="progress-bar" [style.width.%]="project.level_complete"></div>
+
+      </div>
+
+    </div>
+</div>
+
+  </div>
+
+  <div class="grid">
+
+  </div>
+
+  <!-- Tasks -->
+
+</div>

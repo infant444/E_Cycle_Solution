@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { USER_KEY } from '../../constant/localStorage.key';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { GET_ALL_STAFF, LOGIN } from '../../constant/url';
+import { GET_ALL_PROJECT_MEMBER, GET_ALL_STAFF, GET_By_ID_STAFF, LOGIN } from '../../constant/url';
 import { App } from '../../app';
 
 @Injectable({
@@ -48,6 +48,12 @@ export class UserServices {
   }
   getAll():Observable<User[]>{
     return this.http.get<User[]>(GET_ALL_STAFF);
+  }
+  getById(id:string):Observable<User>{
+    return this.http.get<User>(GET_By_ID_STAFF+id);
+  }
+  getProjectMemberId(x:string[]):Observable<User[]>{
+    return this.http.post<User[]>(GET_ALL_PROJECT_MEMBER,{ids:x})
   }
 
 logout() {

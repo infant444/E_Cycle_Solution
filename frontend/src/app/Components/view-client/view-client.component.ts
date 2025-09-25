@@ -1,31 +1,64 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClientServices } from '../../Services/client/client';
 import { ProjectServices } from '../../Services/project/project.services';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ClientModel } from '../../model/client.model';
 import { MatIconModule } from '@angular/material/icon';
+import { ProjectModel } from '../../model/project.model';
 
 @Component({
   selector: 'app-view-client',
-  imports: [CommonModule,RouterModule,MatIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule, ],
   templateUrl: './view-client.component.html',
   styleUrl: './view-client.component.css'
 })
 export class ViewClientComponent  implements OnInit{
-  client!:ClientModel
+  client!:ClientModel;
+  display='none';
+  projects?:ProjectModel[];
   constructor(
     private clientService:ClientServices,
     private projectServices:ProjectServices,
-    private activateRouter:ActivatedRoute
+    private activateRouter:ActivatedRoute,
+    private cd:ChangeDetectorRef,
+    private router:Router
   ){}
   ngOnInit(): void {
     this.activateRouter.params.subscribe((param)=>{
       if(param.clientId){
         this.clientService.getClientById(param.clientId).subscribe((res)=>{
           this.client=res;
+          this.getProjectInfo(res.id);
+          this.cd.markForCheck()
         })
       }
     })
+  }
+  reAssign(){
+     this.activateRouter.params.subscribe((param)=>{
+      if(param.clientId){
+        this.clientService.getClientById(param.clientId).subscribe((res)=>{
+          this.client=res;
+          this.cd.markForCheck()
+        })
+      }
+    })
+  }
+  edit(id:string){
+    this.router.navigateByUrl("/client/edit/"+id);
+  }
+  getProjectInfo(id:string){
+    this.projectServices.getProjectByClientId(id).subscribe((res)=>{
+      this.projects=res;
+      this.cd.markForCheck()
+    })
+  }
+    calculateDate(x:string){
+  const dueDate = new Date(x).getTime();   // convert to ms
+  const today = new Date().getTime();      // current time in ms
+  const diffMs = dueDate - today;          // difference in ms
+  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+  return diffDays;
   }
 }

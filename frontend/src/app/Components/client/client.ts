@@ -9,7 +9,7 @@ import { ClientModel } from '../../model/client.model';
 import { AddClient } from "../../sub_component/add-client/add-client";
 import { ClientServices } from '../../Services/client/client';
 import { NotFound } from "../../sub_component/not-found/not-found";
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-client',
@@ -29,14 +29,24 @@ export class Client implements OnInit {
   display = "none";
   clients?: ClientModel[] = [];
   sample?: ClientModel[] = [];
-  editClient!:ClientModel;
-  isshow=false;
-  showValue!:number;
+  editClient!: ClientModel;
+  isshow = false;
+  showValue!: number;
 
-  constructor(private clientServices: ClientServices, private cd: ChangeDetectorRef) {
+  constructor(private clientServices: ClientServices, private cd: ChangeDetectorRef, private activateRouter: ActivatedRoute) {
 
   }
   ngOnInit(): void {
+    this.activateRouter.params.subscribe((params) => {
+      if (params.id) {
+        this.clientServices.getClientById(params.id).subscribe((res) => {
+          this.editClient = res;
+          this.display = 'flex';
+          this.type = "edit";
+          this.cd.markForCheck();
+        })
+      }
+    })
     this.clientServices.getAllClient().subscribe((res) => {
       this.clients = res;
       this.sample = res;
@@ -59,7 +69,7 @@ export class Client implements OnInit {
   }
   search() {
     if (this.name.length > 2) {
-      this.clients=this.sample?.filter(s=>s.name.toLowerCase().includes(this.name.toLowerCase()))
+      this.clients = this.sample?.filter(s => s.name.toLowerCase().includes(this.name.toLowerCase()))
     } else {
       this.getAll();
     }
@@ -86,18 +96,18 @@ export class Client implements OnInit {
   dis() {
     if (this.display == 'none') {
       this.display = 'flex';
-      this.type="add";
-      this.editClient=new ClientModel;
+      this.type = "add";
+      this.editClient = new ClientModel;
     } else {
       this.display = 'none';
       this.reAssign()
     }
   }
-  edit(x:ClientModel){
+  edit(x: ClientModel) {
     if (this.display == 'none') {
       this.display = 'flex';
-      this.type="edit";
-      this.editClient=x;
+      this.type = "edit";
+      this.editClient = x;
     } else {
       this.display = 'none';
       this.reAssign()
@@ -110,16 +120,16 @@ export class Client implements OnInit {
       this.cd.detectChanges();
     })
   }
-  show(i:number){
-    if(this.showValue==i){
-    this.isshow=!this.isshow;
-    }else{
-      this.isshow=true;
+  show(i: number) {
+    if (this.showValue == i) {
+      this.isshow = !this.isshow;
+    } else {
+      this.isshow = true;
     }
-    this.showValue=i;
+    this.showValue = i;
   }
-  delete(id:string){
-    this.clientServices.deleteClientById(id).subscribe(_=>{
+  delete(id: string) {
+    this.clientServices.deleteClientById(id).subscribe(_ => {
       this.reAssign();
     })
   }

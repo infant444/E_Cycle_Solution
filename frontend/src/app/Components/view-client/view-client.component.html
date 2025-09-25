@@ -9,8 +9,9 @@
 
         <div class="part1">
           <div class="back">
-            <mat-icon>keyboard_backspace</mat-icon>
-          </div>
+            <a routerLink="/client">
+            <mat-icon color="#000">keyboard_backspace</mat-icon>
+            </a>          </div>
          <div class="title">
           <div class="sub">
  <mat-icon>{{client.type=="Individual"?'person':'apartment'}}</mat-icon>
@@ -24,7 +25,7 @@
       <div>
 
         <div class="actions">
-          <button class="edit">Edit</button>
+          <button class="edit" (click)="edit(client.id)">Edit</button>
           <button class="delete">Delete</button>
         </div>
       </div>
@@ -36,11 +37,11 @@
     <!-- Stats Cards -->
     <div class="cards">
       <div class="card">
-        <h3>6</h3>
+        <h3>{{client.total_collection||0}}</h3>
         <p>Total Collections</p>
       </div>
       <div class="card">
-        <h3>$12,000</h3>
+        <h3>{{client.value||0|currency:'INR'}}</h3>
         <p>Total Value</p>
       </div>
       <div class="card">
@@ -57,15 +58,16 @@
     <div class="two-col">
       <div class="section">
         <h4>Contact Information</h4>
-        <p><b>Email:</b> procurement.gmail.gov</p>
-        <p><b>Phone:</b> (555) 456-7890</p>
-        <p><b>Contact Person:</b> Michael Brown</p>
-        <p><b>Member Since:</b> 11/20/2023</p>
+        <p><b>Email:</b>{{client.email}}</p>
+        <p><b>Phone:</b>{{client.contact_number}}</p>
+        <p><b>webSite:</b> <a [href]="client.website" target="_blank">{{client.website}}</a></p>
+        <p><b>Contact Person:</b> {{client.contact_person}}</p>
+
       </div>
       <div class="section">
         <h4>Preferences</h4>
         <p><b>Pickup Time:</b> Morning (8-11 AM)</p>
-        <p><b>Last Collection:</b> 2024-01-16</p>
+        <p><b>Last Collection:</b> {{client.last_collection_date||'Na'}}</p>
       </div>
     </div>
 
@@ -73,11 +75,11 @@
     <div class="two-col">
       <div class="section">
         <h4>Address</h4>
-        <p>789 Government Plaza<br>Springfield, IL 62701</p>
+        <p>{{client.address}}</p>
       </div>
       <div class="section">
         <h4>Special Instructions</h4>
-        <p>Security clearance required, contact 24h in advance</p>
+        <p>{{client.special_instruction}}</p>
       </div>
     </div>
 
@@ -89,18 +91,27 @@
       </div>
       <div class="section">
         <h4>Collection Summary</h4>
-        <p>Completed: 0</p>
+        <p>Completed Task: 0</p>
         <div class="progress"><div class="bar" style="width:0%"></div></div>
-        <p>Scheduled: 1</p>
+        <p>Complete Scheduled: 1</p>
         <div class="progress"><div class="bar" style="width:40%"></div></div>
         <p><b>Total Value Generated: $12,000</b></p>
       </div>
     </div>
-
+    <div class="section">
+      <h4>Project Information</h4>
+      <p *ngFor="let x of projects"><a [routerLink]="'/project/view/'+x.id">{{x.project_name}}</a> <span class="tag">{{x.status}}</span> — Due: {{calculateDate(x.due_date)>0?calculateDate(x.due_date)+' days left':'Finished'}}</p>
+    </div>
     <!-- Inventory -->
     <div class="section">
       <h4>Inventory Items</h4>
       <p>Samsung Galaxy Tab S7 • Qty: 2 <span class="tag">received</span> — $150</p>
+    </div>
+    <div class="section">
+      <button class="schedule">Schedule Meeting</button>
+      <button class="schedule">Schedule Collection</button>
+      <button class="schedule">View Project</button>
+      <button class="schedule">View Meeting</button>
     </div>
   </div>
     </div>

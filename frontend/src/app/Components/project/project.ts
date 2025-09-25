@@ -13,6 +13,7 @@ import { ClientModel } from '../../model/client.model';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { NotFound } from "../../sub_component/not-found/not-found";
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-project',
   imports: [CommonModule, Title, AddProject,
@@ -39,9 +40,19 @@ export class Project implements OnInit {
     private projectServices: ProjectServices,
     private userServices: UserServices,
     private clientServices: ClientServices,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private router: Router,
+    private activateRouter:ActivatedRoute
   ) { }
   ngOnInit(): void {
+    this.activateRouter.params.subscribe((params)=>{
+      if(params.projectid){
+        this.projectServices.getProjectById(params.projectid).subscribe((res)=>{
+          this.editProject=res;
+          this.edit(res);
+        })
+      }
+    })
     this.userServices.userObservable.subscribe((res) => {
       this.user = res;
       this.cd.markForCheck();
@@ -81,10 +92,13 @@ export class Project implements OnInit {
     return this.allUser.filter(s => s.id === id)[0].name;
   }
   dis() {
+
     if (this.display == 'none') {
+      this.editProject = new ProjectModel();
       this.display = 'flex';
     } else {
       this.display = 'none';
+      this.reAssign()
     }
   }
   edit(x: ProjectModel) {
@@ -123,13 +137,23 @@ export class Project implements OnInit {
     }
   }
   activeChange() {
- if (this.active=="") {
+    if (this.active == "") {
       this.projects = this.projectX;
 
     } else {
-      this.projects = this.projectX.filter(s => s.status==this.active);
+      this.projects = this.projectX.filter(s => s.status == this.active);
 
     }
+  }
+  view(id: string) {
+    this.router.navigateByUrl("/project/view/" + id);
+  }
+  calculateDate(x: string) {
+    const dueDate = new Date(x).getTime();   // convert to ms
+    const today = new Date().getTime();      // current time in ms
+    const diffMs = dueDate - today;          // difference in ms
+    const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    return diffDays;
   }
 }
 

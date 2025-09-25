@@ -15,13 +15,13 @@ rout.get("/getAll", asyncHandler(
 rout.post("/addClient", asyncHandler(
 
     async (req, res, next: NextFunction) => {
-        const { name, email, type, contact_number, address, website, contact_person } = req.body;
+        const { name, email, type, contact_number, address, website, contact_person,special_instruction } = req.body;
         try {
             const client = await pool.query(
-                `INSERT INTO client(name, type, email, contact_number, address, website,contact_person)
-   VALUES ($1, $2, $3, $4, $5, $6,$7)
+                `INSERT INTO client(name, type, email, contact_number, address, website,contact_person,special_instruction)
+   VALUES ($1, $2, $3, $4, $5, $6,$7,$8)
    RETURNING *`,
-                [name, type, email, contact_number, address, website, contact_person]
+                [name, type, email, contact_number, address, website, contact_person,special_instruction]
             );
 
             res.json(client.rows[0])
@@ -45,7 +45,7 @@ rout.get("/get/:clientId", asyncHandler(
 rout.put("/update/:clientId", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
-            const { name, email, type, contact_number, address, website, contact_person } = req.body;
+            const { name, email, type, contact_number, address, website, contact_person,special_instruction } = req.body;
             const client = await pool.query(
                 `UPDATE client 
    SET name = $1,
@@ -54,10 +54,11 @@ rout.put("/update/:clientId", asyncHandler(
        contact_number = $4,
        address = $5,
        website = $6,
-       contact_person = $7
-   WHERE id = $8
+       contact_person = $7,
+       special_instruction=$8
+   WHERE id = $9
    RETURNING *`,
-                [name, type, email, contact_number, address, website, contact_person, req.params.clientId]
+                [name, type, email, contact_number, address, website, contact_person, special_instruction, req.params.clientId]
             );
 
             res.json(client.rows[0]);

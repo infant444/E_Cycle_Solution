@@ -8,6 +8,8 @@ import { environment } from "../../environment/environment.pord";
 export const EMPLOYEE_BASE_URL=BASEURL+"/api/user";
 export const LOGIN=EMPLOYEE_BASE_URL+"/login";
 export const GET_ALL_STAFF=EMPLOYEE_BASE_URL+"/getAll";
+export const GET_ALL_PROJECT_MEMBER=EMPLOYEE_BASE_URL+"/get-data/project-member";
+export const GET_By_ID_STAFF=EMPLOYEE_BASE_URL+"/getById/";
 
 
 
@@ -31,7 +33,9 @@ export const Project_BASE_URL=BASEURL+"/api/project";
 export const ADD_PROJECT=Project_BASE_URL+"/add";
 export const GET_ALL_PROJECT=Project_BASE_URL+"/getall";
 export const GET_BY_ID_PROJECT=Project_BASE_URL+"/get/";
+export const GET_BY_ClIENT_ID_PROJECT=Project_BASE_URL+"/get-by-client/";
 export const UPDATE_ALL_PROJECT=Project_BASE_URL+"/update/";
+export const UPDATE_STATUS_PROJECT=Project_BASE_URL+"/update/status/";
 export const DELETE_BY_ID_PROJECT=Project_BASE_URL+"/delete/";
 
 
@@ -41,7 +45,7 @@ export const ADD_TASK=Project_BASE_URL+"/task/add";
 export const GET_ALL_TASK=Project_BASE_URL+"/task/getall/";
 export const GET_BY_ID_TASK=Project_BASE_URL+"/task/get/";
 export const UPDATE_STATUS_TASK=Project_BASE_URL+"/task/status/update/";
-
+export const DELETE_TASK=Project_BASE_URL+"/task/delete/";
 
 // Time sheet
 
