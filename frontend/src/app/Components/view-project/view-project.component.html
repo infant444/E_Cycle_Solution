@@ -8,9 +8,9 @@
             </a>
       </div>
       <div>
-      <h1>Downtown E-Waste Initiative</h1>
+      <h1>{{project.project_name}}</h1>
       <p class="subtitle">
-        Comprehensive e-waste collection and processing project for downtown district
+       {{project.description}}
       </p>
 
       <div class="tags">
@@ -69,13 +69,9 @@
     </div>
     <div class="card">
       <h3>Project Tasks</h3>
-      <div class="task">
-        <p>Downtown E-Waste Collection</p>
-        <span class="status complete">completed</span>
-      </div>
-      <div class="task">
-        <p>Computer Equipment Processing</p>
-        <span class="status progress">in progress</span>
+      <div class="task" *ngFor="let x of task">
+        <p>{{x.task}}</p>
+        <span class="status" [ngClass]="x.status">{{x.status}}</span>
       </div>
     </div>
     </div>
@@ -93,7 +89,7 @@
 
     <div class="card">
       <h3>Progress Overview</h3>
-      <p>Tasks Completed ({{project.completed_task}}/{{project.completed_task}})</p>
+      <p>Tasks Completed ({{project.completed_task}}/{{project.no_task}})</p>
       <div class="progress blue">
       <div class="progress-bar" [style.width.%]="project.level_complete"></div>
 
@@ -106,8 +102,15 @@
 
   <div class="grid">
 
+ <div class="card">
+      <h3>Project Description</h3>
+      <p>{{project.description}}</p>
   </div>
-
   <!-- Tasks -->
-
+    <div class="card">
+      <h3>Tag</h3>
+      <div class="tages">
+        <span *ngFor="let tag of project.tags" class="tag-card">{{tag}}</span>
+      </div>
+  </div>
 </div>

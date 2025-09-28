@@ -32,3 +32,157 @@ margin: .5rem;
   margin: 0 .5rem;
   cursor: pointer;
 }
+
+
+.task-info{
+  width: 100%;
+  margin: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  position: relative;
+}
+.filter{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+.filter-content{
+  display: flex;
+  margin-right: 1rem;
+  padding: .5rem;
+}
+.filter-name{
+  margin: .5rem;
+  margin-right: 1rem;
+  font-size: large;
+}
+.filter-forms select{
+  font-size: large;
+  margin: .5rem;
+  padding: .3rem .5rem;
+}
+/* task-card.component.css */
+.task-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  margin: 12px;
+  width: 320px;
+  font-family: Arial, sans-serif;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-header h3 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.priority {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #fff;
+  text-transform: capitalize;
+}
+.priority.high {
+  background: #e74c3c;
+}
+
+.description {
+  font-size: 14px;
+  margin: 10px 0;
+  color: #555;
+}
+
+.description mat-icon {
+  font-size: 16px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.name{
+  text-transform: capitalize;
+}
+.project-link {
+  display: flex;
+  align-items: center;
+  color: #007bff;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+.project-link mat-icon {
+  margin-right: 4px;
+}
+
+.assignee {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.assignee img {
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  margin-right: 6px;
+}
+
+.due-date {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.due-date mat-icon {
+  margin-right: 6px;
+}
+
+.progress {
+  margin-bottom: 12px;
+}
+.progress span {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: white;
+  text-transform: capitalize;
+}
+.status.completed {
+  background: #2ecc71;
+}
+.high,.warn{
+    background: #ffe5e5;
+  color: #c00;
+}
+.middle,.pending,.processed{
+    background: #fffae5;
+  color: rgb(204, 156, 0);
+}
+.low,.accepted,.completed{
+    background: #eaffe5;
+  color: rgb(3, 204, 0);
+}
+.bottom{
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem;
+}
+.menu mat-icon{
+    margin-left: 8px;
+  cursor: pointer;
+  color: #444;
+}

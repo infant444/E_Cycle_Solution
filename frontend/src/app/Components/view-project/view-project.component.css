@@ -9,14 +9,14 @@
   justify-content: space-between;
   align-items: flex-start;
 }
-.add-back{
+.add-back {
   display: flex;
 }
-.back{
-      margin-top: .4em;
-      cursor: pointer;
-      margin-right: 1rem;
-    }
+.back {
+  margin-top: 0.4em;
+  cursor: pointer;
+  margin-right: 1rem;
+}
 h1 {
   margin: 0;
   font-size: 24px;
@@ -26,6 +26,11 @@ h1 {
   color: #666;
   font-size: 14px;
   margin: 5px 0;
+  white-space: nowrap; /* keep text on one line */
+  overflow: hidden; /* hide overflow */
+  text-overflow: ellipsis; /* add ... at the end */
+  width: 300px; /* required fixed width */
+  display: inline-block;
 }
 
 .tags {
@@ -45,16 +50,20 @@ h1 {
   color: #256029;
 }
 
-.high{
-    background: #ffe5e5;
+.high {
+  background: #ffe5e5;
   color: #c00;
 }
-.medium,.pending,.processed{
-    background: #fffae5;
+.medium,
+.pending,
+.processed {
+  background: #fffae5;
   color: rgb(204, 156, 0);
 }
-.low,.accepted,.completed{
-    background: #eaffe5;
+.low,
+.accepted,
+.completed {
+  background: #eaffe5;
   color: rgb(3, 204, 0);
 }
 
@@ -104,7 +113,7 @@ h1 {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  margin: 1rem .5rem;
+  margin: 1rem 0.5rem;
 }
 
 .card h2 {
@@ -122,8 +131,8 @@ h1 {
   gap: 16px;
   margin-bottom: 20px;
 }
-.info{
-  margin: .5rem;
+.info {
+  margin: 0.5rem;
   display: block;
 }
 .col-2 {
@@ -147,7 +156,7 @@ h1 {
   color: #777;
   font-size: 13px;
 }
-.name{
+.name {
   text-transform: capitalize;
 }
 .milestone {
@@ -200,11 +209,25 @@ h1 {
   background: #dbeafe;
   color: #1e40af;
 }
-a{
+a {
   color: #000;
   text-transform: capitalize;
   text-decoration: underline lightgray;
 }
-a:hover{
+a:hover {
   transform: scale(1.1);
+}
+.tag{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top:1rem ;
+}
+.tag-card{
+  padding: .1rem .8rem;
+  background-color: #065f46;
+  color: #fff;
+  border-radius: .5rem;
+  margin-top: .5rem;
 }

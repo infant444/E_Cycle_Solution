@@ -8,6 +8,7 @@ import { User } from '../../model/user.model';
 import { UserServices } from '../../Services/user/user';
 import { ClientModel } from '../../model/client.model';
 import { MatIconModule } from '@angular/material/icon';
+import { Task } from '../../model/task.model';
 
 @Component({
   selector: 'app-view-project',
@@ -20,7 +21,8 @@ export class ViewProjectComponent implements OnInit {
   projectMember?:User[];
   projectManager!:User;
   projectClient!:ClientModel;
-
+  task?:Task[];
+  completedTask!:number;
   constructor(
     private clientServices:ClientServices,
     private projectService:ProjectServices,
@@ -39,6 +41,7 @@ export class ViewProjectComponent implements OnInit {
               this.getProjectMember(res.team_member);
               this.getProjectManager(res.manager_id);
               this.getClient(res.client_id);
+              this.getTask(res.id);
             }
             this.cd.markForCheck();
           })
@@ -70,6 +73,11 @@ export class ViewProjectComponent implements OnInit {
             this.cd.markForCheck();
 
 
+    })
+  }
+  getTask(id:string){
+    this.projectService.getTask(id).subscribe((res)=>{
+      this.task=res;
     })
   }
   delete(id:string){

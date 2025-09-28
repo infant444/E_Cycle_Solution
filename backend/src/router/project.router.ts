@@ -3,13 +3,13 @@ import asyncHandler from "express-async-handler";
 import { pool } from "../config/postgersql.config";
 import auth from "../middleware/auth.middleware";
 import { ProjectModel } from "../model/project.model";
-import { projectAssignedEmployee, ProjectAssignedManager } from "../controller/email.control";
+import { projectAssignedEmployee, ProjectAssignedManager, TaskAssignedForStaff } from "../controller/email.control";
 import { MailConfig, mailGenerator } from "../config/mail.config";
 import nodeMailer from 'nodemailer';
 const rout = Router();
 
 rout.use(auth);
-
+// Post
 rout.post("/add", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
@@ -58,11 +58,11 @@ rout.post("/add", asyncHandler(
         }
     }
 ));
-
+// Get
 rout.get("/getall", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
-            const projects = await pool.query("select * from project",);
+            const projects = await pool.query("select * from project order by priority DESC",);
             res.send(projects.rows);
         } catch (e) {
             next(e);
@@ -82,13 +82,24 @@ rout.get("/get/:id", asyncHandler(
 rout.get("/get-by-client/:clientId", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
-            const project = await pool.query("select * from project where client_id=$1", [req.params.clientId]);
+            const project = await pool.query("select * from project where client_id=$1 order by priority DESC", [req.params.clientId]);
             res.send(project.rows);
         } catch (e) {
             next(e);
         }
     }
 ))
+rout.get("/getByManager", asyncHandler(
+    async (req:any, res, next: NextFunction) => {
+        try {
+            const Project = await pool.query("select * from project where manager_id=$1 order by priority DESC", [req.user.id]);
+            res.json(Project.rows);
+        } catch (err) {
+            next(err);
+        }
+    }
+))
+// Update
 rout.put("/update/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
@@ -125,16 +136,17 @@ rout.put("/update/:id", asyncHandler(
         }
     }
 ));
-rout.put("/update/status/:id",asyncHandler(
-    async(req,res,next:NextFunction)=>{
-        try{
-        const result= await pool.query("update project set status=$1 where id=$2 RETURNING *",[req.body.status,req.params.id])
-        res.json(result.rows[0]);
-        }catch(err){
+rout.put("/update/status/:id", asyncHandler(
+    async (req, res, next: NextFunction) => {
+        try {
+            const result = await pool.query("update project set status=$1 where id=$2 RETURNING *", [req.body.status, req.params.id])
+            res.json(result.rows[0]);
+        } catch (err) {
             next(err);
         }
     }
 ))
+// delete
 rout.delete("/delete/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
@@ -151,23 +163,49 @@ rout.delete("/delete/:id", asyncHandler(
 rout.post("/task/add", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
-            const { task, description, project, staff, project_name, priority, due } = req.body;
-            const tasks = await pool.query("insert into task (task,description,project,staff,project_name,priority,due) values ($1,$2,$3,$4,$5,$6,$7) returning * ", [task, description, project, staff, project_name, priority, due]);
+            const { task, description, project, staff, project_name, priority, due,estimate_time } = req.body;
+            const tasks = await pool.query("insert into task (task,description,project,staff,project_name,priority,due,estimate_time) values ($1,$2,$3,$4,$5,$6,$7,$8) returning * ", [task, description, project, staff, project_name, priority, due,estimate_time]);
             const project_data = await pool.query("select * from project where id=$1", [project]);
-            const task_count = parseInt(project_data.rows[0].no_task) + 1;
-            const complete_task = parseInt(project_data.rows[0].complete_task);
+            const task_count = parseInt(project_data.rows[0].no_task||0) + 1;
+            const complete_task = parseInt(project_data.rows[0].complete_task||0);
             const score = (complete_task / task_count) * 100;
-            await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3 where id=$4 ", [task_count, complete_task, score, project]);
-            res.send(tasks);
+            await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3 where id=$4", [task_count, complete_task, score, project]);
+
+            const staffX=await pool.query("select * from staff where id=$1",[staff]);
+            let transporter = nodeMailer.createTransport(MailConfig);
+            if(staffX.rowCount!=null && staffX.rowCount>0){
+     const mail = mailGenerator.generate(TaskAssignedForStaff(staffX.rows[0].name,project_name,task,description,due,priority,tasks.rows[0].id));
+                    let message = {
+                        from: '"RI planIt " <riplanit@gmail.com>',
+                        to: '<' + staffX.rows[0].email + '>',
+                        subject: "Task Assignment Notification",
+                        html: mail,
+                    }
+                    transporter.sendMail(message).then(() => {
+                        console.log("Successfully send to " + staffX.rows[0].name)
+                    })
+            }
+       
+            res.send(tasks.rows[0]);
         } catch (error) {
             next(error);
         }
     }
 ));
+rout.get("/task/getAll/manager",asyncHandler(
+    async(req:any,res,next:NextFunction)=>{
+        try{
+            const task=await pool.query("select * from task where project in (select id from project where manager_id=$1) order by priority DESC",[req.user.id,]);
+            res.json(task.rows)
+        }catch(err){
+            next(err)
+        }
+    }
+))
 rout.get("/task/getall/:projectid", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
-            const tasks = await pool.query("select * from task where project=$1", [req.params.projectid]);
+            const tasks = await pool.query("select * from task where project=$1 order by priority DESC", [req.params.projectid]);
             res.send(tasks.rows);
         } catch (e) {
             next(e);
@@ -177,13 +215,14 @@ rout.get("/task/getall/:projectid", asyncHandler(
 rout.get("/task/get/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
-            const task = await pool.query("select * from task where id=$1", [req.params.id]);
+            const task = await pool.query("select * from task where id=$1" , [req.params.id]);
             res.send(task.rows[0]);
         } catch (e) {
             next(e);
         }
     }
 ));
+
 rout.put("/task/status/update/:taskId", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
@@ -209,27 +248,78 @@ rout.put("/task/status/update/:taskId", asyncHandler(
         }
     }
 ));
+rout.put("/task/update/:id",asyncHandler(
+    async(req,res,next:NextFunction)=>{
+        try{
+            const { task, description, project, staff, project_name, priority, due,estimate_time } = req.body;
+            const updateTask= await pool.query("update task set task=$1,description=$2,project=$3,staff=$4,project_name=$5,priority=$6,due=$7,estimate_time=$8 where id=$9 returning *",[task,description,project,staff,project_name,priority,due,estimate_time,req.params.id]);
+            res.json(updateTask.rows[0]);
+        }catch(err){
+            next(err)
+        }
+    }  
+))
+// rout.delete("/task/delete/:id", asyncHandler(
+//     async (req, res, next: NextFunction) => {
+//         try {
+//             const data = await pool.query("select * from task where id=$1", [req.params.id,]);
+//             if (data.rowCount != null && data.rowCount > 0) {
+//                 const projectData = await pool.query("select * from project where id=$1;"[data.rows[0].project]);
+//                 if (projectData.rowCount != null && projectData.rowCount > 0) {
+//                     const noTask = parseInt(projectData.rows[0].no_task) - 1;
+//                     await pool.query("update project set no_task=$1 where id=$2", [noTask, data.rows[0].project])
+//                     if (data.rows[0].status == 'completed') {
+//                         const completedTask = parseInt(projectData.rows[0].completed_task) - 1;
+//                         await pool.query("update project set completed_task=$1 where id=$2", [noTask, data.rows[0].project])
+//                     }
+//                     await pool.query("delete from task where id=$1", [req.params.id]);
+//                 }
+//             }
+//             res.json(data);
+//         } catch (err) {
+//             next(err);
+//         }
+//     }
+// ))
 
 rout.delete("/task/delete/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
-            const data = await pool.query("select * from task where id=$1", [req.params.id,]);
-            if (data.rowCount != null && data.rowCount > 0) {
-                const projectData = await pool.query("select * from project where id=$1;"[data.rows[0].project]);
-                if (projectData.rowCount != null && projectData.rowCount > 0) {
+            const data = await pool.query(
+                "select * from task where id=$1",
+                [req.params.id]
+            );
+
+            if (data.rowCount && data.rowCount > 0) {
+                const projectData = await pool.query(
+                    "select * from project where id=$1",
+                    [data.rows[0].project]
+                );
+
+                if (projectData.rowCount && projectData.rowCount > 0) {
                     const noTask = parseInt(projectData.rows[0].no_task) - 1;
-                    await pool.query("update project set no_task=$1 where id=$2", [noTask, data.rows[0].project])
-                    if (data.rows[0].status == 'completed') {
+                    await pool.query(
+                        "update project set no_task=$1 where id=$2",
+                        [noTask, data.rows[0].project]
+                    );
+
+                    if (data.rows[0].status === 'completed') {
                         const completedTask = parseInt(projectData.rows[0].completed_task) - 1;
-                        await pool.query("update project set completed_task=$1 where id=$2", [noTask, data.rows[0].project])
+                        await pool.query(
+                            "update project set completed_task=$1 where id=$2",
+                            [completedTask, data.rows[0].project]
+                        );
                     }
+
                     await pool.query("delete from task where id=$1", [req.params.id]);
                 }
             }
+
             res.json(data);
         } catch (err) {
             next(err);
         }
     }
-))
+));
+
 export default rout;

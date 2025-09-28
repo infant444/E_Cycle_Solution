@@ -7,8 +7,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TYPE staff_type AS ENUM ('admin', 'staff', 'worker');
 
 CREATE TYPE project_type AS ENUM('completed','processed','pending','accepted');
-CREATE TYPE task_type AS ENUM('completed','processed','pending','accepted');
-
+CREATE TYPE task_type AS ENUM('completed','processed','pending','accepted','rejected');
+-- ALTER TYPE task_type ADD VALUE 'rejected';
 CREATE OR REPLACE FUNCTION set_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN

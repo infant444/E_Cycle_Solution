@@ -1,1 +1,93 @@
-<p>add-task.component works!</p>
+<div class="container" [ngStyle]="{'display': display}">
+  <div class="close" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </div>
+  <div class="content">
+    <app-title [h3_title]="type=='edit'?'Edit Task':'Add Task'"></app-title>
+    <hr class="hr">
+    <form (ngSubmit)="submit()" [formGroup]="TaskForm">
+      <div class="div1">
+        <app-title sub_title="Basic Information"></app-title>
+        <div class="input-all">
+          <div class="label">
+            Task's Name
+          </div>
+          <div class="input">
+            <input type="text" formControlName="task" [className]="(isSubmitted && FC.task.invalid)?'error':''">
+          </div>
+        </div>
+        <div class="input-all">
+          <div class="label">
+            Description
+          </div>
+          <div class="input">
+            <textarea formControlName="description" cols="30" rows="5"
+              [className]="(isSubmitted && FC.description.invalid)?'error':''"></textarea>
+          </div>
+        </div>
+        <div class="div11">
+          <div class="input-all">
+            <div class="label">
+              Client
+            </div>
+            <div class="input">
+              <select formControlName="project" [className]="(isSubmitted && FC.project.invalid)?'error':''" (change)="projectChange()">
+                <option value="" selected>Select Project</option>
+                <option *ngFor="let client of projects" [value]="client.id">{{client.project_name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-all">
+            <div class="label">
+              Manager
+            </div>
+            <div class="input">
+              <select formControlName="staff_id" [className]="(isSubmitted && FC.staff_id.invalid)?'error':''">
+                <option value="" selected>Select Staff</option>
+                <option *ngFor="let staff of staffs" [value]="staff.id">{{staff.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="div11">
+          <div class="input-all">
+            <div class="label">
+              Due Date
+            </div>
+            <div class="input">
+              <input type="date" [min]="now" formControlName="due"
+                [className]="(isSubmitted && FC.due.invalid)?'error':''">
+            </div>
+          </div>
+          <div class="input-all">
+            <div class="label">
+              Priority
+            </div>
+            <div class="input">
+              <select formControlName="priority" [className]="(isSubmitted && FC.priority.invalid)?'error':''">
+                <option value="" selected>Select Priority</option>
+                <option value="3">High</option>
+                <option value="2">Medium</option>
+                <option value="1">low</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="div2">
+        <app-title sub_title="estimate_time"></app-title>
+        <div class="input">
+          <input type="text" formControlName="estimate_time" [className]="(isSubmitted && FC.estimate_time.invalid)?'error':''">
+        </div>
+      </div>
+
+      <div class="div5">
+        <input type="button" value="Cancel" class="button cancel" (click)="close()">
+        <input type="submit" value="Submit" class="button submit">
+      </div>
+    </form>
+  </div>
+
+
+</div>

@@ -34,6 +34,7 @@ export const ADD_PROJECT=Project_BASE_URL+"/add";
 export const GET_ALL_PROJECT=Project_BASE_URL+"/getall";
 export const GET_BY_ID_PROJECT=Project_BASE_URL+"/get/";
 export const GET_BY_ClIENT_ID_PROJECT=Project_BASE_URL+"/get-by-client/";
+export const GET_BY_MANAGER_ID=Project_BASE_URL+'/getByManager';
 export const UPDATE_ALL_PROJECT=Project_BASE_URL+"/update/";
 export const UPDATE_STATUS_PROJECT=Project_BASE_URL+"/update/status/";
 export const DELETE_BY_ID_PROJECT=Project_BASE_URL+"/delete/";
@@ -44,7 +45,9 @@ export const DELETE_BY_ID_PROJECT=Project_BASE_URL+"/delete/";
 export const ADD_TASK=Project_BASE_URL+"/task/add";
 export const GET_ALL_TASK=Project_BASE_URL+"/task/getall/";
 export const GET_BY_ID_TASK=Project_BASE_URL+"/task/get/";
+export const GET_ALL_TASK_BY_MANGER=Project_BASE_URL+"/task/getAll/manager";
 export const UPDATE_STATUS_TASK=Project_BASE_URL+"/task/status/update/";
+export const UPDATE_TASK=Project_BASE_URL+"/task/update/";
 export const DELETE_TASK=Project_BASE_URL+"/task/delete/";
 
 // Time sheet

@@ -29,6 +29,7 @@ export class AddProject implements OnInit, OnChanges {
 
   @Input()
   Project!: ProjectModel;
+
   clientData?: ClientModel[];
   projectForm!: FormGroup;
   user?: User[];
@@ -121,7 +122,7 @@ export class AddProject implements OnInit, OnChanges {
     this.FC.description.setValue(this.Project?.description || '');
     this.FC.client.setValue(this.Project?.client_id || "");
     this.FC.manager.setValue(this.Project?.manager_id || "");
-    this.FC.due_date.setValue(this.Project?.due_date || "");
+    this.FC.due_date.setValue(new Date(this.Project?.due_date).toISOString().split('T')[0] || "");
     this.FC.budget.setValue(this.Project.budget || "");
     this.FC.priority.setValue(this.Project.priority || "");
     (this.Project.team_member || []).forEach((member: any) => {

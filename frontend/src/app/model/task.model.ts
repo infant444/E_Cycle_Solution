@@ -11,4 +11,6 @@ export class Task{
   estimate_time!:string;
   actual_time!:string;
   complete_time!:string;
+  created_at!:string;
+    updated_at!:string;
 }
