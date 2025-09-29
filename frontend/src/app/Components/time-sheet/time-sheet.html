@@ -5,16 +5,17 @@
       <div class="div1">
         <div class="sub1">
           <app-title sub_title="Today's Hours"></app-title>
-          <div class="sDiv1 red">5hr</div>
+          <div class="sDiv1 red">{{ weekHour | number:'1.0-1' }}hr</div>
         </div>
         <div class="sub1">
           <app-title sub_title="This Week"></app-title>
-          <div class="sDiv1 green">16.4hr</div>
+     <div class="sDiv1 green">{{ todayHour | number:'1.0-1' }} hr</div>
+
 
         </div>
         <div class="sub1">
           <app-title sub_title="Assigned project"></app-title>
-          <div class="sDiv1 blue">3</div>
+          <div class="sDiv1 blue">{{assignedTask}}</div>
 
         </div>
       </div>
@@ -87,9 +88,7 @@
 
         <div class="recent-work">
           <app-title h3_title="Recent Work" sub_title="see your recent work"></app-title>
-          <app-recent-works></app-recent-works>
-          <app-recent-works></app-recent-works>
-          <app-recent-works></app-recent-works>
+          <app-recent-works *ngFor="let x of resentTimeSheet" [project_name]="x.project_name" [task_name]="x.task_name" [start_time]="x.start_time" [end_time]="x.end_time" [hr]="x.total_hours.toString()" ></app-recent-works>
           <div>
           </div>
         </div>

@@ -20,13 +20,13 @@ rout.post("/add", asyncHandler(
                 if (statusX == 'completed') {
                     const projectX = await pool.query("select * from project where id=$1", [project]);
                     const task_count = parseInt(projectX.rows[0].no_task || 0);
-                    const complete_task = parseInt(projectX.rows[0].complete_task ||0) + 1;
+                    const complete_task = parseInt(projectX.rows[0].complete_task || 0) + 1;
                     const score = (complete_task / task_count) * 100;
-                     if (score == 100) {
-                    await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3,status=$4 where id=$5 ", [task_count, complete_task, score, "completed", project]);
-                } else {
-                    await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3,status=$4 where id=$5 ", [task_count, complete_task, score, "processed", project]);
-                }
+                    if (score == 100) {
+                        await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3,status=$4 where id=$5 ", [task_count, complete_task, score, "completed", project]);
+                    } else {
+                        await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3,status=$4 where id=$5 ", [task_count, complete_task, score, "processed", project]);
+                    }
                 }
             }
             res.json(result.rows);
@@ -67,6 +67,37 @@ rout.get("/get/:id", asyncHandler(
         }
     }
 ));
+rout.get("/get/totalHour/weak", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const { start, end } = req.query;
+            const result = await pool.query("select sum(total_hours) as week_hour from timesheet where staff=$1 and date between $2 and $3 ", [req.user.id, start, end])
+            res.json(result.rows[0]);
+        } catch (err) {
+            next(err)
+        }
+    }
+));
+rout.get("/get/totalHour/today", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const dateX = new Date().toISOString().split('T')[0];
+
+            const result = await pool.query(
+                `SELECT SUM(total_hours) AS today_hour 
+                    FROM timesheet 
+                    WHERE staff = $1 
+                    AND "date" = $2`,
+                [req.user.id, dateX]
+            );
+            res.json(result.rows[0]);
+        } catch (err) {
+            next(err)
+        }
+    }
+));
+
+// update
 rout.put("/update/:id", asyncHandler(
     async (req: any, res, next: NextFunction) => {
         try {

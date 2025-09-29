@@ -1,11 +1,30 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-recent-works',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './recent-works.html',
   styleUrl: './recent-works.css'
 })
-export class RecentWorks {
+export class RecentWorks  {
 
+ @Input()
+ project_name!:string;
+
+ @Input()
+ task_name!:string;
+
+ @Input()
+ start_time!:string;
+
+ @Input()
+ end_time!:string;
+
+ @Input()
+ hr!:string;
+
+ secToHr(x:string){
+  return (parseInt(x) / 3600)
+ }
 }

@@ -47,6 +47,7 @@ export const GET_ALL_TASK=Project_BASE_URL+"/task/getall/";
 export const GET_BY_ID_TASK=Project_BASE_URL+"/task/get/";
 export const GET_ALL_TASK_STATUS=Project_BASE_URL+"/task/getTask/";
 export const GET_ALL_TASK_BY_MANGER=Project_BASE_URL+"/task/getAll/manager";
+export const GET_TASK_COUNT=Project_BASE_URL+"/task/getCount";
 export const UPDATE_STATUS_TASK=Project_BASE_URL+"/task/status/update/";
 export const UPDATE_TASK=Project_BASE_URL+"/task/update/";
 export const DELETE_TASK=Project_BASE_URL+"/task/delete/";
@@ -58,7 +59,10 @@ export const ADD_TIME_SHEET=TIME_SHEET+'/add';
 export const GET_ALL_TIME_SHEET_WEEK=TIME_SHEET+'/getAll/weak';
 export const GET_ALL_TIME_SHEET_STAFF=TIME_SHEET+'/getAll/staff';
 export const GET_TIME_SHEET_ID=TIME_SHEET+'/get/';
+export const GET_WEEK_HOUR=TIME_SHEET+'/get/totalHour/weak';
+export const GET_TODAY_HOUR=TIME_SHEET+'/get/totalHour/today';
 export const UPDATE_TIME_SHEET_STATUS=TIME_SHEET+"/update/";
+
 
 // Inventory
 

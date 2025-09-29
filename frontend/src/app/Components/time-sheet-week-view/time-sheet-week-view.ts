@@ -6,32 +6,32 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-time-sheet-week-view',
-  imports: [Title, TimesheetBaseNav,CommonModule],
+  imports: [Title, TimesheetBaseNav, CommonModule],
   templateUrl: './time-sheet-week-view.html',
   styleUrl: './time-sheet-week-view.css'
 })
-export class TimeSheetWeekView implements OnInit{
-  currentWeekStart=new Date();
+export class TimeSheetWeekView implements OnInit {
+  currentWeekStart = new Date();
   weekTotal = 0;
   weekdays: string[] = [];
-  dateRange!:string;
+  dateRange!: string;
   ngOnInit(): void {
     this.getWeekDays();
   }
-getWeekDays() {
+  getWeekDays() {
     const today = this.currentWeekStart;
     const currentDay = today.getDay();
     const diff = today.getDate() - currentDay + (currentDay === 0 ? -6 : 1);
     const monday = new Date(today.setDate(diff));
 
-    this.weekdays= [];
+    this.weekdays = [];
     for (let i = 0; i < 7; i++) {
       const day = new Date(monday);
       day.setDate(monday.getDate() + i);
       this.weekdays.push(day.toISOString().split('T')[0]);
     }
     console.log(this.weekdays);
-    this.formatDateRange(this.weekdays[0],this.weekdays[6]);
+    this.formatDateRange(this.weekdays[0], this.weekdays[6]);
   }
   setCurrentWeek(): void {
     const today = new Date();
@@ -53,24 +53,24 @@ getWeekDays() {
     this.currentWeekStart.setDate(this.currentWeekStart.getDate() + 7);
     this.getWeekDays();
   }
- formatDateRange(start: string, end: string){
+  formatDateRange(start: string, end: string) {
     const startDate = new Date(start);
-  const endDate = new Date(end);
+    const endDate = new Date(end);
 
-  const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
-  const year = endDate.getFullYear();
+    const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+    const year = endDate.getFullYear();
 
-  const startFormatted = startDate.toLocaleDateString('en-US', options);
-  const endFormatted = endDate.toLocaleDateString('en-US', options);
+    const startFormatted = startDate.toLocaleDateString('en-US', options);
+    const endFormatted = endDate.toLocaleDateString('en-US', options);
 
-  this.dateRange= `${startFormatted} – ${endFormatted}, ${year}`;
+    this.dateRange = `${startFormatted} – ${endFormatted}, ${year}`;
 
-}
-formateDate(date:string):string{
-  const x=new Date(date);
+  }
+  formateDate(date: string): string {
+    const x = new Date(date);
 
-  const options: Intl.DateTimeFormatOptions = {weekday: 'short', month: 'short', day: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
     const dateFormatted = x.toLocaleDateString('en-US', options);
     return `${dateFormatted}`;
-}
+  }
 }

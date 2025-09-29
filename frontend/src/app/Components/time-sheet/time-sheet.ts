@@ -31,8 +31,18 @@ export class TimeSheetComponent implements OnInit {
   isSubmitted: boolean = false;
   project?: ProjectModel[];
   task?: Task[];
-  resentTimeSheet?:TimeSheet[];
+  resentTimeSheet?: TimeSheet[];
   today = new Date().toISOString().split('T')[0];
+  weekHour!: number;
+  todayHour!: number;
+  assignedTask!: number;
+  currentWeekStart = new Date();
+  weekTotal = 0;
+  weekdays: string[] = [];
+  dateRange!: string;
+  start!: string;
+  end!: string;
+
   constructor(private formBuilder: FormBuilder,
     private client: ClientServices,
     private user: UserServices,
@@ -42,9 +52,21 @@ export class TimeSheetComponent implements OnInit {
     private toasterServices: ToastrService,
   ) { }
   ngOnInit(): void {
+    this.getWeekDays()
     this.projectServices.getByStaff().subscribe((res) => {
       this.project = res;
       this.cd.markForCheck()
+    })
+    this.timeSheetService.getTotalHourWeek(this.start, this.end).subscribe((res) => {
+      this.weekHour = (parseInt(res.week_hour.toString()) / 3600)
+      this.cd.markForCheck()
+    })
+    this.timeSheetService.getTotalHourToday().subscribe((res) => {
+      this.todayHour = (parseInt(res.today_hour.toString()) / 3600)
+      this.cd.markForCheck()
+    })
+    this.projectServices.getTaskCount().subscribe((res)=>{
+      this.assignedTask=res.task_count;
     })
     this.timeSheetForm = this.formBuilder.group({
       project: ["", [Validators.required]],
@@ -54,8 +76,8 @@ export class TimeSheetComponent implements OnInit {
       start_time: ["", Validators.required],
       end_time: ["", Validators.required],
     });
-    this.timeSheetService.getAllStaff().subscribe((res)=>{
-      this.resentTimeSheet=res.reverse();
+    this.timeSheetService.getAllStaff().subscribe((res) => {
+      this.resentTimeSheet = res.reverse().slice(0,3);
     })
   }
   get FC() {
@@ -74,6 +96,22 @@ export class TimeSheetComponent implements OnInit {
 
     const diff = Math.abs((time2.getTime() - time1.getTime()) / 1000); // ms → sec
     return diff;
+  }
+  getWeekDays() {
+
+    const today = this.currentWeekStart;
+    const currentDay = today.getDay();
+    const diff = today.getDate() - currentDay + (currentDay === 0 ? -6 : 1);
+    const monday = new Date(today.setDate(diff));
+
+    this.weekdays = [];
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(monday);
+      day.setDate(monday.getDate() + i);
+      this.weekdays.push(day.toISOString().split('T')[0]);
+    }
+    this.start = this.weekdays[0];
+    this.end = this.weekdays[6];
   }
   add() {
     if (this.timeSheetForm.invalid) {
@@ -109,4 +147,5 @@ export class TimeSheetComponent implements OnInit {
     )
 
   }
+
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProjectModel } from '../../model/project.model';
 import { Observable } from 'rxjs';
-import { ADD_PROJECT, ADD_TASK, DELETE_BY_ID_PROJECT, DELETE_TASK, GET_ALL_PROJECT, GET_ALL_TASK, GET_ALL_TASK_BY_MANGER, GET_ALL_TASK_STATUS, GET_BY_ClIENT_ID_PROJECT, GET_BY_ID_PROJECT, GET_BY_ID_TASK, GET_BY_MANAGER_ID, GET_BY_STAFF_ID, UPDATE_ALL_PROJECT, UPDATE_STATUS_PROJECT, UPDATE_STATUS_TASK, UPDATE_TASK } from '../../constant/url';
+import { ADD_PROJECT, ADD_TASK, DELETE_BY_ID_PROJECT, DELETE_TASK, GET_ALL_PROJECT, GET_ALL_TASK, GET_ALL_TASK_BY_MANGER, GET_ALL_TASK_STATUS, GET_BY_ClIENT_ID_PROJECT, GET_BY_ID_PROJECT, GET_BY_ID_TASK, GET_BY_MANAGER_ID, GET_BY_STAFF_ID, GET_TASK_COUNT, UPDATE_ALL_PROJECT, UPDATE_STATUS_PROJECT, UPDATE_STATUS_TASK, UPDATE_TASK } from '../../constant/url';
 import { Task } from '../../model/task.model';
 
 @Injectable({
@@ -59,6 +59,9 @@ export class ProjectServices {
 
   getAllTaskByManager():Observable<Task[]>{
     return this.http.get<Task[]>(GET_ALL_TASK_BY_MANGER);
+  }
+  getTaskCount():Observable<any>{
+    return this.http.get<any>(GET_TASK_COUNT);
   }
   updateTaskStatus(taskId:string,status:string):Observable<Task>{
     return this.http.put<Task>(UPDATE_STATUS_TASK+taskId,{'status':status});

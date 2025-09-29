@@ -242,17 +242,30 @@ rout.get("/task/get/:id", asyncHandler(
     }
 ));
 rout.get("/task/getTask/:projectId", asyncHandler(
-    async (req:any, res, next: NextFunction) => {
+    async (req: any, res, next: NextFunction) => {
         try {
             const status = ['completed', 'pending', 'rejected'];
-            const result = await pool.query('select * from task where project=$1 and status!=All($2) and staff=$3', [req.params.projectId, status,req.user.id]);
+            const result = await pool.query('select * from task where project=$1 and status!=All($2) and staff=$3', [req.params.projectId, status, req.user.id]);
             res.json(result.rows);
         } catch (err) {
             next(err);
         }
     }
-))
+));
+rout.get("/task/getCount", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+          const status = ['completed', 'pending', 'rejected'];
+            const result = await pool.query('select count(*) as task_count from task where status!=All($1) and staff=$2', [status, req.user.id]);
 
+res.json(result.rows[0]);
+
+        } catch (err) {
+            next(err)
+        }
+    }
+));
+// update
 
 rout.put("/task/status/update/:taskId", asyncHandler(
     async (req, res, next: NextFunction) => {
