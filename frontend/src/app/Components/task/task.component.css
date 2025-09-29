@@ -92,14 +92,16 @@ margin: .5rem;
   color: #fff;
   text-transform: capitalize;
 }
-.priority.high {
-  background: #e74c3c;
-}
 
 .description {
   font-size: 14px;
   margin: 10px 0;
   color: #555;
+    white-space: nowrap;      /* keep text on one line */
+  overflow: hidden;         /* hide overflow */
+  text-overflow: ellipsis;  /* add ... at the end */
+  width: 300px;             /* required fixed width */
+  display: inline-block;
 }
 
 .description mat-icon {

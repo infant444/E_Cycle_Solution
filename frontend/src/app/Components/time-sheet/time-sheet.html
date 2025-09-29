@@ -27,10 +27,9 @@
                 Project
               </div>
               <div class="intp">
-                <select formControlName="project">
+                <select formControlName="project" (change)="change()">
                   <option value="" selected>Select Project</option>
-                  <option value="project1" >sample Project 1</option>
-                  <option value="project2" >sample Project 2</option>
+                  <option *ngFor="let pro of project" value="{{pro.id}}" >{{pro.project_name}}</option>
                 </select>
               </div>
             </div>
@@ -41,8 +40,8 @@
               <div class="intp">
                 <select formControlName="task">
                   <option value="" selected>Select task</option>
-                  <option value="task1" >sample task 1</option>
-                  <option value="task2" >sample task 2</option>
+                  <option *ngFor="let x of task" value="{{x.id}}" >{{x.task}}</option>
+
                 </select>
               </div>
             </div>

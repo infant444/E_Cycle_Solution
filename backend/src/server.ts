@@ -7,6 +7,7 @@ import userRouter from './router/user.router';
 import tableRouter from './router/table.router';
 import clientRouter from './router/client.router';
 import projectRouter from './router/project.router';
+import timeSheetRouter from './router/timesheet.router';
 import path from 'path';
 // config
 dotenv.config();
@@ -26,6 +27,7 @@ app.use("/api/table",tableRouter);
 app.use("/api/client",clientRouter);
 app.use("/api/user",userRouter);
 app.use("/api/project",projectRouter);
+app.use("/api/timeSheet",timeSheetRouter);
 
 // middleware
 app.use(errorHandler);

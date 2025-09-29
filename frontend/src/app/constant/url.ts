@@ -35,16 +35,17 @@ export const GET_ALL_PROJECT=Project_BASE_URL+"/getall";
 export const GET_BY_ID_PROJECT=Project_BASE_URL+"/get/";
 export const GET_BY_ClIENT_ID_PROJECT=Project_BASE_URL+"/get-by-client/";
 export const GET_BY_MANAGER_ID=Project_BASE_URL+'/getByManager';
+export const GET_BY_STAFF_ID=Project_BASE_URL+'/getByStaff';
 export const UPDATE_ALL_PROJECT=Project_BASE_URL+"/update/";
 export const UPDATE_STATUS_PROJECT=Project_BASE_URL+"/update/status/";
 export const DELETE_BY_ID_PROJECT=Project_BASE_URL+"/delete/";
 
 
 // Task
-
 export const ADD_TASK=Project_BASE_URL+"/task/add";
 export const GET_ALL_TASK=Project_BASE_URL+"/task/getall/";
 export const GET_BY_ID_TASK=Project_BASE_URL+"/task/get/";
+export const GET_ALL_TASK_STATUS=Project_BASE_URL+"/task/getTask/";
 export const GET_ALL_TASK_BY_MANGER=Project_BASE_URL+"/task/getAll/manager";
 export const UPDATE_STATUS_TASK=Project_BASE_URL+"/task/status/update/";
 export const UPDATE_TASK=Project_BASE_URL+"/task/update/";
@@ -52,6 +53,12 @@ export const DELETE_TASK=Project_BASE_URL+"/task/delete/";
 
 // Time sheet
 
+export const TIME_SHEET=BASEURL+'/api/timeSheet';
+export const ADD_TIME_SHEET=TIME_SHEET+'/add';
+export const GET_ALL_TIME_SHEET_WEEK=TIME_SHEET+'/getAll/weak';
+export const GET_ALL_TIME_SHEET_STAFF=TIME_SHEET+'/getAll/staff';
+export const GET_TIME_SHEET_ID=TIME_SHEET+'/get/';
+export const UPDATE_TIME_SHEET_STATUS=TIME_SHEET+"/update/";
 
 // Inventory
 

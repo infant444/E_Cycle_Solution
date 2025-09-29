@@ -2,8 +2,8 @@
 
   <!-- Header -->
   <div class="header">
-    <button mat-icon-button>
-     <a routerLink="/task"> <mat-icon>arrow_back</mat-icon></a>
+    <button mat-icon-button (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
     </button>
     <div class="title-section">
       <h2>{{task.task}}</h2>
@@ -67,7 +67,7 @@
     <mat-card class="info-card">
       <h3>Assigned Employee</h3>
       <div class="employee">
-        <img src="https://i.pravatar.cc/60" alt="Employee" />
+        <img [src]="user.profile==null?'./assets/images/profile_pic.png':user.profile" alt="{{user.profile}}" class="img"/>
         <div>
           <strong class="name">{{user.name}}</strong><br />
           {{user.position||'Na'}}<br />

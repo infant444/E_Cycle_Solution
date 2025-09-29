@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { Home } from './Components/home/home';
 import { Dashboard } from './Components/dashboard/dashboard';
 import { AuthGuard } from './guard/auth/auth-guard';
-import { LoginGuard } from './guard/login/login-guard';
 
 
 export const routes: Routes = [
@@ -98,7 +97,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import("./Components/time-sheet/time-sheet").then(m => m.TimeSheet,),
+        loadComponent: () => import("./Components/time-sheet/time-sheet").then(m => m.TimeSheetComponent,),
         canActivate: [AuthGuard]
       },
       {

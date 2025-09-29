@@ -79,7 +79,7 @@
     <div class="card">
       <h3>Team Members</h3>
       <div class="member" *ngFor="let x of projectMember">
-        <img src="https://i.pravatar.cc/40?img=1" alt="Michael Chen" />
+               <img [src]="x.profile==null?'./assets/images/profile_pic.png':x.profile" alt="{{x.profile}}" class="img"/>
         <div>
           <p class="name"><b>{{x.name}}</b></p>
           <p class="muted">{{x.position||'Na'}}</p>

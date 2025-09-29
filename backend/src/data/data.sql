@@ -108,6 +108,7 @@ CREATE TABLE IF NOT EXISTS timesheet (
     total_hours NUMERIC DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status task_type,
     FOREIGN KEY (project) REFERENCES project(id) ON DELETE CASCADE,
     FOREIGN KEY (staff) REFERENCES staff(id) ON DELETE CASCADE,
     FOREIGN KEY (task) REFERENCES task(id) ON DELETE CASCADE
@@ -169,5 +170,5 @@ DROP TABLE task;
 DROP TABLE project;
 -- Drop TABLE client;
 
--- ALTER TABLE staff ADD COLUMN position TEXT; 
+-- ALTER TABLE timesheet ADD COLUMN status task_type; 
 -- ALTER TABLE project RENAME COLUMN start_date to due_date; 

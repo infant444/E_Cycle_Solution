@@ -12,7 +12,7 @@
           *ngIf="show">{{user.role=='admin'?'Project':'My Project'}}</span> </a>
       <a [routerLink]="user.role=='admin'?'/task':'/myTask'" routerLinkActive="active"
         class="link"><mat-icon>task_alt</mat-icon><span *ngIf="show">{{user.role=='admin'?'Task':'My Task'}}</span> </a>
-      <a [routerLink]="user.role=='admin'?'/time-sheet':'/my-time-sheet'" routerLinkActive="active"
+      <a [routerLink]="user.role=='admin'?'/my-time-sheet':'/time-sheet'" routerLinkActive="active"
         class="link"><mat-icon>access_time</mat-icon><span *ngIf="show">{{user.role=='admin'?'Time sheet':'My Time Sheet'}}</span> </a>
       <a *ngIf="user.role=='admin'" routerLink="/report" routerLinkActive="active"
         class="link"><mat-icon>description</mat-icon><span *ngIf="show">Report</span> </a>

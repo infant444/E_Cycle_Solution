@@ -34,12 +34,8 @@
   margin-right: 6px;
   color: #fff;
 }
-.tag.completed {
-  background: #2ecc71;
-}
-.tag.high {
-  background: #e74c3c;
-}
+
+
 .tag.overdue {
   background: #f39c12;
 }
@@ -135,4 +131,8 @@
 }
 .dot.red {
   background: #e74c3c;
+}
+.img{
+  width: 5rem;
+
 }

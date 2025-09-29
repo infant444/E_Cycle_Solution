@@ -79,4 +79,7 @@ export class ViewTaskComponent implements OnInit {
       this.router.navigateByUrl("/task")
     })
   }
+  back(){
+      this.router.navigateByUrl("/task")
+  }
 }

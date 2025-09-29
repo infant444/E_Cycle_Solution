@@ -9,4 +9,6 @@ export class TimeSheet{
   date!:string;
   start_time!:string;
   end_time!:string;
+  total_hours!:number;
+  status!:string;
 }

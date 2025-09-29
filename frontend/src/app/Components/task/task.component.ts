@@ -55,11 +55,11 @@ export class TaskComponent implements OnInit {
     if (this.display == 'none') {
       this.editTask = new Task();
       this.display = 'flex';
-      this.type='add';
     } else {
       this.display = 'none';
       this.reAssign()
     }
+    console.log(this.display)
   }
   reAssign(){
     this.projectServices.getAllTaskByManager().subscribe((res)=>{

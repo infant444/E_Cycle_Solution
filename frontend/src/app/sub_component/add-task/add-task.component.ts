@@ -80,7 +80,7 @@ get FC(){
     this.FC.description.setValue(this.task.description || '');
     this.FC.project.setValue(this.task.project || "");
     this.FC.staff_id.setValue(this.task.staff || "");
-    this.FC.due.setValue(new Date(this.task?.due).toISOString().split('T')[0] || "");
+   this.FC.due.setValue(this.task?.due ? new Date(this.task.due).toISOString().split('T')[0] : '');
     console.log(this.task?.estimate_time)
     this.FC.estimate_time.setValue(this.task?.estimate_time || 0);
     this.FC.priority.setValue(this.task.priority || "");
