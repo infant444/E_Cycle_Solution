@@ -119,15 +119,15 @@ rout.get("/get/report/today", asyncHandler(
         try {
             const dateX = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
-           const result = await pool.query(
-  `SELECT task, task_name, SUM(total_hours) AS today_hour
+            const result = await pool.query(
+                `SELECT task, task_name, SUM(total_hours) AS today_hour
    FROM timesheet
    WHERE staff = $1 
      AND "date" = $2
    GROUP BY task, task_name
    ORDER BY task_name`,
-  [req.user.id, dateX]
-);
+                [req.user.id, dateX]
+            );
 
             // return all rows, not just first one
             res.json(result.rows);
@@ -154,6 +154,22 @@ rout.get("/get/report/month", asyncHandler(
         }
     }
 ));
+rout.get("/getall/manager", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const query = `
+    SELECT t.*
+    FROM timesheet t
+    JOIN project p ON p.id = t.project
+    WHERE p.manager_id = $1 order by t.date,t.status
+  `;
+            const result = await pool.query(query, [req.user.id]);
+            res.json(result.rows);
+        } catch (err) {
+            next(err);
+        }
+    }
+))
 // update
 rout.put("/update/:id", asyncHandler(
     async (req: any, res, next: NextFunction) => {

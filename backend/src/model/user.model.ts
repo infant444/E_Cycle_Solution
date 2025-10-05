@@ -6,5 +6,10 @@ password:string;
 dob:string;
 contact:string;
 role:string;
-isLogin:boolean;
+is_login:boolean;
+profile:string;
+position:string;
+is_active:boolean;
+createdat:string;
+login_time:string;
 }

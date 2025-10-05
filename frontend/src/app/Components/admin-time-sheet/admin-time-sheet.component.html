@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="content">
+    <div class="header">
+      <app-title title="All Timesheets" sub_title="Review and approve employee timesheets"></app-title>
+    </div>
+    <div class="filter">
+      <div class="filter-content">
+        <div class="filter-name">
+          <p> <span class="icon"><mat-icon style="padding-top:.4rem ;">filter_list</mat-icon></span><span
+              class="text">Filter</span></p>
+        </div>
+        <div class="filter-forms">
+          <select [(ngModel)]="status" [ngModelOptions]="{ standalone: true }" (change)="getBaseStatus()">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <input type="date" [(ngModel)]="date" [ngModelOptions]="{ standalone: true }" (change)="getBaseDate()">
+          <select [(ngModel)]="projectId" [ngModelOptions]="{ standalone: true }" (change)=" getBaseProject()">
+            <option value="">All Project</option>
+            <option *ngFor="let p of project" [value]="p.id">{{p.project_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <hr>
+      <hr>
+        <div class="TimeSheet-info not-found" *ngIf="!timeSheet?.length">
+      <app-not-found></app-not-found>
+    </div>
+        <div class="TimeSheet-info" *ngIf="timeSheet?.length">
+         <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Employee</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Hours</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let record of timeSheet; let i = index">
+        <!-- Main Row -->
+        <tr  class="main-row">
+          <td>
+            <div class="employee">
+              <img [src]="getUser(record.staff)?.profile==null||getUser(record.staff)?.profile==''?'./assets/images/profile_pic.png':getUser(record.staff)?.profile" alt="avatar" />
+              <div>
+                <div class="name">{{ getUser(record.staff)?.name}}</div>
+                <div class="role">{{getUser(record.staff)?.role }}</div>
+              </div>
+            </div>
+          </td>
+          <td>{{ record.date |date:'dd/MM/yyyy'}}</td>
+          <td>{{ getTime(record.start_time)| date:'hh:mm a'}}</td>
+          <td>{{ getTime(record.end_time) | date:'hh:mm a'}}</td>
+          <td>{{ secToHr(record.total_hours.toString())|number:'1.0-1'}}hr</td>
+          <td class="description">{{ record.description }}</td>
+          <td>
+            <span class="status" [ngClass]="record.status">{{ record.status }}</span>
+          </td>
+          <td class="actions">
+              <div class="menu">
+    <mat-icon (click)="toggleView(i)">visibility</mat-icon>
+    <div class="menu" *ngIf="record.status=='pending'">
+    <mat-icon (click)="updateStatus(record.id ,'accepted')"  class="accepted">done</mat-icon>
+    <mat-icon (click)="updateStatus(record.id,'rejected')" color="#fff" class="cancel">close</mat-icon>
+</div>
+    </div>
+          </td>
+        </tr>
+
+        <!-- Animated Dropdown -->
+        <tr>
+          <td colspan="8" class="details-cell">
+            <div [@expandCollapse]="expandedIndex === i ? 'expanded' : 'collapsed'" class="details-box">
+              <h4>Details</h4>
+              <p><strong>Project:</strong> {{ record.project_name }}</p>
+              <p><strong>Task:</strong> {{ record.task_name }}</p>
+              <p><strong>Date:</strong>{{ record.date |date:'dd/MM/yyyy'}}</p>
+              <p><strong>Start Time:</strong> {{ getTime(record.start_time)| date:'hh:mm a'}}</p>
+              <p><strong>End Time:</strong> {{ getTime(record.end_time)| date:'hh:mm a'}}</p>
+              <p><strong>Hours:</strong> {{ secToHr(record.total_hours.toString())|number:'1.0-1'}}hr</p>
+              <p><strong>Description:</strong> {{ record.description }}</p>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+  </div>
+</div>

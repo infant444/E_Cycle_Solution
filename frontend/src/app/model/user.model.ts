@@ -10,4 +10,7 @@ is_login!:boolean;
 profile!:string;
 position!:string;
 token!:string;
+is_active!:boolean
+createdat!:string;
+login_time!:string;
 }

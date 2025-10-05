@@ -1,7 +1,7 @@
 <div class="container">
   <div class="content">
     <div class="header">
-      <app-title title="My Task" sub_title="Assign and track tasks across your team"></app-title>
+      <app-title title="My Task" sub_title="View and update your assigned tasks"></app-title>
       <div class="add">
       </div>
     </div>
@@ -51,7 +51,7 @@
   </a>
 
   <div class="assignee">
-    <img src="https://i.pravatar.cc/40" alt="profile" />
+    <img [src]="getProfile(i.staff)==null|| getProfile(i.staff)==''?'./assets/images/profile_pic.png':getProfile(i.staff)" [alt]="getUser(i.staff)" />
     <span class="name">{{getUser(i.staff)}}</span>
   </div>
 

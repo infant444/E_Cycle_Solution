@@ -14,7 +14,7 @@
       <hr>
       <div class="profile">
         <div class="pic">
-          <img src="./assets/images/profile_pic.png" alt="">
+          <img [src]="user.profile==null||user.profile==''?'./assets/images/profile_pic.png':user.profile" alt="">
         </div>
         <div class="detail">
           <p class="p1">

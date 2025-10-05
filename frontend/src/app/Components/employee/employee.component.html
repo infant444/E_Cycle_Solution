@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="content">
+    <div class="header">
+      <app-title title="Employee Management" sub_title="Manage your team members and their access"></app-title>
+      <div class="add">
+        <button class="btn" (click)="dis()">Add</button>
+      </div>
+    </div>
+    <app-employee-info [total_employee]="total" [active_employee]="active"
+      [inactive_employee]="inactive"></app-employee-info>
+    <div class="filter" style="margin-bottom: .5rem;">
+      <form>
+        <input type="text" [(ngModel)]="name" placeholder="Search" [ngModelOptions]="{ standalone: true }"
+          class="search" (change)="search()">
+        <div class="div1">
+          <p> <span class="icon"><mat-icon style="padding-top:.4rem ;">filter_list</mat-icon></span><span
+              class="text">Filter</span></p>
+          <select [(ngModel)]="position_type" [ngModelOptions]="{ standalone: true }" (change)="typeChange()">
+            <option value="" selected>All Position</option>
+            <option value="field_operations">Field Operations</option>
+            <option value="collection">Collection</option>
+            <option value="management">Management</option>
+            <option value="quality_control">Quality Control</option>
+            <option value="logistics">Logistics</option>
+            <option value="administration">Administration</option>
+          </select>
+          <select [(ngModel)]="active_status" [ngModelOptions]="{ standalone: true }" (change)="activeChange()">
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">InActive</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <hr>
+    <div class="employee-i not-found" *ngIf="!user.length">
+            <app-not-found></app-not-found>
+    </div>
+    <div class="employee-i" *ngIf="user.length">
+      <div class="card" *ngFor="let x of user">
+        <div class="card-header">
+          <img [src]="x.profile==null||x.profile==''?'./assets/images/profile_pic.png':x.profile" alt="Profile" class="profile-img" />
+          <div class="info">
+            <h3>{{x.name}}</h3>
+            <p class="role">{{changeText(x.position)}}</p>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+
+            <span><mat-icon>email</mat-icon>{{x.email}}</span>
+            <span><mat-icon>call</mat-icon> {{x.contact}}</span>
+          </div>
+          <div class="row">
+            <span><strong>Joined</strong> {{x.createdat|date:'dd/MM/yyyy'}}</span>
+            <span><strong>Last Login</strong> {{x.login_time|date:'dd/MM/yyyy hh:mm a'}}</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <span class="status" [ngClass]="x.is_login?'active':'inactive'">{{x.is_login?'Active':'Inactive'}}</span>
+          <mat-icon>visibility</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-add-employee [display]="display" [type]="type" [user]="editUser"></app-add-employee>

@@ -11,7 +11,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: "admin",
+    path: "admin/dashboard",
     component: Dashboard,
     canActivate: [AuthGuard]
   },
@@ -138,11 +138,21 @@ export const routes: Routes = [
     ]
 
   },
-
+  {
+    path:"admin/time-sheet",
+    loadComponent:()=>import("./Components/admin-time-sheet/admin-time-sheet.component").then(m=>m.AdminTimeSheetComponent),
+    canActivate:[AuthGuard]
+  },
+  {
+    path:"employee",
+    loadComponent:()=>import("./Components/employee/employee.component").then(m=>m.EmployeeComponent),
+    canActivate:[AuthGuard]
+  },
   {
     path: "time-sheet/**",
     redirectTo: "/time-sheet"
   },
+
   { path: "**", redirectTo: '' },
 
 ];

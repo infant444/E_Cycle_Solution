@@ -9,8 +9,10 @@ import clientRouter from './router/client.router';
 import projectRouter from './router/project.router';
 import timeSheetRouter from './router/timesheet.router';
 import path from 'path';
+import { cloudinaryConnect } from './config/database.config';
 // config
 dotenv.config();
+cloudinaryConnect()
 const port=process.env.PORT||5000;
 const app = express();
 

@@ -1,0 +1,93 @@
+<div class="container" [ngStyle]="{'display': display}">
+  <div class="close" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </div>
+  <div class="content">
+    <app-title [h3_title]="type=='edit'?'Edit Employee':'Add Employee'"></app-title>
+    <hr class="hr">
+    <form (ngSubmit)="submit()" [formGroup]="userForm">
+      <div class="div1">
+        <app-title sub_title="Basic Information"></app-title>
+        <div class="input-all">
+          <div class="label">
+            Employees Name
+          </div>
+          <div class="input">
+            <input type="text" formControlName="name" [className]="(isSubmitted && FC.name.invalid)?'error':''">
+          </div>
+        </div>
+        <div class="input-all">
+          <div class="label">
+            Email
+          </div>
+          <div class="input">
+            <input type="email" formControlName="email" [className]="(isSubmitted && FC.email.invalid)?'error':''">
+          </div>
+        </div>
+        <div class="div11">
+          <div class="input-all">
+            <div class="label">
+              Position
+            </div>
+            <div class="input">
+              <select formControlName="position" [className]="(isSubmitted && FC.position.invalid)?'error':''">
+                <option value="" selected>Select Position</option>
+                <option value="field_operations">Field Operations</option>
+                <option value="collection">Collection</option>
+                <option value="management">Management</option>
+                <option value="quality_control">Quality Control</option>
+                <option value="logistics">Logistics</option>
+                <option value="administration">Administration</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-all">
+            <div class="label">
+              Role
+            </div>
+            <div class="input">
+              <select formControlName="role" [className]="(isSubmitted && FC.role.invalid)?'error':''">
+                <option value="" selected>Select Role</option>
+                <option value="admin" selected>Admin</option>
+                <option value="staff" selected>Employee</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="div11">
+          <div class="input-all">
+            <div class="label">
+              Birth Date
+            </div>
+            <div class="input">
+              <input type="date" formControlName="dob" [className]="(isSubmitted && FC.dob.invalid)?'error':''">
+            </div>
+          </div>
+          <div class="input-all">
+            <div class="label">
+              Contact
+            </div>
+            <div class="input">
+              <input type="tel" formControlName="contact" [className]="(isSubmitted && FC.contact.invalid)?'error':''">
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="div2">
+        <app-title sub_title="Profile"></app-title>
+        <div class="input">
+          <input type="file" formControlName="profile" accept="image/*"
+            [className]="(isSubmitted && FC.profile.invalid)?'error':''" (change)="onFileSelected($event)">
+        </div>
+        <img *ngIf="imageUrl" [src]="imageUrl" alt="Preview" width="150" height="150" style="border-radius: 8px; margin-top:10px;">
+
+      </div>
+
+      <div class="div5">
+        <input type="button" value="Cancel" class="button cancel" (click)="close()">
+        <input type="submit" value="Submit" class="button submit">
+      </div>
+    </form>
+  </div>
+</div>

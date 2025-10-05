@@ -10,7 +10,8 @@ export const LOGIN=EMPLOYEE_BASE_URL+"/login";
 export const GET_ALL_STAFF=EMPLOYEE_BASE_URL+"/getAll";
 export const GET_ALL_PROJECT_MEMBER=EMPLOYEE_BASE_URL+"/get-data/project-member";
 export const GET_By_ID_STAFF=EMPLOYEE_BASE_URL+"/getById/";
-
+export const REGISTER=EMPLOYEE_BASE_URL+"/register";
+export const LOGOUT=EMPLOYEE_BASE_URL+"/logout/";
 
 
 // Admin
@@ -66,6 +67,7 @@ export const GET_TODAY_HOUR=TIME_SHEET+'/get/totalHour/today';
 export const GET_WEEK_HOUR_REPORT=TIME_SHEET+'/get/report/week';
 export const GET_TODAY_TASK_REPORT=TIME_SHEET+'/get/report/today';
 export const GET_MONTH_TASK_REPORT=TIME_SHEET+'/get/report/month';
+export const GET_ALL_TIME_SHEET_MANAGER=TIME_SHEET+"/getall/manager";
 
 export const UPDATE_TIME_SHEET_STATUS=TIME_SHEET+"/update/";
 

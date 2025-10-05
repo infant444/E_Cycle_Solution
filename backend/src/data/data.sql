@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS Staff (
     is_login BOOLEAN DEFAULT FALSE,
     profile TEXT,
     position TEXT,
+    is_active BOOLEAN DEFAULT TRUE,
     login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -170,5 +171,5 @@ DROP TABLE task;
 DROP TABLE project;
 -- Drop TABLE client;
 
--- ALTER TABLE timesheet ADD COLUMN status task_type; 
+-- ALTER TABLE staff ADD COLUMN is_active BOOLEAN DEFAULT TRUE; 
 -- ALTER TABLE project RENAME COLUMN start_date to due_date; 

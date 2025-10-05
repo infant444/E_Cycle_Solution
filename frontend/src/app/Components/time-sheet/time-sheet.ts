@@ -65,8 +65,8 @@ export class TimeSheetComponent implements OnInit {
       this.todayHour = (parseInt(res.today_hour.toString()) / 3600)
       this.cd.markForCheck()
     })
-    this.projectServices.getTaskCount().subscribe((res)=>{
-      this.assignedTask=res.task_count;
+    this.projectServices.getTaskCount().subscribe((res) => {
+      this.assignedTask = res.task_count;
       this.cd.markForCheck()
 
     })
@@ -79,7 +79,7 @@ export class TimeSheetComponent implements OnInit {
       end_time: ["", Validators.required],
     });
     this.timeSheetService.getAllStaff().subscribe((res) => {
-      this.resentTimeSheet = res.reverse().slice(0,3);
+      this.resentTimeSheet = res.reverse().slice(0, 3);
       this.cd.markForCheck()
 
     })
@@ -145,11 +145,36 @@ export class TimeSheetComponent implements OnInit {
         this.FC.date.setValue('');
         this.FC.start_time.setValue('');
         this.FC.end_time.setValue('');
+        this.reAssign();
       }, (err) => {
         this.toasterServices.error(err.message);
       }
     )
 
   }
+  reAssign() {
+    this.getWeekDays()
+    this.projectServices.getByStaff().subscribe((res) => {
+      this.project = res;
+      this.cd.markForCheck()
+    })
+    this.timeSheetService.getTotalHourWeek(this.start, this.end).subscribe((res) => {
+      this.weekHour = (parseInt(res.week_hour.toString()) / 3600)
+      this.cd.markForCheck()
+    })
+    this.timeSheetService.getTotalHourToday().subscribe((res) => {
+      this.todayHour = (parseInt(res.today_hour.toString()) / 3600)
+      this.cd.markForCheck()
+    })
+    this.projectServices.getTaskCount().subscribe((res) => {
+      this.assignedTask = res.task_count;
+      this.cd.markForCheck()
 
+    })
+    this.timeSheetService.getAllStaff().subscribe((res) => {
+      this.resentTimeSheet = res.reverse().slice(0, 3);
+      this.cd.markForCheck()
+
+    })
+  }
 }

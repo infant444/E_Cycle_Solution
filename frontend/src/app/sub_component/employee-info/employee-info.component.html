@@ -1,0 +1,38 @@
+<div class="min-dashboard">
+  <div class="div2">
+
+    <div class="div1">
+      <div class="tit">
+        <p>Total Employee</p>
+        <h4>{{total_employee||0}}</h4>
+      </div>
+      <div class="icon blue">
+<lucide-angular [img]="UserCheck" class="my-icon"></lucide-angular>      </div>
+    </div>
+  </div>
+  <div class="div2">
+
+    <div class="div1">
+      <div class="tit">
+        <p>Active Employee</p>
+        <h4>{{active_employee||0}}</h4>
+      </div>
+      <div class="icon green">
+        <lucide-angular [img]="UserCheck" class="my-icon"></lucide-angular>
+
+      </div>
+    </div>
+  </div>
+  <div class="div2">
+
+    <div class="div1">
+      <div class="tit">
+        <p>Inactive Employee</p>
+        <h4>{{inactive_employee||0}}</h4>
+      </div>
+      <div class="icon red">
+        <lucide-angular [img]="userX" class="my-icon"></lucide-angular>
+      </div>
+    </div>
+  </div>
+</div>

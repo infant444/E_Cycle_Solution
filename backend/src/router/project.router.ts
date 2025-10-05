@@ -2,7 +2,6 @@ import { NextFunction, Router } from "express";
 import asyncHandler from "express-async-handler";
 import { pool } from "../config/postgersql.config";
 import auth from "../middleware/auth.middleware";
-import { ProjectModel } from "../model/project.model";
 import { projectAssignedEmployee, ProjectAssignedManager, TaskAcceptedReplyMail, TaskAssignedForStaff } from "../controller/email.control";
 import { MailConfig, mailGenerator } from "../config/mail.config";
 import nodeMailer from 'nodemailer';
@@ -322,7 +321,6 @@ rout.put("/task/status/update/:taskId", asyncHandler(
                     const staffX = await pool.query("select * from staff where id=$1", [req.user.id]);
                     if (staffX.rowCount != null && staffX.rowCount > 0) {
                         let transporter = nodeMailer.createTransport(MailConfig);
-                        const priority = taskX.rows[0].priority == 3 ? 'High' : taskX.rows[0].priority == 2 ? 'Medium' : 'Low';
 
                         const mailTemplate = TaskAcceptedReplyMail(
                             staffX.rows[0].name,
@@ -337,7 +335,7 @@ rout.put("/task/status/update/:taskId", asyncHandler(
                         let message = {
                             from: '"RI planIt " <riplanit@gmail.com>',
                             to: '<' + staffX.rows[0].email + '>',
-                            subject: "Task Assignment Notification",
+                            subject: "Task Accepted Confirmation",
                             html: mail,
                         }
                         transporter.sendMail(message).then(() => {

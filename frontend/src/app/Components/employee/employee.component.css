@@ -1,0 +1,175 @@
+.container{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 3;
+  position: relative;
+}
+.content{
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+.content::-webkit-scrollbar{
+  width: 0;
+}
+.header{
+display: flex;
+justify-content: space-between;
+margin: .5rem;
+}
+
+.btn{
+    width: 7rem;
+  height: 3rem;
+  border-radius: .4rem;
+  background-color:#000;
+    color:  blanchedalmond;
+  box-shadow:  0px 0px 15px 2px lightgray;
+  border-color: #eff6f9;
+  font-weight: 500;
+  transform: scale(1.1);
+  margin: 0 .5rem;
+  cursor: pointer;
+}
+
+form{
+  width: 100%;
+  padding: .5rem 1.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+input,select{
+  margin: 0 .5rem;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+.div1{
+  display: flex;
+}
+.icon{
+margin-top: .4rem;
+}
+
+form>p{
+  display: flex;
+  text-transform: capitalize;
+}
+.search{
+  width: 25rem;
+}
+.employee-i{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  position: relative;
+}
+.card {
+  width: 285px;
+  min-height: 200px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  display: flex;
+  margin: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.info {
+  flex: 1;
+}
+
+.info h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #222;
+}
+
+.role {
+  font-size: 14px;
+  color: #777;
+  margin-top: 2px;
+  text-transform: capitalize;
+}
+
+.menu-btn {
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.card-body {
+  margin-top: 15px;
+}
+
+.row {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  margin: 6px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.row i {
+  margin-right: 8px;
+  color: #666;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.status {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status.active {
+  background-color: #e8f9ef;
+  color: #198754;
+}
+.status.inactive {
+  background-color: #f9e8e8;
+  color: #871919;
+}
+.edit-icon {
+  color: #555;
+  cursor: pointer;
+}
+span{
+  font-size: 1rem;
+}
+span mat-icon{
+  padding-top: .8rem;
+  height: 2rem;
+  font-size: 1.35rem;
+}
+mat-icon{
+cursor: pointer;
+}

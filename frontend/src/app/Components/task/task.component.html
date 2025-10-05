@@ -52,7 +52,7 @@
   </a>
 
   <div class="assignee">
-    <img src="https://i.pravatar.cc/40" alt="profile" />
+    <img [src]="getProfile(i.staff)==null|| getProfile(i.staff)==''?'./assets/images/profile_pic.png':getProfile(i.staff)" [alt]="getUser(i.staff)" />
     <span class="name">{{getUser(i.staff)}}</span>
   </div>
 

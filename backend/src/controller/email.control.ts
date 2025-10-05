@@ -88,7 +88,7 @@ export const TaskAcceptedReplyMail=(staffName:string, projectName:string, task:s
   return {
     body: {
       name: staffName,
-      intro: `✅ Thank you for accepting the task **"${task}"** in the project **${projectName}**.`,
+      intro: `✅ Thank you for accepting the task ${task} in the project ${projectName}.`,
       action: {
         instructions: `Here’s a quick summary of your assigned task:`,
         button: {
@@ -110,4 +110,30 @@ export const TaskAcceptedReplyMail=(staffName:string, projectName:string, task:s
   };
 
   
+}
+export const greatEmployee=(staffName:string,username:string,passcode:string)=>{
+  return {
+    body: {
+      name: staffName,
+      intro: `🎉 Congratulations and welcome to E-Cycle Solutions! We’re excited to have you join our team.`,
+      action: {
+        instructions: 'Here are your login credentials to access your staff portal:',
+        button: {
+          color: '#22BC66',
+          text: 'Go to Staff Portal',
+          link: 'https://portal.ecyclesolutions.com/login'
+        }
+      },
+      dictionary: {
+        'Username': username,
+        'Password': passcode
+      },
+      outro: [
+        'Please keep your credentials secure and do not share them with anyone.',
+        'We’re thrilled to have you with us — wishing you success and growth ahead!',
+        'Warm regards,',
+        'E-Cycle Solutions HR Team'
+      ]
+    }
+  }
 }

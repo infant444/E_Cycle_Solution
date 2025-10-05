@@ -103,6 +103,10 @@ export class TaskComponent implements OnInit {
   getUser(id:string):string{
     return this.staff?.filter(s=>s.id===id)[0].name ||'';
   }
+  getProfile(id:string):string{
+    return this.staff?.filter(s=>s.id===id)[0].profile ||'';
+
+  }
   calculateDate(x: string) {
     const dueDate = new Date(x).getTime();   // convert to ms
     const today = new Date().getTime();      // current time in ms
