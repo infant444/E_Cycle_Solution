@@ -83,3 +83,31 @@ export const TaskAssignedForStaff = (staffName: string, projectName: string, Tas
   }
 
 }
+
+export const TaskAcceptedReplyMail=(staffName:string, projectName:string, task:string, description:string, due:string, priority:string, estimate_time:string)=> {
+  return {
+    body: {
+      name: staffName,
+      intro: `✅ Thank you for accepting the task **"${task}"** in the project **${projectName}**.`,
+      action: {
+        instructions: `Here’s a quick summary of your assigned task:`,
+        button: {
+          color: '#4F46E5',
+          text: 'View Task in Dashboard',
+          link: `https://yourapp.com/tasks/${task}`
+        }
+      },
+      dictionary: {
+        'Task Name': task,
+        'Description': description,
+        'Priority': priority,
+        'Due Date': due,
+        'Estimated Time': `${estimate_time} hrs`
+      },
+      outro: `We appreciate your dedication and timely action. You can always view task progress and updates in your dashboard.`,
+      signature: 'Best regards,\nRI planIt Team'
+    }
+  };
+
+  
+}

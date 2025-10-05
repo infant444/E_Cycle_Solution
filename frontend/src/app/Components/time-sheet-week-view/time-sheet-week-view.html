@@ -14,8 +14,15 @@
         <div class="sub-header">
           <p class="p2">{{formateDate(date)}}</p>
 
-          <p class="p3">0 hrs</p>
+          <p class="p3">{{calculateHr(date)|number:'1.0-1'}}hrs</p>
+
         </div>
+        <div class="sub-content" *ngIf="dateFilter(date).length>0">
+          <app-recent-works *ngFor="let x of dateFilter(date)" [project_name]="x.project_name" [task_name]="x.task_name" [start_time]="x.start_time" [end_time]="x.end_time" [hr]="x.total_hours.toString()" ></app-recent-works>
+
+        </div>
+        <div class="sub-content x" *ngIf="dateFilter(date).length==0">
+          NOT FOUND!
       </div>
 
     </div>

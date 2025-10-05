@@ -1,5 +1,6 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Title } from "../../sub_component/title/title";
 import { ProjectServices } from '../../Services/project/project.services';

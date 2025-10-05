@@ -7,10 +7,10 @@
           class="my-icon"></lucide-angular><span *ngIf="show">Inventory</span> </a>
       <a *ngIf="user.role=='admin'" routerLink="/client" routerLinkActive="active"
         class="link"><mat-icon>person</mat-icon><span *ngIf="show">Client</span> </a>
-      <a [routerLink]="user.role=='admin'?'/project':'/myProject'" routerLinkActive="active"
+      <a [routerLink]="user.role=='admin'?'/project':'/project/myProject'" routerLinkActive="active"
         class="link"><lucide-angular [img]="FolderOpen" class="my-icon"></lucide-angular><span
           *ngIf="show">{{user.role=='admin'?'Project':'My Project'}}</span> </a>
-      <a [routerLink]="user.role=='admin'?'/task':'/myTask'" routerLinkActive="active"
+      <a [routerLink]="user.role=='admin'?'/task':'/task/myTask'" routerLinkActive="active"
         class="link"><mat-icon>task_alt</mat-icon><span *ngIf="show">{{user.role=='admin'?'Task':'My Task'}}</span> </a>
       <a [routerLink]="user.role=='admin'?'/my-time-sheet':'/time-sheet'" routerLinkActive="active"
         class="link"><mat-icon>access_time</mat-icon><span *ngIf="show">{{user.role=='admin'?'Time sheet':'My Time Sheet'}}</span> </a>

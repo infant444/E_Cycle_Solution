@@ -64,7 +64,18 @@ export const routes: Routes = [
       },
       {
         path: "myProject",
-        loadComponent: () => import("./Components/my-project/my-project.component").then(m => m.MyProjectComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import("./Components/my-project/my-project.component").then(m => m.MyProjectComponent),
+            canActivate: [AuthGuard]
+          },
+          {
+        path: "view/:projectid",
+        loadComponent: () => import("./Components/view-my-project/view-my-project.component").then(m => m.ViewMyProjectComponent),
+        canActivate: [AuthGuard]
+          }
+        ],
         canActivate: [AuthGuard]
       }
     ]
@@ -87,7 +98,19 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
       }, {
         path: 'myTask',
-        loadComponent: () => import("./Components/my-task/my-task.component").then(m => m.MyTaskComponent),
+        children:[
+ {
+            path: '',
+            loadComponent: () => import("./Components/my-task/my-task.component").then(m => m.MyTaskComponent),
+            canActivate: [AuthGuard]
+          },
+          {
+        path: "view/:taskId",
+        loadComponent: () => import("./Components/view-my-task/view-my-task.component").then(m => m.ViewMyTaskComponent),
+        canActivate: [AuthGuard]
+          }
+        ],
+
         canActivate: [AuthGuard]
       }
     ]

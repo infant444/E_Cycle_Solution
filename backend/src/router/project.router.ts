@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import { pool } from "../config/postgersql.config";
 import auth from "../middleware/auth.middleware";
 import { ProjectModel } from "../model/project.model";
-import { projectAssignedEmployee, ProjectAssignedManager, TaskAssignedForStaff } from "../controller/email.control";
+import { projectAssignedEmployee, ProjectAssignedManager, TaskAcceptedReplyMail, TaskAssignedForStaff } from "../controller/email.control";
 import { MailConfig, mailGenerator } from "../config/mail.config";
 import nodeMailer from 'nodemailer';
 const rout = Router();
@@ -117,6 +117,23 @@ rout.get("/getByStaff", asyncHandler(
         }
     }
 ));
+rout.get("/getByStaffId", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const query = `
+        SELECT *
+        FROM project
+        WHERE $1 = ANY(team_member)
+        order by priority DESC;
+      `;
+            const result = await pool.query(query, [req.user.id]);
+            // console.log(result.rows)
+            res.json(result.rows);
+        } catch (err) {
+            next(err);
+        }
+    }
+));
 
 // Update
 rout.put("/update/:id", asyncHandler(
@@ -164,11 +181,25 @@ rout.put("/update/status/:id", asyncHandler(
             next(err);
         }
     }
-))
+));
+
 // delete
 rout.delete("/delete/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
+            const project = await pool.query("select * from project where id=$1", [req.params.id,])
+            if (project.rowCount != null && project.rowCount > 0) {
+                const client = await pool.query("select * from client where id=$1;", [project.rows[0].client_id,]);
+                if (client.rowCount != null && client.rowCount > 0) {
+                    var count = parseInt(client.rows[0].no_project) || 0;
+                    count -= 1;
+                    if (client.rows[0].project_name == project.rows[0].project_name) {
+                        await pool.query("update client set current_project=$1,no_project=$2 where id=$3", ['', count, project.rows[0].client_id]);
+                    } else {
+                        await pool.query("update client set no_project=$1 where id=$2", [count, project.rows[0].client_id]);
+                    }
+                }
+            }
             const result = await pool.query("delete from project where id=$1 RETURNING *", [req.params.id,]);
             res.json(result);
         } catch (err) {
@@ -255,26 +286,67 @@ rout.get("/task/getTask/:projectId", asyncHandler(
 rout.get("/task/getCount", asyncHandler(
     async (req: any, res, next: NextFunction) => {
         try {
-          const status = ['completed', 'pending', 'rejected'];
+            const status = ['completed', 'pending', 'rejected'];
             const result = await pool.query('select count(*) as task_count from task where status!=All($1) and staff=$2', [status, req.user.id]);
 
-res.json(result.rows[0]);
+            res.json(result.rows[0]);
 
         } catch (err) {
             next(err)
         }
     }
 ));
+rout.get("/task/getByStaffId", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const result = await pool.query('select * from task where staff=$1', [req.user.id]);
+            res.json(result.rows);
+        } catch (err) {
+            next(err)
+        }
+    }
+))
 // update
 
 rout.put("/task/status/update/:taskId", asyncHandler(
-    async (req, res, next: NextFunction) => {
+    async (req: any, res, next: NextFunction) => {
         try {
 
             const task = await pool.query(
                 "UPDATE task SET status=$1 WHERE id=$2 RETURNING id",
                 [req.body.status, req.params.taskId]
             );
+            if (req.body.status === "accepted") {
+                const taskX = await pool.query("select * from task where id=$1", [req.params.taskId])
+                if (taskX.rowCount != null && taskX.rowCount > 0) {
+                    const staffX = await pool.query("select * from staff where id=$1", [req.user.id]);
+                    if (staffX.rowCount != null && staffX.rowCount > 0) {
+                        let transporter = nodeMailer.createTransport(MailConfig);
+                        const priority = taskX.rows[0].priority == 3 ? 'High' : taskX.rows[0].priority == 2 ? 'Medium' : 'Low';
+
+                        const mailTemplate = TaskAcceptedReplyMail(
+                            staffX.rows[0].name,
+                            taskX.rows[0].project_name,
+                            taskX.rows[0].task,
+                            taskX.rows[0].description,
+                            new Date(taskX.rows[0].due).toISOString().split('T')[0],
+                            taskX.rows[0].priority == 3 ? 'High' : taskX.rows[0].priority == 2 ? 'Medium' : 'Low',
+                            taskX.rows[0].estimate_time.toString()
+                        );
+                        const mail = mailGenerator.generate(mailTemplate);
+                        let message = {
+                            from: '"RI planIt " <riplanit@gmail.com>',
+                            to: '<' + staffX.rows[0].email + '>',
+                            subject: "Task Assignment Notification",
+                            html: mail,
+                        }
+                        transporter.sendMail(message).then(() => {
+                            console.log("Successfully send to " + staffX.rows[0].name)
+                        })
+                    }
+                }
+
+            }
             if (req.body.status === "completed") {
                 const project_data = await pool.query("select * from project where id=$1", [task.rows[0].project]);
                 const task_count = parseInt(project_data.rows[0].no_task);

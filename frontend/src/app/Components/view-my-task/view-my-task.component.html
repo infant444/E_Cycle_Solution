@@ -1,0 +1,125 @@
+<div class="task-details">
+
+  <!-- Header -->
+  <div class="header">
+    <button mat-icon-button (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="title-section">
+      <h2>{{task.task}}</h2>
+      <p class="description">{{task.description}}</p>
+      <div class="tags">
+        <span class="tag" [ngClass]="task.status">{{task.status}}</span>
+        <span *ngIf="task.priority==3" class="tag high">high priority</span>
+        <span *ngIf="task.priority==2" class="tag medium">medium priority</span>
+        <span *ngIf="task.priority==1" class="tag low">low priority</span>
+        <span class="tag overdue" *ngIf="calculateDate(task.due)<0">Overdue</span>
+      </div>
+    </div>
+    <div class="actions" *ngIf="task.status=='pending'">
+      <button mat-stroked-button color="primary" (click)="updateStatus('accepted')">
+        <mat-icon >done</mat-icon> Accepted
+      </button>
+      <button mat-flat-button color="warn" (click)="updateStatus('rejected')">
+        <mat-icon >close</mat-icon> Rejected
+      </button>
+    </div>
+     <div class="actions" *ngIf="task.status!='pending'">
+      <button mat-flat-button color="warn" (click)="move()">
+        <mat-icon >add</mat-icon> Add Work
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card">
+      <h3>Progress</h3>
+      <p>{{task.complete_time}}%</p>
+      <mat-icon>check_circle</mat-icon>
+    </div>
+    <div class="stat-card">
+      <h3>Hours Logged</h3>
+      <p>{{task.actual_time}}h</p>
+      <mat-icon>schedule</mat-icon>
+    </div>
+    <div class="stat-card">
+      <h3>Estimated Hours</h3>
+      <p>{{task.estimate_time}}h</p>
+      <mat-icon>timer</mat-icon>
+    </div>
+    <div class="stat-card">
+      <h3 >Days Left</h3>
+      <p *ngIf="calculateDate(task.due)>0">{{calculateDate(task.due)}}</p>
+      <p *ngIf="calculateDate(task.due)<=0">Overdue</p>
+      <mat-icon *ngIf="calculateDate(task.due)<=0">event_busy</mat-icon>
+      <mat-icon *ngIf="calculateDate(task.due)>0">event</mat-icon>
+    </div>
+  </div>
+
+  <!-- Task Info + Employee -->
+  <div class="info-grid">
+    <mat-card class="info-card">
+      <h3>Task Information</h3>
+      <div class="flex">
+      <p><mat-icon>person</mat-icon> Assigned To: <span class="name">{{user.name}}</span></p>
+      <p><mat-icon>event</mat-icon> End Date: {{task.due|date:'dd/MM/yyyy'}}</p>
+      </div>
+      <p>Created: {{task.created_at|date:'dd/MM/yyyy'}}</p>
+      <p>Last Updated: {{task.updated_at |date:'dd/MM/yyyy'}}</p>
+    </mat-card>
+
+    <mat-card class="info-card">
+      <h3>Assigned Employee</h3>
+      <div class="employee">
+        <img [src]="user.profile==null?'./assets/images/profile_pic.png':user.profile" alt="{{user.profile}}" class="img"/>
+        <div>
+          <strong class="name">{{user.name}}</strong><br />
+          {{user.position||'Na'}}<br />
+          <a href="mailto:{{user.email}}">{{user.email}}</a>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Associated Project -->
+  <mat-card class="project-card">
+    <h3>Associated Project</h3>
+    <div>
+      <mat-icon>folder</mat-icon>
+      <div>
+        <strong>{{project.project_name}}</strong>
+        <p>{{project.description}}</p>
+        <span>Progress: {{project.level_complete}}% | <span class="tag active">active</span></span>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Description -->
+  <mat-card class="desc-card">
+    <h3>Description</h3>
+    <p>
+      <mat-icon>description</mat-icon>{{task.description}}
+    </p>
+  </mat-card>
+
+  <!-- Time Tracking + Timeline -->
+  <div class="info-grid">
+    <mat-card class="info-card">
+      <h3>Time Tracking</h3>
+      <mat-progress-bar mode="determinate" [value]="task.complete_time"></mat-progress-bar>
+      <p>{{task.actual_time}}h Actual | {{task.estimate_time}}h Estimated</p>
+      <p>Remaining: {{sub(task.actual_time,task.estimate_time)}}h</p>
+    </mat-card>
+
+    <mat-card class="info-card">
+      <h3>Timeline</h3>
+      <ul class="timeline">
+        <li><span class="dot green"></span> Task Created - {{task.created_at|date:'dd/MM/yyyy'}}</li>
+        <li *ngIf="task.status=='complete'"><span class="dot green"></span> Completed - {{task.updated_at|date:'dd/MM/yyyy'}}</li>
+        <li><span class="dot red"></span> Due Date - {{task.due|date:'dd/MM/yyyy'}}</li>
+      </ul>
+    </mat-card>
+  </div>
+
+</div>

@@ -5,11 +5,11 @@
       <div class="div1">
         <div class="sub1">
           <app-title sub_title="Today's Hours"></app-title>
-          <div class="sDiv1 red">{{ weekHour | number:'1.0-1' }}hr</div>
+          <div class="sDiv1 red">{{ todayHour||0 | number:'1.0-1' }}hr</div>
         </div>
         <div class="sub1">
           <app-title sub_title="This Week"></app-title>
-     <div class="sDiv1 green">{{ todayHour | number:'1.0-1' }} hr</div>
+     <div class="sDiv1 green">{{  weekHour || 0| number:'1.0-1' }} hr</div>
 
 
         </div>

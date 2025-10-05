@@ -27,4 +27,10 @@ export class RecentWorks  {
  secToHr(x:string){
   return (parseInt(x) / 3600)
  }
+ getTime(dateStr: string): Date {
+  const today = new Date();
+  const [hours, minutes] = dateStr.split(':').map(Number);
+  today.setHours(hours, minutes, 0);
+  return today;
+}
 }

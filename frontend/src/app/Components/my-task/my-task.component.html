@@ -1,1 +1,86 @@
-<p>my-task.component works!</p>
+<div class="container">
+  <div class="content">
+    <div class="header">
+      <app-title title="My Task" sub_title="Assign and track tasks across your team"></app-title>
+      <div class="add">
+      </div>
+    </div>
+    <div class="filter">
+      <div class="filter-content">
+        <div class="filter-name">
+          <p> <span class="icon"><mat-icon style="padding-top:.4rem ;">filter_list</mat-icon></span><span
+              class="text">Filter</span></p>
+        </div>
+        <div class="filter-forms">
+          <select [(ngModel)]="selectStatus" [ngModelOptions]="{ standalone: true }" (change)="assignStatus()">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="processed">Processed</option>
+            <option value="accepted">Accepted</option>
+            <option value="completed">Completed</option>
+          </select>
+          <select [(ngModel)]="selectProject" [ngModelOptions]="{ standalone: true }" (change)="assignProject()">
+            <option value="">All Project</option>
+            <option *ngFor="let p of projects" [value]="p.id">{{p.project_name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <hr>
+        <div class="Task-info not-found" *ngIf="!task?.length">
+      <app-not-found></app-not-found>
+    </div>
+    <div class="task-info">
+
+<div class="task-card" *ngFor="let i of task">
+  <div class="task-header">
+    <h3>{{i.task}}</h3>
+    <span class="priority high" *ngIf="i.priority==3">high</span>
+    <span class="priority middle" *ngIf="i.priority==2">medium</span>
+    <span class="priority low" *ngIf="i.priority==1">low</span>
+  </div>
+
+  <p class="description">
+    {{i.description}}
+
+  </p>
+
+  <a routerLink="/project/view/{{i.project}}" class="project-link">
+    <mat-icon>folder</mat-icon>
+    {{i.project_name}}
+  </a>
+
+  <div class="assignee">
+    <img src="https://i.pravatar.cc/40" alt="profile" />
+    <span class="name">{{getUser(i.staff)}}</span>
+  </div>
+
+  <div class="due-date">
+    <mat-icon>event</mat-icon>
+    <span>Due {{i.due|date:'dd-MM-yyyy'}}</span>
+    <mat-icon class="warn" *ngIf="calculateDate(i.due)<2">error</mat-icon>
+  </div>
+
+  <div class="progress">
+    <span>Progress: {{i.actual_time}}h / {{i.estimate_time}}h</span>
+    <mat-progress-bar mode="determinate" [value]="i.complete_time"></mat-progress-bar>
+  </div>
+
+
+<div class="bottom">
+  <span class="status" [ngClass]="i.status">{{i.status}}</span>
+  <div class="menu">
+    <mat-icon (click)="view(i.id)">visibility</mat-icon>
+    <div class="menu" *ngIf="i.status=='pending'">
+    <mat-icon (click)="updateStatus(i.id ,'accepted')"  class="accepted">done</mat-icon>
+    <mat-icon (click)="updateStatus(i.id,'rejected')" color="#fff" class="cancel">close</mat-icon>
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+    </div>
+  </div>
+</div>

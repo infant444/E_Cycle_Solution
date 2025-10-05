@@ -96,7 +96,64 @@ rout.get("/get/totalHour/today", asyncHandler(
         }
     }
 ));
+rout.get("/get/report/week", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const result = await pool.query(
+                `SELECT date, SUM(total_hours) AS day_hours
+   FROM timesheet
+   WHERE staff = $1
+     AND date BETWEEN CURRENT_DATE - INTERVAL '7 days' AND CURRENT_DATE + INTERVAL '1days'
+   GROUP BY date
+   ORDER BY date`,
+                [req.user.id]
+            );
+            res.json(result.rows);
+        } catch (err) {
+            next(err)
+        }
+    }
+));
+rout.get("/get/report/today", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const dateX = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
+           const result = await pool.query(
+  `SELECT task, task_name, SUM(total_hours) AS today_hour
+   FROM timesheet
+   WHERE staff = $1 
+     AND "date" = $2
+   GROUP BY task, task_name
+   ORDER BY task_name`,
+  [req.user.id, dateX]
+);
+
+            // return all rows, not just first one
+            res.json(result.rows);
+
+        } catch (err) {
+            next(err)
+        }
+    }
+));
+rout.get("/get/report/month", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const result = await pool.query(
+                `SELECT *
+   FROM timesheet
+   WHERE staff = $1
+     AND date BETWEEN CURRENT_DATE - INTERVAL '30 days' AND CURRENT_DATE
+   ORDER BY date`,
+                [req.user.id]
+            );
+            res.json(result.rows);
+        } catch (err) {
+            next(err)
+        }
+    }
+));
 // update
 rout.put("/update/:id", asyncHandler(
     async (req: any, res, next: NextFunction) => {

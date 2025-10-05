@@ -67,6 +67,8 @@ export class TimeSheetComponent implements OnInit {
     })
     this.projectServices.getTaskCount().subscribe((res)=>{
       this.assignedTask=res.task_count;
+      this.cd.markForCheck()
+
     })
     this.timeSheetForm = this.formBuilder.group({
       project: ["", [Validators.required]],
@@ -78,6 +80,8 @@ export class TimeSheetComponent implements OnInit {
     });
     this.timeSheetService.getAllStaff().subscribe((res) => {
       this.resentTimeSheet = res.reverse().slice(0,3);
+      this.cd.markForCheck()
+
     })
   }
   get FC() {

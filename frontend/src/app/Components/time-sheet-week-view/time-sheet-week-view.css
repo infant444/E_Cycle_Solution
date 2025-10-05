@@ -76,6 +76,23 @@
   color: green;
 
 }
+.sub-content{
+  height: 12rem;
+  overflow: hidden;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+.x{
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fc2121;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  letter-spacing: 2px;
+}
 
 @media (max-width:1255px) {
   .div3{

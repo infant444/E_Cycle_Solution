@@ -69,7 +69,6 @@ export class Project implements OnInit {
     this.projectServices.getProject().subscribe(
       (res) => {
         this.projects = res;
-        // console.log(this.projects)
         this.projectX = res;
         this.total_project = this.projects.length;
         for (let i = 0; i < this.projects.length; i++) {

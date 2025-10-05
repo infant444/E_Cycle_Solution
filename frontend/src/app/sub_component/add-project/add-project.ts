@@ -10,8 +10,8 @@ import { ProjectModel } from '../../model/project.model';
 import { User } from '../../model/user.model';
 import { UserServices } from '../../Services/user/user';
 import { ProjectServices } from '../../Services/project/project.services';
-import { error } from 'console';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-project',
@@ -47,7 +47,8 @@ export class AddProject implements OnInit, OnChanges {
      private clientServices: ClientServices,
      private userServices: UserServices,
      private projectServices:ProjectServices,
-     private toastServices:ToastrService
+     private toastServices:ToastrService,
+     private router:Router
 
   ) { }
 
@@ -122,7 +123,7 @@ export class AddProject implements OnInit, OnChanges {
     this.FC.description.setValue(this.Project?.description || '');
     this.FC.client.setValue(this.Project?.client_id || "");
     this.FC.manager.setValue(this.Project?.manager_id || "");
-    this.FC.due_date.setValue(new Date(this.Project?.due_date).toISOString().split('T')[0] || "");
+    this.FC.due_date.setValue(this.Project?.due_date ? new Date(this.Project.due_date).toISOString().split('T')[0] : '');
     this.FC.budget.setValue(this.Project.budget || "");
     this.FC.priority.setValue(this.Project.priority || "");
     (this.Project.team_member || []).forEach((member: any) => {
@@ -160,6 +161,7 @@ export class AddProject implements OnInit, OnChanges {
          (res)=>{
         this.toastServices.success("Successfully Updated");
                this.project.dis();
+               this.router.navigateByUrl("/project/view/"+res.id)
       },(error)=>{
         this.toastServices.error(error.message)
       }

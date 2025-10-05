@@ -4,7 +4,7 @@
       <div class="div2">
         <h3>{{project_name}}</h3>
       <h5>{{task_name}}</h5>
-      <p>{{start_time}} - {{end_time}}</p>
+      <p>{{ getTime(start_time) | date:'hh:mm a' }} - {{ getTime(end_time) | date:'hh:mm a' }}</p>
       </div>
       <div class="hr">
         <p>{{secToHr(hr)|number:'1.0-1'}}hr</p>

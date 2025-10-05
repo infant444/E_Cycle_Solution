@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Task } from '../../model/task.model';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Route, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProjectServices } from '../../Services/project/project.services';
 import { UserServices } from '../../Services/user/user';
@@ -40,7 +40,8 @@ export class AddTaskComponent implements OnInit, OnChanges{
       private projectServices:ProjectServices,
       private staffServices:UserServices,
       private cd:ChangeDetectorRef,
-      private toasterServices:ToastrService
+      private toasterServices:ToastrService,
+      private router:Router
     ){
     }
 
@@ -136,6 +137,8 @@ submit(){
     this.projectServices.updateTask(this.task.id,task).subscribe((res)=>{
         this.toasterServices.success("Updates successfully")
         this.close();
+               this.router.navigateByUrl("/task/view/"+res.id)
+
     },
     (err)=>{
       this.toasterServices.error(err.message)

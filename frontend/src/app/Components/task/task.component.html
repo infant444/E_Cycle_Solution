@@ -28,7 +28,7 @@
       </div>
     </div>
     <hr>
-        <div class="Task-info" *ngIf="!task?.length">
+        <div class="Task-info not-found" *ngIf="!task?.length">
       <app-not-found></app-not-found>
     </div>
     <div class="task-info">
@@ -72,7 +72,7 @@
   <span class="status" [ngClass]="i.status">{{i.status}}</span>
   <div class="menu">
     <mat-icon (click)="edit(i)">edit</mat-icon>
-    <mat-icon (click)="view(i.id)">visibility</mat-icon>
+    <mat-icon (click)="view(i.id)" >visibility</mat-icon>
   </div>
 </div>
 </div>

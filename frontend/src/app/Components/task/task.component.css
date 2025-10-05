@@ -8,6 +8,7 @@
 .content{
   width: 100%;
   height: 100%;
+  overflow: hidden;
   overflow-y: scroll;
 }
 .content::-webkit-scrollbar{
@@ -41,6 +42,9 @@ margin: .5rem;
   flex-wrap: wrap;
   justify-content: space-around;
   position: relative;
+}
+.not-found{
+  height: 70%;
 }
 .filter{
   width: 100%;
@@ -166,17 +170,17 @@ margin: .5rem;
 .status.completed {
   background: #2ecc71;
 }
-.high,.warn{
-    background: #ffe5e5;
-  color: #c00;
+.high,.warn,.rejected{
+    color: #ffe5e5;
+  background-color: #c00;
 }
 .middle,.pending,.processed{
-    background: #fffae5;
-  color: rgb(204, 156, 0);
+    color: #fffae5;
+  background-color: rgb(204, 156, 0);
 }
 .low,.accepted,.completed{
-    background: #eaffe5;
-  color: rgb(3, 204, 0);
+    color: #eaffe5;
+  background-color: rgb(3, 204, 0);
 }
 .bottom{
   display: flex;

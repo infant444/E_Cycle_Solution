@@ -3,7 +3,53 @@
     <app-title title="Time Sheet" sub_title="Track your time and manage projects efficiently"></app-title>
     <app-timesheet-base-nav></app-timesheet-base-nav>
     <div class="div1">
+<div class="report-container">
+<div class="export">
+  <button (click)="downloadCSV()">Export CSV</button>
+</div>
+  <h2>Task Hours Report</h2>
+
+  <div style="display: block;">
+    <canvas baseChart
+            [data]="barChartData1"
+            [options]="barChartOptions1"
+            chartType="bar">
+    </canvas>
+  </div>
+
+  <div style="display: block;">
+    <canvas baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            chartType="bar">
+    </canvas>
+  </div>
+
+  <h3>Report Table</h3>
+  <table border="1" cellpadding="8" class="table">
+    <tr>
+      <th>Task</th>
+      <th>Project</th>
+      <th>Date</th>
+      <th>Start time - End time</th>
+      <th>Total Hours</th>
+      <th>Status</th>
+    </tr>
+    <tr *ngFor="let t of lastMonthTimeSheet">
+      <td>{{t.task_name}}</td>
+      <td>{{t.project_name}}</td>
+      <td>{{t.date|date:'dd/MM/yyyy'}}</td>
+      <td>{{ getTime(t.start_time) | date:'hh:mm a' }} - {{ getTime(t.end_time) | date:'hh:mm a' }}</td>
+
+      <td>{{sectoHr(t.total_hours.toString())|number:'1.0-1'}}hr</td>
+      <td>{{t.status}}</td>
+    </tr>
+  </table>
+</div>
 
     </div>
   </div>
 </div>
+
+<!--
+ -->

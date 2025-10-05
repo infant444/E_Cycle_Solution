@@ -1,0 +1,27 @@
+.export{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding: 1rem;
+}
+.export button{
+    width: 7rem;
+  height: 3rem;
+  border-radius: .4rem;
+  background-color:#000;
+    color:  blanchedalmond;
+  box-shadow:  0px 0px 15px 2px lightgray;
+  border-color: #eff6f9;
+  font-weight: 500;
+  transform: scale(1.1);
+  margin: 0 .5rem;
+  cursor: pointer;
+}
+.table{
+  margin: 1rem;
+  border-collapse: collapse;
+  width: 95%;
+}
+th,td{
+  padding: .3rem .5rem;
+}
