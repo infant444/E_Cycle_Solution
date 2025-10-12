@@ -13,4 +13,5 @@ token!:string;
 is_active!:boolean
 createdat!:string;
 login_time!:string;
+lock!:boolean;
 }

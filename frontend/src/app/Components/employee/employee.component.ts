@@ -8,6 +8,7 @@ import { EmployeeInfoComponent } from "../../sub_component/employee-info/employe
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { NotFound } from "../../sub_component/not-found/not-found";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee.component',
@@ -29,9 +30,18 @@ export class EmployeeComponent implements OnInit{
     position_type:string='';
   constructor(
     private userServices:UserServices,
-    private cd:ChangeDetectorRef
+    private cd:ChangeDetectorRef,
+    private router:Router,
+    private activateRoute:ActivatedRoute
   ){}
   ngOnInit(): void {
+    this.activateRoute.params.subscribe((params)=>{
+      if(params.id){
+        this.userServices.getById(params.id).subscribe((res)=>{
+          this.edit(res);
+        })
+      }
+    })
     this.userServices.getAll().subscribe((res)=>{
       this.user=res;
       this.defaultUser=res;
@@ -47,6 +57,7 @@ export class EmployeeComponent implements OnInit{
  if (this.display == 'none') {
       this.editUser = new User();
       this.display = 'flex';
+      this.type='add'
     } else {
       this.display = 'none';
       this.reAssign()
@@ -64,7 +75,14 @@ export class EmployeeComponent implements OnInit{
       }
     }
   reAssign(){
-
+    this.userServices.getAll().subscribe((res)=>{
+      this.user=res;
+      this.defaultUser=res;
+      this.total=res.length;
+      this.active=res.filter(s=>s.is_login==true).length;
+      this.inactive=res.filter(s=>s.is_login==false).length;
+      this.cd.markForCheck()
+    });
   }
   search(){
     if(this.name=='' || this.name.length<2){
@@ -95,5 +113,8 @@ export class EmployeeComponent implements OnInit{
   changeText(t:string):string{
     const x=t.split("_");
     return x.join(" ");
+  }
+  view(id:string){
+    this.router.navigateByUrl('/employee/view/'+id);
   }
 }

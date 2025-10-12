@@ -44,6 +44,9 @@
             <h3>{{x.name}}</h3>
             <p class="role">{{changeText(x.position)}}</p>
           </div>
+        <div class="admin active" *ngIf="x.role=='admin'">
+          <p>Admin</p>
+        </div>
         </div>
 
         <div class="card-body">
@@ -60,7 +63,10 @@
 
         <div class="card-footer">
           <span class="status" [ngClass]="x.is_login?'active':'inactive'">{{x.is_login?'Active':'Inactive'}}</span>
-          <mat-icon>visibility</mat-icon>
+          <div class="action">
+            <mat-icon (click)="view(x.id)" *ngIf="x.role!='admin'">visibility</mat-icon>
+          <mat-icon (click)="edit(x)" >edit</mat-icon>
+          </div>
         </div>
       </div>
     </div>

@@ -136,4 +136,48 @@ export const greatEmployee=(staffName:string,username:string,passcode:string)=>{
       ]
     }
   }
+
+}
+
+export const passwordChanged=(name:string)=>{
+  return {
+  body: {
+    name: name, // e.g., 'Infant Raj'
+    intro: "Your password has been successfully reset.",
+    action: {
+      instructions:
+        "If you didn’t request this password reset, please secure your account immediately using the button below:",
+      button: {
+        color: '#0d6efd', // Bootstrap primary blue
+        text: 'Secure My Account',
+        link: 'https://yourprojectlink.com/security',
+      },
+    },
+    outro:
+      "If you did request this change, you can safely ignore this email. For your safety, we recommend using a strong and unique password.",
+  },
+};
+}
+
+export const resetPassword=(username:string,passcode:string)=>{
+return {
+  body: {
+    name: username,
+    intro: `Your password has been reset by the Admin Team.`,
+    dictionary: [
+      { key: 'Temporary Password', value: passcode }
+    ],
+    action: {
+      instructions:
+        'Use the temporary password to log in and make sure to change it immediately for security.',
+      button: {
+        color: '#0d6efd', // Blue button
+        text: 'Login Now',
+        link: 'http://localhost:4200/login',
+      },
+    },
+    outro:
+      'If you did not expect this password reset, please contact your administrator immediately.',
+  },
+};
 }

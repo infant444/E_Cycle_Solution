@@ -32,7 +32,8 @@ CREATE TABLE IF NOT EXISTS Staff (
     is_active BOOLEAN DEFAULT TRUE,
     login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lock BOOLEAN DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS client (
@@ -120,13 +121,22 @@ CREATE TABLE IF NOT EXISTS timesheet (
 
 
 -- Update Function
+CREATE OR REPLACE FUNCTION set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at := CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trigger_set_updated_at
 BEFORE UPDATE ON task
 FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
-
-
+CREATE TRIGGER trigger_set_user_updated_at
+BEFORE UPDATE ON staff
+FOR EACH ROW
+EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER trigger_set_client_updated_at
 BEFORE UPDATE ON client
 FOR EACH ROW
@@ -171,5 +181,5 @@ DROP TABLE task;
 DROP TABLE project;
 -- Drop TABLE client;
 
--- ALTER TABLE staff ADD COLUMN is_active BOOLEAN DEFAULT TRUE; 
--- ALTER TABLE project RENAME COLUMN start_date to due_date; 
+ALTER TABLE staff ADD COLUMN  lock BOOLEAN DEFAULT false; 
+-- ALTER TABLE staff RENAME updatedAt  to updated_at; 

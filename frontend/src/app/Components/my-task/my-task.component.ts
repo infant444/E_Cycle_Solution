@@ -67,7 +67,6 @@ export class MyTaskComponent implements OnInit {
     this.projectServices.getAllTaskByManager().subscribe((res)=>{
       this.task=res;
      this.defaultTask=res;
-     console.log(this.task)
      this.cd.detectChanges()
     })
   }

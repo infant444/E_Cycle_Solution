@@ -71,9 +71,9 @@ export const routes: Routes = [
             canActivate: [AuthGuard]
           },
           {
-        path: "view/:projectid",
-        loadComponent: () => import("./Components/view-my-project/view-my-project.component").then(m => m.ViewMyProjectComponent),
-        canActivate: [AuthGuard]
+            path: "view/:projectid",
+            loadComponent: () => import("./Components/view-my-project/view-my-project.component").then(m => m.ViewMyProjectComponent),
+            canActivate: [AuthGuard]
           }
         ],
         canActivate: [AuthGuard]
@@ -98,16 +98,16 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
       }, {
         path: 'myTask',
-        children:[
- {
+        children: [
+          {
             path: '',
             loadComponent: () => import("./Components/my-task/my-task.component").then(m => m.MyTaskComponent),
             canActivate: [AuthGuard]
           },
           {
-        path: "view/:taskId",
-        loadComponent: () => import("./Components/view-my-task/view-my-task.component").then(m => m.ViewMyTaskComponent),
-        canActivate: [AuthGuard]
+            path: "view/:taskId",
+            loadComponent: () => import("./Components/view-my-task/view-my-task.component").then(m => m.ViewMyTaskComponent),
+            canActivate: [AuthGuard]
           }
         ],
 
@@ -139,14 +139,28 @@ export const routes: Routes = [
 
   },
   {
-    path:"admin/time-sheet",
-    loadComponent:()=>import("./Components/admin-time-sheet/admin-time-sheet.component").then(m=>m.AdminTimeSheetComponent),
-    canActivate:[AuthGuard]
+    path: "admin/time-sheet",
+    loadComponent: () => import("./Components/admin-time-sheet/admin-time-sheet.component").then(m => m.AdminTimeSheetComponent),
+    canActivate: [AuthGuard]
   },
   {
-    path:"employee",
-    loadComponent:()=>import("./Components/employee/employee.component").then(m=>m.EmployeeComponent),
-    canActivate:[AuthGuard]
+    path: "employee",
+    children: [
+      {
+        path: '',
+        loadComponent: () => import("./Components/employee/employee.component").then(m => m.EmployeeComponent),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'view/:id',
+        loadComponent: () => import("./Components/view-employee/view-employee.component").then(m => m.ViewEmployeeComponent),
+        canActivate: [AuthGuard]
+      },{
+        path:'edit/:id',
+        loadComponent: () => import("./Components/employee/employee.component").then(m => m.EmployeeComponent),
+        canActivate: [AuthGuard]
+      }
+    ]
   },
   {
     path: "time-sheet/**",

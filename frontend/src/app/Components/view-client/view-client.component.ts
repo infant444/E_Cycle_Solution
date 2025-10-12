@@ -48,6 +48,16 @@ export class ViewClientComponent  implements OnInit{
   edit(id:string){
     this.router.navigateByUrl("/client/edit/"+id);
   }
+    delete(id: string) {
+    const confirmed = window.confirm("Are you sure you want to delete this client?");
+    if (confirmed) {
+      this.clientService.deleteClientById(id).subscribe(_ => {
+    this.router.navigateByUrl("/client");
+
+      })
+    }
+
+  }
   getProjectInfo(id:string){
     this.projectServices.getProjectByClientId(id).subscribe((res)=>{
       this.projects=res;

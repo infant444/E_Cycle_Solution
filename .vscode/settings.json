@@ -1,7 +1,9 @@
 {
     "postman.settings.dotenv-detection-notification-visibility": false,
     "cSpell.words": [
+        "CHANGEPASSWORD",
         "intp",
-        "ossp"
+        "ossp",
+        "paticular"
     ]
 }

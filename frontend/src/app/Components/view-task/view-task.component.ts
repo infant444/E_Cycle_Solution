@@ -22,13 +22,13 @@ import { ProjectModel } from '../../model/project.model';
 export class ViewTaskComponent implements OnInit {
   task!: Task;
   user!: User;
-  project!:ProjectModel;
+  project!: ProjectModel;
   constructor(
     private taskServices: ProjectServices,
     private cd: ChangeDetectorRef,
     private activateRouter: ActivatedRoute,
     private userService: UserServices,
-    private router:Router
+    private router: Router
   ) {
 
   }
@@ -37,7 +37,7 @@ export class ViewTaskComponent implements OnInit {
       if (param.taskId) {
         this.taskServices.getTaskById(param.taskId).subscribe((res) => {
           this.task = res;
-          if(this.task.staff){
+          if (this.task.staff) {
             this.getUser();
             this.getProject();
           }
@@ -60,26 +60,30 @@ export class ViewTaskComponent implements OnInit {
       this.cd.markForCheck()
     })
   }
-  getProject(){
-    this.taskServices.getProjectById(this.task.project).subscribe((res)=>{
-      this.project=res;
+  getProject() {
+    this.taskServices.getProjectById(this.task.project).subscribe((res) => {
+      this.project = res;
       this.cd.markForCheck()
     })
   }
-  sub(a:string,b:string):number{
+  sub(a: string, b: string): number {
     console.log(parseInt(b))
-    return (parseInt(b)-parseInt(a));
+    return (parseInt(b) - parseInt(a));
   }
-  edit(id:string){
+  edit(id: string) {
     console.log("Hi")
-    this.router.navigateByUrl("/task/view/"+id);
+    this.router.navigateByUrl("/task/view/" + id);
   }
-  delete(id:string){
-    this.taskServices.deleteTask(id).subscribe((res)=>{
-      this.router.navigateByUrl("/task")
-    })
+  delete(id: string) {
+    const confirmed = window.confirm("Are you sure you want to delete this Task?");
+    if (confirmed) {
+      this.taskServices.deleteTask(id).subscribe((res) => {
+        this.router.navigateByUrl("/task")
+      })
+    }
+
   }
-  back(){
-      this.router.navigateByUrl("/task")
+  back() {
+    this.router.navigateByUrl("/task")
   }
 }

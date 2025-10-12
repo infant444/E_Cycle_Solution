@@ -23,6 +23,14 @@ export class RecentWorks  {
 
  @Input()
  hr!:string;
+ @Input()
+ type:string='timeSheet'
+
+ @Input()
+ description!:string;
+
+ @Input()
+ status!:string;
 
  secToHr(x:string){
   return (parseInt(x) / 3600)

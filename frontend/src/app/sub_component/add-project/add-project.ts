@@ -160,6 +160,8 @@ export class AddProject implements OnInit, OnChanges {
       this.projectServices.updateProject(this.Project.id,pro).subscribe(
          (res)=>{
         this.toastServices.success("Successfully Updated");
+        this.isSubmitted=false;
+
                this.project.dis();
                this.router.navigateByUrl("/project/view/"+res.id)
       },(error)=>{
@@ -171,6 +173,8 @@ export class AddProject implements OnInit, OnChanges {
     this.projectServices.addProject(pro).subscribe(
       (res)=>{
         this.toastServices.success("Successfully add");
+        this.isSubmitted=false;
+
         this.project.dis();
       },(error)=>{
         this.toastServices.error(error.message)

@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { USER_KEY } from '../../constant/localStorage.key';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { GET_ALL_PROJECT_MEMBER, GET_ALL_STAFF, GET_By_ID_STAFF, LOGIN, LOGOUT, REGISTER } from '../../constant/url';
+import { CHANGE_PASSWORD, DELETE_STAFF, GET_ALL_PROJECT_MEMBER, GET_ALL_STAFF, GET_By_ID_STAFF, LOGIN, LOGOUT, REGISTER, RESETPASSWORD, UPDATE_DETAIL, UPDATE_LOCK_STATUS } from '../../constant/url';
 import { App } from '../../app';
 
 @Injectable({
@@ -55,10 +55,25 @@ export class UserServices {
   getProjectMemberId(x: string[]): Observable<User[]> {
     return this.http.post<User[]>(GET_ALL_PROJECT_MEMBER, { ids: x })
   }
+  resetPassword(id:string):Observable<any>{
+    return this.http.get<any>(RESETPASSWORD+id);
+  }
   register(data: any): Observable<User> {
     return this.http.post<User>(REGISTER, data);
   }
-
+  update(id:string,data: any): Observable<User> {
+    console.log(data)
+    return this.http.put<User>(UPDATE_DETAIL+id, data);
+  }
+  changePassword(id:string,oldPassword:string,newPassword:string):Observable<any>{
+    return this.http.put<any>(CHANGE_PASSWORD+id,{"oldPassword":oldPassword,"newPassword":newPassword});
+  }
+  lockedStaff(id:string,status:boolean){
+    return this.http.put(UPDATE_LOCK_STATUS+id,{"status":status});
+  }
+  delete(id:string):Observable<User>{
+    return this.http.delete<User>(DELETE_STAFF+id);
+  }
   logout() {
     this.http.get(LOGOUT + this.currentUser.id).subscribe(_ => {
       this.userSubject.next(new User());
@@ -67,6 +82,7 @@ export class UserServices {
     })
 
   }
+
   //  Local storage
   private setUserToLocalStorage(user: User) {
     localStorage.setItem(USER_KEY, JSON.stringify(user));

@@ -133,6 +133,23 @@ rout.get("/getByStaffId", asyncHandler(
         }
     }
 ));
+rout.get("/get/paticularStaff/:id", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const query = `
+        SELECT *
+        FROM project
+        WHERE $1 = ANY(team_member)
+        order by priority DESC;
+      `;
+            const result = await pool.query(query, [req.params.id]);
+            // console.log(result.rows)
+            res.json(result.rows);
+        } catch (err) {
+            next(err);
+        }
+    }
+));
 
 // Update
 rout.put("/update/:id", asyncHandler(
@@ -213,12 +230,23 @@ rout.post("/task/add", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
             const { task, description, project, staff, project_name, priority, due, estimate_time } = req.body;
-            const tasks = await pool.query("insert into task (task,description,project,staff,project_name,priority,due,estimate_time) values ($1,$2,$3,$4,$5,$6,$7,$8) returning * ", [task, description, project, staff, project_name, priority, due, estimate_time]);
+            console.log(req.body);
+            const tasks = await pool.query(
+                `INSERT INTO task (
+    task, description, project, staff, project_name, priority, due, estimate_time
+  )
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+  RETURNING *`,
+                [task, description, project, staff, project_name, priority, due, estimate_time]
+            );
+            console.log(tasks.command);
             const project_data = await pool.query("select * from project where id=$1", [project]);
             const task_count = parseInt(project_data.rows[0].no_task || 0) + 1;
-            const complete_task = parseInt(project_data.rows[0].complete_task || 0);
+            const complete_task = parseInt(project_data.rows[0].completed_task || 0);
             const score = (complete_task / task_count) * 100;
-            await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3,status=$4 where id=$5", [task_count, complete_task, score, 'processed', project]);
+            console.log(score)
+            await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3,status=$4 where id=$5",
+                [task_count, complete_task, score, 'processed', project]);
 
             const staffX = await pool.query("select * from staff where id=$1", [staff]);
             let transporter = nodeMailer.createTransport(MailConfig);
@@ -299,6 +327,16 @@ rout.get("/task/getByStaffId", asyncHandler(
     async (req: any, res, next: NextFunction) => {
         try {
             const result = await pool.query('select * from task where staff=$1', [req.user.id]);
+            res.json(result.rows);
+        } catch (err) {
+            next(err)
+        }
+    }
+))
+rout.get("/task/get/paticularStaff/:id", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const result = await pool.query('select * from task where staff=$1', [req.params.id]);
             res.json(result.rows);
         } catch (err) {
             next(err)

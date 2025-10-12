@@ -1,1 +1,196 @@
-<p>view-employee.component works!</p>
+<div class="employee-detail-container">
+  <div class="header">
+  <a class="back-link" routerLink="/employee"><mat-icon>arrow_back</mat-icon> Back to Employees</a>
+
+    <div class="actions">
+          <button class="edit" (click)="edit(employee.id)">Edit</button>
+          <button class="delete" (click)="delete(employee.id)">Delete</button>
+          <button [ngClass]="employee.lock?'unlock':'lock'" (click)="lock(employee.id)">{{employee.lock?'unlock':'lock'}}</button>
+        </div>
+  </div>
+
+  <div class="profile-card">
+    <img [src]="employee.profile==''?'./assets/images/profile_pic.png':employee.profile" alt="Profile" class="profile-pic" />
+    <h4 class="lock-label" *ngIf="employee.lock">LOCKED</h4>
+    <div class="profile-info">
+      <h2>{{ employee.name }}</h2>
+      <p class="designation">{{ employee.position }}</p>
+      <p class="email">{{ employee.email }}</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button [class.active]="tab === 'overview'" (click)="tab='overview'">Overview</button>
+    <button [class.active]="tab === 'timeSheet'" (click)="tab='timeSheet'">TimeSheet</button>
+    <button [class.active]="tab === 'tasks'" (click)="tab='tasks'">Tasks</button>
+    <select [(ngModel)]="period" class="filter-select" (change)="getAllReport()">
+      <option value="all" selected>All</option>
+      <option value="week">Week</option>
+      <option value="month">Month</option>
+      <option value="year">Year</option>
+    </select>
+  </div>
+  <div *ngIf="tab==='overview'">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h4>Total Hours</h4>
+        <h2>{{totalHours|number:'2.0-2'}}</h2>
+        <p>Hours worked</p>
+      </div>
+      <div class="stat-card">
+        <h4>Completed</h4>
+        <h2>{{complete_task}}</h2>
+        <p>Out of {{total_task}} tasks</p>
+      </div>
+      <div class="stat-card">
+        <h4>Completion Rate</h4>
+        <h2>{{percentage_complete||0}}%</h2>
+        <p>Task success rate</p>
+      </div>
+      <div class="stat-card">
+        <h4>Avg Hours/Day</h4>
+        <h2>{{avg_working_hours|number:'1.0-2'}}</h2>
+        <p>Daily average</p>
+      </div>
+    </div>
+
+    <div class="performance-summary">
+      <h3>Performance Summary</h3>
+      <div class="progress-container">
+        <div class="progress-bar" [style.width.%]="percentage_complete"></div>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <h2>{{timeSheet?.length||0}}</h2>
+          <p>Timesheet Entries</p>
+        </div>
+        <div class="summary-card">
+          <h2>{{getTaskProcessed()}}</h2>
+          <p>In Progress</p>
+        </div>
+        <div class="summary-card">
+          <h2>{{getPending()}}</h2>
+          <p>Pending Tasks</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="recent-section">
+      <div class="recent-card">
+        <h3>Recent Tasks</h3>
+        <p *ngIf="!ResentTask?.length">No tasks found</p>
+          <app-recent-works *ngFor="let x of ResentTask" [project_name]="x.project_name" [task_name]="x.task" [description]="x.description" type="task" [status]="x.status" ></app-recent-works>
+
+      </div>
+      <div class="recent-card">
+        <h3>Recent Timesheets</h3>
+        <p *ngIf="!resentTimeSheet?.length">No timesheets found</p>
+          <app-recent-works *ngFor="let x of resentTimeSheet" [project_name]="x.project_name" [task_name]="x.task_name" [start_time]="x.start_time" [end_time]="x.end_time" [hr]="x.total_hours.toString()" [status]="x.status" ></app-recent-works>
+
+      </div>
+    </div>
+  </div>
+  <div *ngIf="tab==='tasks'">
+ <div class="TimeSheet-info not-found" *ngIf="!userTask?.length">
+      <app-not-found></app-not-found>
+    </div>
+        <div class="TimeSheet-info" *ngIf="userTask?.length">
+         <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th>Days To Complete</th>
+        <th>Estimate Time</th>
+        <th>Actual Time</th>
+        <th>Completed percentage</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let record of userTask; let i = index">
+        <tr  class="main-row" (click)="viewTask(record.id)">
+          <td>
+            {{record.project_name}}
+          </td>
+          <td>
+            {{record.task}}
+          </td>
+          <td ><p class="description">{{ record.description }}</p></td>
+          <td>{{ record.due |date:'dd/MM/yyyy'}}</td>
+          <td>{{ calculateDate(record.due)||'OverDue'}}</td>
+          <td>{{ record.estimate_time}}</td>
+          <td>{{ record.actual_time|number:'1.0-1'}}hr</td>
+          <td>{{record.complete_time}}</td>
+          <td>
+            <span class="status" [ngClass]="record.status">{{ record.status }}</span>
+          </td>
+        </tr>
+
+
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+  </div>
+  <div *ngIf="tab==='timeSheet'">
+<div class="TimeSheet-info not-found" *ngIf="!timeSheet?.length">
+      <app-not-found></app-not-found>
+    </div>
+        <div class="TimeSheet-info" *ngIf="timeSheet?.length">
+         <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Task</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Hours</th>
+        <th>Description</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let record of timeSheet; let i = index">
+        <tr  class="main-row" (click)="toggleView(i)">
+          <td>
+            {{record.project_name}}
+          </td>
+          <td>
+            {{record.task_name}}
+          </td>
+          <td>{{ record.date |date:'dd/MM/yyyy'}}</td>
+          <td>{{ getTime(record.start_time)| date:'hh:mm a'}}</td>
+          <td>{{ getTime(record.end_time) | date:'hh:mm a'}}</td>
+          <td>{{ secToHr(record.total_hours.toString())|number:'1.0-1'}}hr</td>
+          <td ><p class="description">{{ record.description }}</p></td>
+          <td>
+            <span class="status" [ngClass]="record.status">{{ record.status }}</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="8" class="details-cell">
+            <div [@expandCollapse]="expandedIndex === i ? 'expanded' : 'collapsed'" class="details-box">
+              <h4>Details</h4>
+              <p><strong>Project:</strong> {{ record.project_name }}</p>
+              <p><strong>Task:</strong> {{ record.task_name }}</p>
+              <p><strong>Date:</strong>{{ record.date |date:'dd/MM/yyyy'}}</p>
+              <p><strong>Start Time:</strong> {{ getTime(record.start_time)| date:'hh:mm a'}}</p>
+              <p><strong>End Time:</strong> {{ getTime(record.end_time)| date:'hh:mm a'}}</p>
+              <p><strong>Hours:</strong> {{ secToHr(record.total_hours.toString())|number:'1.0-1'}}hr</p>
+              <p><strong>Description:</strong> {{ record.description }}</p>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+  </div>
+</div>

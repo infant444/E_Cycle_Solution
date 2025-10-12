@@ -124,7 +124,8 @@ submit(){
 
     this.projectServices.addTask(task).subscribe(
       (res)=>{
-        this.toasterServices.success("Add successfully")
+        this.toasterServices.success("Add successfully");
+        this.isSubmitted=false;
         this.close();
     },
     (err)=>{
@@ -136,7 +137,10 @@ submit(){
     console.log(task);
     this.projectServices.updateTask(this.task.id,task).subscribe((res)=>{
         this.toasterServices.success("Updates successfully")
+        this.isSubmitted=false;
+
         this.close();
+
                this.router.navigateByUrl("/task/view/"+res.id)
 
     },

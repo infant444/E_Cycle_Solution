@@ -81,9 +81,13 @@ export class ViewProjectComponent implements OnInit {
     })
   }
   delete(id:string){
+    const confirmed = window.confirm("Are you sure you want to delete this Project?");
+  if (confirmed) {
     this.projectService.deleteProject(id).subscribe((res)=>{
       this.router.navigateByUrl("/project")
     })
+  }
+
 
   }
   edit(id:string){

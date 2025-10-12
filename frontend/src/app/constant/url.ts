@@ -12,8 +12,11 @@ export const GET_ALL_PROJECT_MEMBER=EMPLOYEE_BASE_URL+"/get-data/project-member"
 export const GET_By_ID_STAFF=EMPLOYEE_BASE_URL+"/getById/";
 export const REGISTER=EMPLOYEE_BASE_URL+"/register";
 export const LOGOUT=EMPLOYEE_BASE_URL+"/logout/";
-
-
+export const RESETPASSWORD=EMPLOYEE_BASE_URL+"/resetPassword/";
+export const UPDATE_DETAIL=EMPLOYEE_BASE_URL+"/update/";
+export const CHANGE_PASSWORD=EMPLOYEE_BASE_URL+"/updatePassword/";
+export const UPDATE_LOCK_STATUS=EMPLOYEE_BASE_URL+"/update-status/";
+export const DELETE_STAFF=EMPLOYEE_BASE_URL+"/delete/"
 // Admin
 
 
@@ -38,6 +41,7 @@ export const GET_BY_ClIENT_ID_PROJECT=Project_BASE_URL+"/get-by-client/";
 export const GET_BY_MANAGER_ID=Project_BASE_URL+'/getByManager';
 export const GET_BY_STAFF=Project_BASE_URL+'/getByStaff';
 export const GET_BY_STAFF_ID=Project_BASE_URL+'/getByStaffId';
+export const GET_BY_PARTICULAR_ID=Project_BASE_URL+'/get/paticularStaff/';
 export const UPDATE_ALL_PROJECT=Project_BASE_URL+"/update/";
 export const UPDATE_STATUS_PROJECT=Project_BASE_URL+"/update/status/";
 export const DELETE_BY_ID_PROJECT=Project_BASE_URL+"/delete/";
@@ -51,6 +55,8 @@ export const GET_ALL_TASK_STATUS=Project_BASE_URL+"/task/getTask/";
 export const GET_ALL_TASK_BY_MANGER=Project_BASE_URL+"/task/getAll/manager";
 export const GET_TASK_COUNT=Project_BASE_URL+"/task/getCount";
 export const GET_TASK_By_Staff=Project_BASE_URL+"/task/getByStaffId";
+export const GET_TASK_By_PARTICULAR_Staff=Project_BASE_URL+"/task/get/paticularStaff/";
+
 export const UPDATE_STATUS_TASK=Project_BASE_URL+"/task/status/update/";
 export const UPDATE_TASK=Project_BASE_URL+"/task/update/";
 export const DELETE_TASK=Project_BASE_URL+"/task/delete/";
@@ -67,8 +73,8 @@ export const GET_TODAY_HOUR=TIME_SHEET+'/get/totalHour/today';
 export const GET_WEEK_HOUR_REPORT=TIME_SHEET+'/get/report/week';
 export const GET_TODAY_TASK_REPORT=TIME_SHEET+'/get/report/today';
 export const GET_MONTH_TASK_REPORT=TIME_SHEET+'/get/report/month';
+export const GET_TIME_TASK_REPORT=TIME_SHEET+'/get/report/all';
 export const GET_ALL_TIME_SHEET_MANAGER=TIME_SHEET+"/getall/manager";
-
 export const UPDATE_TIME_SHEET_STATUS=TIME_SHEET+"/update/";
 
 

@@ -49,7 +49,7 @@
           <div class="progress-bar" style.width="{{i.level_complete}}%"></div>
         </div>
         <div class="progress-info">
-          <span>Progress <b>{{i.completed_task}}%</b></span>
+          <span>Progress <b>{{i.level_complete|number:'2.0-1'}}%</b></span>
           <span>Tasks: {{i.completed_task}}/{{i.no_task}} &nbsp;</span>
         </div>
         <div class="div28">

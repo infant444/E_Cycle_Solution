@@ -129,8 +129,12 @@ export class Client implements OnInit {
     this.showValue = i;
   }
   delete(id: string) {
-    this.clientServices.deleteClientById(id).subscribe(_ => {
-      this.reAssign();
-    })
+    const confirmed = window.confirm("Are you sure you want to delete this client?");
+    if (confirmed) {
+      this.clientServices.deleteClientById(id).subscribe(_ => {
+        this.reAssign();
+      })
+    }
+
   }
 }

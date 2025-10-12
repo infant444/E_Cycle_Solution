@@ -74,7 +74,7 @@
           </div>
         </div>
       </div>
-      <div class="div2">
+      <div class="div2" *ngIf="type=='add'">
         <app-title sub_title="Profile"></app-title>
         <div class="input">
           <input type="file" formControlName="profile" accept="image/*"

@@ -1,0 +1,319 @@
+.employee-detail-container {
+  padding: 30px;
+  background: #f9fafc;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+}
+.back-link>mat-icon{
+  padding-top: .5rem;
+  height: 1.7rem;
+}
+    .actions button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+    .edit { background: #e9ecef; }
+    .delete,.lock { background: #e74c3c; color: white; }
+    .unlock{
+       background: #3ce73f; color: white;
+    }
+.profile-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  position: relative;
+}
+.lock-label{
+  position: absolute;
+  color: red;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-family:'Times New Roman', Times, serif;
+  font-weight: bold;
+  font-size: 1.8rem;
+  transform: rotate(-45deg);
+  left: 0rem;
+
+}
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 22px;
+}
+.designation {
+  color: #666;
+  margin-top: 4px;
+}
+.email {
+  color: #888;
+  font-size: 14px;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+  background: white;
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.tabs button {
+  border: none;
+  background: none;
+  font-weight: 500;
+  margin-right: 15px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.2s ease;
+}
+
+.tabs button.active {
+  background: #007bff;
+  color: white;
+}
+
+.filter-select {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.stat-card h4 {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.stat-card h2 {
+  font-size: 28px;
+  color: #222;
+}
+
+.performance-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 25px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.progress-container {
+  background: #eee;
+  height: 8px;
+  border-radius: 5px;
+  margin: 10px 0 20px;
+}
+.progress-bar {
+  background: #007bff;
+  height: 8px;
+  width: 0%;
+  border-radius: 5px;
+}
+
+.summary-grid {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.summary-card h2 {
+  font-size: 26px;
+  color: #007bff;
+}
+
+.recent-section {
+  display: flex;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.recent-card {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.recent-card h3 {
+  margin-bottom: 10px;
+}
+.recent-card p {
+  color: #777;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.custom-table th {
+  text-align: left;
+  padding: 12px;
+  background-color: #f1f3f5;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table td {
+  padding: 12px;
+  color: #444;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.main-row:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.employee {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.employee img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.name {
+  font-weight: 600;
+  color: #222;
+}
+
+.role {
+  font-size: 13px;
+  color: #666;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status.approved {
+  background-color: #d1f7d6;
+  color: #207a30;
+}
+
+.status.submitted {
+  background-color: #ffe6cc;
+  color: #a45c00;
+}
+
+.status.draft {
+  background-color: #e2e3e5;
+  color: #555;
+}
+
+.actions {
+  text-align: center;
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.details-cell {
+  padding: 0;
+}
+
+.details-box {
+  background-color: #ffffff;
+  border-top: 1px solid #ddd;
+  padding: 15px 20px;
+  font-size: 14px;
+}
+
+.details-box h4 {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+.description{
+    font-size: 14px;
+  margin: 10px 0;
+  color: #555;
+    white-space: nowrap;      /* keep text on one line */
+  overflow: hidden;         /* hide overflow */
+  text-overflow: ellipsis;  /* add ... at the end */
+  width: 300px;             /* required fixed width */
+  display: inline-block;
+}
+.high,.warn,.rejected{
+    color: #ffe5e5;
+  background-color: #c00;
+}
+.middle,.pending,.processed{
+    color: #fffae5;
+  background-color: rgb(204, 156, 0);
+}
+.low,.accepted,.completed{
+    color: #eaffe5;
+  background-color: rgb(3, 204, 0);
+}
+.menu{
+  display: flex;
+}
+.menu mat-icon{
+    margin-left: 8px;
+  cursor: pointer;
+  color: #444;
+}

@@ -97,13 +97,16 @@ export class AddClient implements OnInit,OnChanges {
     console.log(sent)
     if(this.type=="edit"){
       this.clientServices.updateClient(sent,this.clientInfo.id).subscribe((res)=>{
-        this.toaster.success("Updated Successfully")
+        this.toaster.success("Updated Successfully");
+        this.isSubmitted=false;
        this.clientx.dis();
 
       })
     }else{
       this.clientServices.addClient(sent).subscribe((res)=>{
-        this.toaster.success("Add Successfully")
+        this.toaster.success("Add Successfully");
+        this.isSubmitted=false;
+
        this.clientx.dis();
       })
 

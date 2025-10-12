@@ -1,6 +1,6 @@
 <div class="container">
   <div class="content">
-    <div class="div1">
+    <div class="div1" *ngIf="type=='timeSheet'">
       <div class="div2">
         <h3>{{project_name}}</h3>
       <h5>{{task_name}}</h5>
@@ -8,6 +8,18 @@
       </div>
       <div class="hr">
         <p>{{secToHr(hr)|number:'1.0-1'}}hr</p>
+               <p [ngClass]="status" class="status">{{status}}</p>
+
+      </div>
+    </div>
+        <div class="div1" *ngIf="type=='task'">
+      <div class="div2">
+        <h3>{{task_name}}</h3>
+      <h5>{{project_name}}</h5>
+      <p class="description">{{description}}</p>
+      </div>
+      <div class="hr">
+        <p [ngClass]="status" class="status">{{status}}</p>
       </div>
     </div>
   </div>

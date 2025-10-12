@@ -2,6 +2,8 @@ import { NextFunction, Router } from "express";
 import asyncHandler from "express-async-handler";
 import { pool } from "../config/postgersql.config";
 import auth from "../middleware/auth.middleware";
+import { console } from "inspector";
+import { timeStamp } from "console";
 const rout = Router();
 rout.use(auth);
 // Post
@@ -169,6 +171,106 @@ rout.get("/getall/manager", asyncHandler(
             next(err);
         }
     }
+));
+rout.get("/get/report/all", asyncHandler(
+    async (req, res, next: NextFunction) => {
+       try {
+      const { id, duration } = req.query;
+      console.log("Duration:", duration);
+
+      // Default to all-time if duration not provided
+      let interval;
+      if (duration === "year") interval = "365 days";
+      else if (duration === "month") interval = "30 days";
+      else if (duration === "week") interval = "7 days";
+
+      // Build conditional date filter only if interval exists
+      const dateCondition = interval
+        ? `AND date BETWEEN CURRENT_DATE - INTERVAL '${interval}' AND CURRENT_DATE`
+        : "";
+      const taskDateCondition = interval
+        ? `AND created_at::date BETWEEN CURRENT_DATE - INTERVAL '${interval}' AND CURRENT_DATE`
+        : "";
+
+      // ✅ Total Hours
+      const totalHours = await pool.query(
+        `
+        SELECT SUM(total_hours) AS totalhours
+        FROM timesheet
+        WHERE staff = $1
+        ${dateCondition}
+        `,
+        [id]
+      );
+
+      // ✅ Completed Tasks
+      const complete_task = await pool.query(
+        `
+        SELECT COUNT(*) AS count
+        FROM task
+        WHERE status = 'completed'
+        AND staff = $1
+        ${taskDateCondition}
+        `,
+        [id]
+      );
+
+      // ✅ Total Tasks
+      const total_task = await pool.query(
+        `
+        SELECT COUNT(*) AS count
+        FROM task
+        WHERE staff = $1
+        ${taskDateCondition}
+        `,
+        [id]
+      );
+      // ✅ Work Hours (grouped by date)
+      const avgHours = await pool.query(
+        `
+        SELECT date, SUM(total_hours) AS totalhours
+        FROM timesheet
+        WHERE staff = $1
+        ${dateCondition}
+        GROUP BY date
+        ORDER BY date
+        `,
+        [id]
+      );
+      const timesheet=await pool.query(`
+        select * 
+        from timesheet 
+        where staff=$1
+        ${dateCondition}
+        order by date desc,status
+        `,[id]);
+        const task=await pool.query(
+        `
+        SELECT *
+        FROM task
+        WHERE staff = $1
+        ${taskDateCondition}
+        order by priority desc, created_at
+        `,
+        [id]
+      );
+      // ✅ Combine result
+      const result = {
+        totalHours: totalHours.rows[0]?.totalhours || 0,
+        completeTask: complete_task.rows[0]?.count || 0,
+        totalTask: total_task.rows[0]?.count || 0,
+        getWorkHours: avgHours.rows || [],
+        task:task.rows||[],
+        timeSheet:timesheet.rows||[],
+        
+      };
+      console.log(result)
+      res.json(result);
+    } catch (err) {
+      next(err);
+    }
+}
+
 ))
 // update
 rout.put("/update/:id", asyncHandler(
