@@ -1,0 +1,107 @@
+<div class="container" [ngStyle]="{'display': display}">
+  <div class="close" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </div>
+  <div class="content">
+    <app-title [h3_title]="type=='edit'?'Edit Event':'Add Event'"></app-title>
+
+<hr class="hr">
+    <form (ngSubmit)="submit()" [formGroup]="meetingForm">
+      <div class="div1">
+        <app-title sub_title="Basic Information"></app-title>
+        <div class="input-all">
+          <div class="label">
+            Title
+          </div>
+          <div class="input">
+            <input type="text" formControlName="title" [className]="(isSubmitted && FC.title.invalid)?'error':''">
+          </div>
+        </div>
+        <div class="input-all">
+          <div class="label">
+            Description
+          </div>
+          <div class="input">
+            <textarea formControlName="description" cols="30" rows="5"
+              [className]="(isSubmitted && FC.description.invalid)?'error':''"></textarea>
+          </div>
+        </div>
+        <div class="div11">
+          <div class="input-all">
+            <div class="label">
+              Type
+            </div>
+            <div class="input">
+              <select formControlName="type" [className]="(isSubmitted && FC.type.invalid)?'error':''">
+                <option value="" selected>Select Meeting Type</option>
+                <option value="collection">Collection</option>
+                <option value="client_meeting">Client Meeting</option>
+                <option value="office_meeting">Office Meeting</option>
+                <option value="project">Project</option>
+                <option value="task">Task</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-all" *ngIf="userX.role=='admin'">
+            <div class="label">
+              Employee
+            </div>
+            <div class="input">
+              <select formControlName="staff"[className]="(isSubmitted && FC.staff.invalid)?'error':''">
+                <option value="" selected>Select Employee</option>
+                <option *ngFor="let staff of employee" [value]="staff.id">{{staff.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="div11">
+          <div class="input-all">
+            <div class="label">
+              Start Date
+            </div>
+            <div class="input">
+              <input type="date" [min]="now" formControlName="start_date"
+                [className]="(isSubmitted && FC.start_date.invalid)?'error':''">
+            </div>
+          </div>
+          <div class="input-all">
+            <div class="label">
+              End Date
+            </div>
+            <div class="input">
+              <input type="date" [min]="now" formControlName="end_date"
+                [className]="(isSubmitted && FC.end_date.invalid)?'error':''">
+            </div>
+
+          </div>
+        </div>
+        <div class="div11">
+          <div class="input-all">
+            <div class="label">
+              Start Time
+            </div>
+            <div class="input">
+              <input type="time" [min]="now" formControlName="start_time"
+                [className]="(isSubmitted && FC.start_time.invalid)?'error':''">
+            </div>
+          </div>
+          <div class="input-all">
+            <div class="label">
+              End Time
+            </div>
+            <div class="input">
+              <input type="time" [min]="now" formControlName="end_time"
+                [className]="(isSubmitted && FC.end_time.invalid)?'error':''">
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="div5">
+        <input type="button" value="Cancel" class="button cancel" (click)="close()">
+        <input type="submit" value="Submit" class="button submit">
+      </div>
+    </form>
+</div>
+</div>

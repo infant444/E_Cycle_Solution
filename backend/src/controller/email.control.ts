@@ -181,3 +181,35 @@ return {
   },
 };
 }
+
+
+export const schudeleMeeting=(name:string,title:string,start_date:string,start_time:string,end_time:string,meetingType:string,meetingDescription:string)=>{
+  return   {
+  body: {
+    name: `${name}`,
+    intro: `
+      <p style="font-size: 16px; line-height: 1.6; color: #444;">
+        You have been scheduled for a meeting titled <b>${title}</b>.
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #555;">
+        📅 <b>Date:</b> ${start_date}<br>
+        🕒 <b>Time:</b> ${start_time} - ${end_time}<br>
+        📍 <b>Type:</b> ${meetingType}
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #555;">
+        ${meetingDescription}
+      </p>
+    `,
+    action: {
+      instructions: "Click the button below to add this meeting to your calendar:",
+      button: {
+        color: "#1a73e8",
+        text: "Add to Calendar",
+        link: "cid:meeting.ics", // not required, optional for look
+      },
+    },
+    outro: "We look forward to your participation.",
+  },
+};
+
+}

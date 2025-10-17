@@ -8,8 +8,8 @@ import tableRouter from './router/table.router';
 import clientRouter from './router/client.router';
 import projectRouter from './router/project.router';
 import timeSheetRouter from './router/timesheet.router';
-import path from 'path';
 import { cloudinaryConnect } from './config/database.config';
+import meetingRouter from './router/meeting.router';
 // config
 dotenv.config();
 cloudinaryConnect()
@@ -30,7 +30,7 @@ app.use("/api/client",clientRouter);
 app.use("/api/user",userRouter);
 app.use("/api/project",projectRouter);
 app.use("/api/timeSheet",timeSheetRouter);
-
+app.use("/api/meeting",meetingRouter);
 // middleware
 app.use(errorHandler);
 

@@ -4,7 +4,10 @@ import jwt from "jsonwebtoken";
 
 export const generateUserToken=(user:User)=>{
 const token=jwt.sign({
-        id:user.id,email:user.email,name:user.name,
+        id:user.id,
+        email:user.email,
+        name:user.name,
+        role:user.role
     },process.env.JWT_USER_AUTH!,{
        expiresIn:"1000d"
     })

@@ -3,11 +3,15 @@
 -- extension Package
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+
+
 -- Enum types
 CREATE TYPE staff_type AS ENUM ('admin', 'staff', 'worker');
 
 CREATE TYPE project_type AS ENUM('completed','processed','pending','accepted');
 CREATE TYPE task_type AS ENUM('completed','processed','pending','accepted','rejected');
+
+CREATE TYPE meeting_status AS ENUM('assigned','processed','ready','wait','completed');
 -- ALTER TYPE task_type ADD VALUE 'rejected';
 CREATE OR REPLACE FUNCTION set_updated_at()
 RETURNS TRIGGER AS $$
@@ -117,7 +121,21 @@ CREATE TABLE IF NOT EXISTS timesheet (
 );
 
 
-
+CREATE TABLE IF NOT EXISTS meeting (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    type TEXT NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT,
+    status meeting_status DEFAULT 'assigned',
+    staff UUID NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    start_time TIME,
+    end_time TIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (staff) REFERENCES staff(id) ON DELETE CASCADE
+);
 
 
 -- Update Function
@@ -128,6 +146,11 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_set_meeting_updated_at
+BEFORE UPDATE ON meeting
+FOR EACH ROW
+EXECUTE FUNCTION set_updated_at();
 
 CREATE TRIGGER trigger_set_updated_at
 BEFORE UPDATE ON task
@@ -151,35 +174,11 @@ CREATE TRIGGER trigger_set_time_sheet_updated_at
 BEFORE UPDATE ON timesheet
 FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
+-- Automatic functionality
 
--- Sample data
--- INSERT INTO
---     staff (
---         name,
---         email,
---         password,
---         dob,
---         contact,
---         role
---     )
--- VALUES (
---         'ram',
---         'ram7@gmail.com',
---         '1234',
---         '2014-11-12',
---         '9342198941',
---         'staff'
---     );
-
--- -- Drop Tables
-
--- -- DROP TABLE staff;
--- Drop TABLE staff;
-
-DROP TABLE timeSheet;
-DROP TABLE task;
-DROP TABLE project;
+-- DROP TABLE timeSheet;
+-- DROP TABLE task;
+-- DROP TABLE project;
 -- Drop TABLE client;
 
-ALTER TABLE staff ADD COLUMN  lock BOOLEAN DEFAULT false; 
 -- ALTER TABLE staff RENAME updatedAt  to updated_at; 

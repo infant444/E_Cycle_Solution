@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="content">
+    <div class="header">
+      <div class="header-first">
+        <mat-icon (click)="back()">keyboard_backspace</mat-icon>
+        <div class="title">
+          <h2>{{meeting.title}}</h2>
+          <div class="sub">
+            <h4 class="status" [ngClass]="meeting.status">{{meeting.status}}</h4>
+            <h4 class="type">{{meeting.type}}</h4>
+
+          </div>
+        </div>
+      </div>
+      <div class="header-second">
+        <button class="edit" (click)="edit(meeting.id)">Edit</button>
+        <button class="delete" (click)="delete(meeting.id)">Delete</button>
+      </div>
+    </div>
+    <div class="group1">
+      <div class="timeline">
+        <div class="time">
+          <div>{{meeting.start_date|date:'dd-MMM-yy'}}</div>
+          <div>{{ getTime(meeting.start_time) | date:'hh:mm a' }}</div>
+        </div>
+        <div class="icon">
+          <mat-icon>trending_flat</mat-icon>
+        </div>
+        <div class="time">
+          <div>{{meeting.end_date|date:'dd-MMM-yy'}}</div>
+          <div> {{ getTime(meeting.end_time) | date:'hh:mm a' }}</div>
+        </div>
+      </div>
+      <div class="user">
+        <h3>User Detail</h3>
+         <div class="employee">
+        <img [src]="user.profile==null?'./assets/images/profile_pic.png':user.profile" alt="{{user.profile}}" class="img"/>
+        <div>
+          <strong class="name">{{user.name}}</strong><br />
+          {{user.position||'Na'}}<br />
+          <a href="mailto:{{user.email}}">{{user.email}}</a>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="group2">
+    <div class="description">
+        <h3>Description</h3><br>
+    <p>{{meeting.description}}</p>
+    </div>
+    <div class="date">
+      <h3>Days</h3><br>
+      <p [ngClass]="calculateDate(meeting.start_date)>=0?'':'completed'">{{calculateDate(meeting.start_date)>=0?calculateDate(meeting.start_date):'completed'}}</p>
+    </div>
+    </div>
+  </div>
+</div>
+

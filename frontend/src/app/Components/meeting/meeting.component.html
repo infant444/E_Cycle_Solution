@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="content">
+        <div class="header">
+      <app-title title="Meeting Management" sub_title="Manage all of out Events"></app-title>
+      <div class="add">
+        <button class="btn" (click)="dis()">Add</button>
+      </div>
+    </div>
+ <div class="calendar">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+</div>
+
+<app-add-meeting [display]="display" [type]="type" [meeting]="editMeeting"></app-add-meeting>
+

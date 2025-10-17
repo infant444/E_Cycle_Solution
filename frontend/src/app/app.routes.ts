@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './Components/home/home';
 import { Dashboard } from './Components/dashboard/dashboard';
 import { AuthGuard } from './guard/auth/auth-guard';
+import { MeetingComponent } from './Components/meeting/meeting.component';
 
 
 export const routes: Routes = [
@@ -160,6 +161,26 @@ export const routes: Routes = [
         loadComponent: () => import("./Components/employee/employee.component").then(m => m.EmployeeComponent),
         canActivate: [AuthGuard]
       }
+    ]
+  },
+  {
+    path:'meeting',
+    children:[
+      {
+        path:'',
+        loadComponent:()=>import("./Components/meeting/meeting.component").then(m=>m.MeetingComponent),
+        canActivate: [AuthGuard]
+      },
+      {
+        path:'view/:id',
+        loadComponent:()=>import("./Components/view-meeting/view-meeting.component").then(m=>m.ViewMeetingComponent),
+        canActivate: [AuthGuard]
+      },
+        {
+        path:'edit/:id',
+        loadComponent:()=>import("./Components/meeting/meeting.component").then(m=>m.MeetingComponent),
+        canActivate: [AuthGuard]
+      },
     ]
   },
   {

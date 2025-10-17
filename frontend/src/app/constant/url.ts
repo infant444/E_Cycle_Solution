@@ -82,4 +82,14 @@ export const UPDATE_TIME_SHEET_STATUS=TIME_SHEET+"/update/";
 
 
 
-// Marketing
+// Meeting
+export const MEETING_BASE_URL=BASEURL+"/api/meeting";
+export const ADD_MEETING=MEETING_BASE_URL+"/add";
+export const GET_ALL_MEETING=MEETING_BASE_URL+"/get/all";
+export const GET_ALL_MEETING_UPCOMING=MEETING_BASE_URL+'/get/all/upcoming';
+export const GET_BY_MEETING_STAFF=MEETING_BASE_URL+'/get/user/';
+export const GET_BY_MEETING_STAFF_UPCOMING=MEETING_BASE_URL+'/get/user/upcoming/';
+export const GET_BY_MEETING_ID=MEETING_BASE_URL+'/get/meeting/';
+export const UPDATE_MEETING_DETAIL=MEETING_BASE_URL+'/update/all/';
+export const UPDATE_MEETING_STATUS=MEETING_BASE_URL+'/update/status/';
+export const DELETE_BY_ID_MEETING=MEETING_BASE_URL+'/delete/meeting/';
