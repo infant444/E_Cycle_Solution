@@ -1,7 +1,7 @@
 <div class="container">
   <div class="content">
     <div class="nav" *ngIf="true">
-      <a [routerLink]="user.role=='admin'?'/admin-dashboard':'/user-dashboard'" routerLinkActive="active"
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
         class="link"><mat-icon>dashboard</mat-icon><span *ngIf="show">DashBoard</span> </a>
       <a routerLink="/inventory" routerLinkActive="active" class="link"><lucide-angular [img]="package"
           class="my-icon"></lucide-angular><span *ngIf="show">Inventory</span> </a>
