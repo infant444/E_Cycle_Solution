@@ -9,12 +9,27 @@ export const routes: Routes = [
   {
     path: "",
     component: Home,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin', 'staff'] }
   },
   {
-    path: "admin/dashboard",
+    path: 'unauthorized',
+    loadComponent: () => import("./Components/unauthorized/unauthorized.component").then(m => m.UnauthorizedComponent),
+
+  },
+  {
+    path: "admin-dashboard",
     component: Dashboard,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
+
+  },
+  {
+    path: "employee-dashboard",
+    loadComponent: () => import("./Components/employee-dashboard/employee-dashboard.component").then(m => m.EmployeeDashboardComponent),
+    canActivate: [AuthGuard],
+    data: { roles: ['staff'] }
+
   },
   {
     path: "login",
@@ -43,7 +58,9 @@ export const routes: Routes = [
         loadComponent: () => import("./Components/view-client/view-client.component").then(m => m.ViewClientComponent),
       }
     ],
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
+
 
   },
   {
@@ -52,16 +69,23 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import("./Components/project/project").then(m => m.Project),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+
+
       }, {
         path: "view/:projectid",
         loadComponent: () => import("./Components/view-project/view-project.component").then(m => m.ViewProjectComponent),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+
       },
       {
         path: 'edit/:projectid',
         loadComponent: () => import("./Components/project/project").then(m => m.Project),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+
       },
       {
         path: "myProject",
@@ -69,12 +93,16 @@ export const routes: Routes = [
           {
             path: '',
             loadComponent: () => import("./Components/my-project/my-project.component").then(m => m.MyProjectComponent),
-            canActivate: [AuthGuard]
+            canActivate: [AuthGuard],
+            data: { roles: ['admin', 'staff'] }
+
           },
           {
             path: "view/:projectid",
             loadComponent: () => import("./Components/view-my-project/view-my-project.component").then(m => m.ViewMyProjectComponent),
-            canActivate: [AuthGuard]
+            canActivate: [AuthGuard],
+            data: { roles: ['admin', 'staff'] }
+
           }
         ],
         canActivate: [AuthGuard]
@@ -87,28 +115,38 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import("./Components/task/task.component").then((m => m.TaskComponent)),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+
       }, {
         path: 'view/:taskId',
         loadComponent: () => import("./Components/view-task/view-task.component").then((m => m.ViewTaskComponent)),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+
       },
       {
         path: 'edit/:taskId',
         loadComponent: () => import("./Components/task/task.component").then((m => m.TaskComponent)),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+
       }, {
         path: 'myTask',
         children: [
           {
             path: '',
             loadComponent: () => import("./Components/my-task/my-task.component").then(m => m.MyTaskComponent),
-            canActivate: [AuthGuard]
+            canActivate: [AuthGuard],
+            data: { roles: ['admin', 'staff'] }
+
           },
           {
             path: "view/:taskId",
             loadComponent: () => import("./Components/view-my-task/view-my-task.component").then(m => m.ViewMyTaskComponent),
-            canActivate: [AuthGuard]
+            canActivate: [AuthGuard],
+            data: { roles: ['admin', 'staff'] }
+
           }
         ],
 
@@ -142,7 +180,9 @@ export const routes: Routes = [
   {
     path: "admin/time-sheet",
     loadComponent: () => import("./Components/admin-time-sheet/admin-time-sheet.component").then(m => m.AdminTimeSheetComponent),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
+
   },
   {
     path: "employee",
@@ -150,35 +190,41 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import("./Components/employee/employee.component").then(m => m.EmployeeComponent),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+
       },
       {
         path: 'view/:id',
         loadComponent: () => import("./Components/view-employee/view-employee.component").then(m => m.ViewEmployeeComponent),
-        canActivate: [AuthGuard]
-      },{
-        path:'edit/:id',
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+
+      }, {
+        path: 'edit/:id',
         loadComponent: () => import("./Components/employee/employee.component").then(m => m.EmployeeComponent),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+
       }
     ]
   },
   {
-    path:'meeting',
-    children:[
+    path: 'meeting',
+    children: [
       {
-        path:'',
-        loadComponent:()=>import("./Components/meeting/meeting.component").then(m=>m.MeetingComponent),
+        path: '',
+        loadComponent: () => import("./Components/meeting/meeting.component").then(m => m.MeetingComponent),
         canActivate: [AuthGuard]
       },
       {
-        path:'view/:id',
-        loadComponent:()=>import("./Components/view-meeting/view-meeting.component").then(m=>m.ViewMeetingComponent),
+        path: 'view/:id',
+        loadComponent: () => import("./Components/view-meeting/view-meeting.component").then(m => m.ViewMeetingComponent),
         canActivate: [AuthGuard]
       },
-        {
-        path:'edit/:id',
-        loadComponent:()=>import("./Components/meeting/meeting.component").then(m=>m.MeetingComponent),
+      {
+        path: 'edit/:id',
+        loadComponent: () => import("./Components/meeting/meeting.component").then(m => m.MeetingComponent),
         canActivate: [AuthGuard]
       },
     ]

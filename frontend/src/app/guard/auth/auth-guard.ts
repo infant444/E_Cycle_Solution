@@ -8,25 +8,28 @@ import { User } from '../../model/user.model';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-constructor(private router: Router,private userService:UserServices) {}
+  constructor(private router: Router, private userService: UserServices) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
 
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      let user!:User;
-     this.userService.userObservable.subscribe((newUser)=>{
-    user=newUser;
+    let user!: User;
+    const expectedRoles = next.data['roles'];
+    this.userService.userObservable.subscribe((newUser) => {
+      user = newUser;
 
-  })
-  // console.log(user)
-  // console.log(this.userService.currentUser)
-    if (this.userService.currentUser.email) {
-      return true
-    } else {
-       this.router.navigateByUrl("/login");
-
-     return false
+    })
+    // console.log(user)
+    // console.log(this.userService.currentUser)
+    if (!this.userService.currentUser.email) {
+      this.router.navigateByUrl("/login");
+      return false
     }
+    if (expectedRoles && !expectedRoles.includes(user.role)) {
+      this.router.navigate(['/unauthorized']); // redirect if not allowed
+      return false;
+    }
+    return true
   }
 }
