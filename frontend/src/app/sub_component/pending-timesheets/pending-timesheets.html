@@ -1,0 +1,21 @@
+<div class="card">
+  <h3>Pending Timesheets</h3>
+  <div class="times-list" *ngIf="items.length">
+    <div class="times-item" *ngFor="let t of items">
+      <div class="left">
+        <div class="avatar"><img [src]="getProfile(t.staff)" alt="" class='profile'></div>
+        <div>
+          <div class="name">{{t.task_name}}</div>
+          <div class="date">{{t.date|date:'dd/MM/yyyy'}}</div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="hours">{{secToHr(t.total_hours)|number:'1.0-1'}} Hr</div>
+        <div class="badge pending">{{t.status}}</div>
+      </div>
+    </div>
+  </div>
+  <ng-template *ngIf="!items.length">
+    <div class="empty">No pending timesheets</div>
+  </ng-template>
+</div>

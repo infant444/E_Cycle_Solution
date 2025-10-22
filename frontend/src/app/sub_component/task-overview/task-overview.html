@@ -1,0 +1,10 @@
+<div class="card">
+  <h3>Task Overview</h3>
+  <ul class="list">
+    <li *ngFor="let it of items">
+      <span class="dot" [ngClass]="it.status"></span>
+      <span class="label">{{it.status}}</span>
+      <span class="count">{{it.count}}</span>
+    </li>
+  </ul>
+</div>

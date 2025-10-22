@@ -1,0 +1,8 @@
+.card{ background:#fff; border-radius:12px; padding:18px; box-shadow:0 2px 6px rgba(16,24,40,0.03); }
+.card h3{ margin:0 0 12px 0; color:#0f172a; }
+.list{ list-style:none; padding:0; margin:0; }
+.list li{ display:flex; align-items:center; justify-content:space-between; padding:10px 0; }
+.left{ display:flex; align-items:center; gap:12px; }
+.dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+.label{ color:#111827; }
+.count{ color:#111827; font-weight:700; }

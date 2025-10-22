@@ -1,0 +1,12 @@
+<div class="card">
+  <h3>Inventory Status</h3>
+  <ul class="list">
+    <li *ngFor="let it of items">
+      <div class="left">
+        <span class="dot" [ngClass]="it.status"></span>
+        <span class="label">{{it.status}}</span>
+      </div>
+      <div class="count">{{it.count}}</div>
+    </li>
+  </ul>
+</div>

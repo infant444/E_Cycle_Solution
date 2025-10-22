@@ -136,7 +136,56 @@ CREATE TABLE IF NOT EXISTS meeting (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (staff) REFERENCES staff(id) ON DELETE CASCADE
 );
+CREATE TABLE inventory (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    company VARCHAR(150) NOT NULL,
+    stored_location VARCHAR(150) NOT NULL,
+    received_date DATE NOT NULL,
+    processed_date DATE,
+    status VARCHAR(50) DEFAULT 'Active',
+    remarks TEXT,
+    total_items INT DEFAULT 0,
+    total_value NUMERIC(12, 2) DEFAULT 0.00,
+    created_by UUID,
+    updated_by UUID,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    inventory_id UUID REFERENCES inventory(id) ON DELETE CASCADE,
+    product_name VARCHAR(150) NOT NULL,
+    barcode VARCHAR(100) UNIQUE,
+    category VARCHAR(100),
+    brand VARCHAR(100),
+    description TEXT,
+    quantity INT DEFAULT 0,
+    stock_in_date DATE NOT NULL,
+    stock_out_date DATE,
+    unit_price NUMERIC(10, 2) NOT NULL,
+    total_value NUMERIC(12, 2) GENERATED ALWAYS AS (quantity * unit_price) STORED,
+    no_item_sold INT DEFAULT 0,
+    profit_margin NUMERIC(5, 2),
+    product_value NUMERIC(10, 2),
+    expiry_date DATE,
+    condition VARCHAR(50) DEFAULT 'New',
+    status VARCHAR(50) DEFAULT 'Available',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
+CREATE TABLE transactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    product_id UUID REFERENCES products(id) ON DELETE CASCADE,
+    type VARCHAR(50) CHECK (type IN ('Purchase', 'Sale', 'Return', 'Damage')),
+    quantity INT NOT NULL,
+    unit_price NUMERIC(10, 2) NOT NULL,
+    total_amount NUMERIC(12, 2) GENERATED ALWAYS AS (quantity * unit_price) STORED,
+    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    customer_or_supplier VARCHAR(150),
+    payment_status VARCHAR(50) CHECK (payment_status IN ('Paid', 'Pending', 'Refunded')),
+    remarks TEXT
+);
 
 -- Update Function
 CREATE OR REPLACE FUNCTION set_updated_at()
@@ -174,7 +223,25 @@ CREATE TRIGGER trigger_set_time_sheet_updated_at
 BEFORE UPDATE ON timesheet
 FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trg_generate_barcode
+BEFORE INSERT ON products
+FOR EACH ROW
+EXECUTE FUNCTION generate_barcode_if_null();
+ALTER TABLE meeting ALTER COLUMN start_date TYPE date USING start_date::date;
+ALTER TABLE meeting ALTER COLUMN end_date TYPE date USING end_date::date;
 -- Automatic functionality
+CREATE OR REPLACE FUNCTION generate_barcode_if_null()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.barcode IS NULL OR NEW.barcode = '' THEN
+    NEW.barcode := 'PROD-' ||
+                   TO_CHAR(CURRENT_DATE, 'YYYYMMDD') || '-' ||
+                   SUBSTRING(MD5(RANDOM()::text) FROM 1 FOR 6);
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
 -- DROP TABLE timeSheet;
 -- DROP TABLE task;

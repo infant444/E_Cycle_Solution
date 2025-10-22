@@ -1,0 +1,18 @@
+<div class="card">
+  <h3>Recent Inventory</h3>
+  <div class="inv-list">
+    <div class="inv-item" *ngFor="let it of items">
+      <div>
+        <div class="inv-title">{{it.product_name}}</div>
+        <div class="inv-sub">{{it.category}}|{{it.condition}}</div>
+      </div>
+      <div class="right">
+        <div class="qty">{{it.quantity}}</div>
+        <div class="badge" [ngClass]="it.status">{{it.status}}</div>
+      </div>
+    </div>
+  </div>
+    <ng-template *ngIf="!items.length">
+    <div class="empty">No Inventory</div>
+  </ng-template>
+</div>

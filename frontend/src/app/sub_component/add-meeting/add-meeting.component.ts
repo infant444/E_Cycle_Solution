@@ -70,14 +70,14 @@ export class AddMeetingComponent implements OnInit, OnChanges {
       this.FC.type.setValue(this.meeting.type || '');
       this.FC.staff.setValue(this.meeting.staff || '');
       this.FC.start_date.setValue(this.meeting?.start_date
-        ? new Date(this.meeting.start_date).toISOString().split('T')[0]
+        ? new Date(this.meeting.start_date).toLocaleDateString('en-CA')
         : '');
       this.FC.start_time.setValue(this.meeting?.start_time
         ? this.formatTime(this.meeting.start_time)
         : '');
 
       this.FC.end_date.setValue(this.meeting?.end_date
-        ? new Date(this.meeting.end_date).toISOString().split('T')[0]
+        ? new Date(this.meeting.end_date).toLocaleDateString('en-CA')
         : '');
 
       this.FC.end_time.setValue(this.meeting?.end_time
@@ -117,7 +117,7 @@ export class AddMeetingComponent implements OnInit, OnChanges {
     if(this.type=='edit'){
       this.meetingServices.updateMeetingDetail(this.meeting.id,data).subscribe((res)=>{
         this.toasterServices.success("Successfully update")
-        this.router.navigateByUrl("/meeting/view/"+res.id)
+        this.router.navigateByUrl("/meeting/view/"+this.meeting.id)
       })
     }else{
       this.meetingServices.addMeeting(data).subscribe(

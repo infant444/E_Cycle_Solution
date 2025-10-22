@@ -1,0 +1,15 @@
+.card{ background:#fff; border-radius:12px; padding:18px; box-shadow:0 2px 6px rgba(16,24,40,0.03); }
+.times-list{ display:flex; flex-direction:column; gap:12px; margin-top:8px; }
+.times-item{ display:flex; justify-content:space-between; align-items:center; padding:12px; background:#f8fafc; border-radius:10px; }
+.left{ display:flex; align-items:center; gap:10px; }
+.avatar{ width:42px; height:42px; border-radius:999px; display:flex; align-items:center; justify-content:center; background:#fff; box-shadow:0 1px 2px rgba(2,6,23,0.05); }
+.name{ font-weight:700; }
+.date{ font-size:13px; color:#6b7280; }
+.right{ display:flex; align-items:center; gap:10px; }
+.hours{ font-weight:700; }
+.badge.pending{ background:#fff7ed; color:#b45309; padding:6px 10px; border-radius:999px; }
+.profile{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 4rem;
+}

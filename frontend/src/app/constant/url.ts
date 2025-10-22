@@ -17,10 +17,15 @@ export const UPDATE_DETAIL=EMPLOYEE_BASE_URL+"/update/";
 export const CHANGE_PASSWORD=EMPLOYEE_BASE_URL+"/updatePassword/";
 export const UPDATE_LOCK_STATUS=EMPLOYEE_BASE_URL+"/update-status/";
 export const DELETE_STAFF=EMPLOYEE_BASE_URL+"/delete/"
-// Admin
-
-
-
+// Dashboard
+export const DASHBOARD_BASE_URL=BASEURL+"/api/dashboard";
+export const GET_STATES=DASHBOARD_BASE_URL+"/get/states";
+export const GET_TASK_STATUS_GROUP=DASHBOARD_BASE_URL+"/get/task-status";
+export const GET_CLIENT_GROUP=DASHBOARD_BASE_URL+"/get/client-group";
+export const GET_INVENTORY_GROUP=DASHBOARD_BASE_URL+"/get/inventory";
+export const GET_RECENT_PRODUCT=DASHBOARD_BASE_URL+'/get/recent-inventory';
+export const GET_TOP_CLIENT=DASHBOARD_BASE_URL+'/get/recent-client';
+export const GET_PENDING_TIMESHEET=DASHBOARD_BASE_URL+'/get/recent-pending-timeSheet';
 
 // Client
 export const CLIENT_BASE_URL=BASEURL+"/api/client";

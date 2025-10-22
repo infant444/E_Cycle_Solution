@@ -84,15 +84,16 @@ export class MeetingComponent implements OnInit {
     };
     if (this.userServices.currentUser.role === 'admin') {
       this.meetingServices.getAllMeeting().subscribe((res) => {
-        console.log(res);
         this.meeting = res;
         if (this.meeting.length > 0) {
           this.events = this.meeting.map(event => {
+          console.log(new Date(event.start_date).toLocaleDateString('en-CA'));
+
             return {
               id: event.id,
               title: event.title,
-              start: `${new Date(event.start_date).toISOString().split('T')[0]}T${event.start_time || '00:00:00'}`,
-              end: `${new Date(event.end_date).toISOString().split('T')[0]}T${event.end_time || '23:59:59'}`,
+              start: `${new Date(event.start_date).toLocaleDateString('en-CA')}T${event.start_time || '00:00:00'}`,
+              end: `${new Date(event.end_date).toLocaleDateString('en-CA')}T${event.end_time || '23:59:59'}`,
               backgroundColor: this.getEventColor(event.type),
               borderColor: this.getEventColor(event.type),
               extendedProps: {
@@ -158,15 +159,14 @@ export class MeetingComponent implements OnInit {
       })
     } else if(this.userServices.currentUser.role=='staff') {
       this.meetingServices.getUserMeeting(this.userServices.currentUser.id).subscribe((res) => {
-        console.log(res);
         this.meeting = res;
         if (this.meeting.length > 0) {
           this.events = this.meeting.map(event => {
             return {
               id: event.id,
               title: event.title,
-              start: `${new Date(event.start_date).toISOString().split('T')[0]}T${event.start_time || '00:00:00'}`,
-              end: `${new Date(event.end_date).toISOString().split('T')[0]}T${event.end_time || '23:59:59'}`,
+              start: `${new Date(event.start_date).toLocaleDateString('en-CA')}T${event.start_time || '00:00:00'}`,
+              end: `${new Date(event.end_date).toLocaleDateString('en-CA')}T${event.end_time || '23:59:59'}`,
               backgroundColor: this.getEventColor(event.type),
               borderColor: this.getEventColor(event.type),
               extendedProps: {
@@ -252,9 +252,9 @@ export class MeetingComponent implements OnInit {
         status: '',
         type: '',
         staff: '',
-        start_date: new Date(info.date).toISOString().split('T')[0],
+        start_date: new Date(info.date).toLocaleDateString('en-CA'),
         start_time: new Date(info.date).toISOString(),
-        end_date: new Date(info.date).toISOString().split('T')[0],
+        end_date: new Date(info.date).toLocaleDateString('en-CA'),
         end_time: this.endDate(info.date)
       }
       console.log(x);
@@ -305,52 +305,54 @@ export class MeetingComponent implements OnInit {
     }
   }
   reAssign() {
-    this.meetingServices.getAllMeeting().subscribe((res) => {
-      console.log(res);
-      this.meeting = res;
-      if (this.meeting.length > 0) {
-        this.events = this.meeting.map(event => {
-          return {
-            id: event.id,
-            title: event.title,
-            start: `${new Date(event.start_date).toISOString().split('T')[0]}T${event.start_time || '00:00:00'}`,
-            end: `${new Date(event.end_date).toISOString().split('T')[0]}T${event.end_time || '23:59:59'}`,
-            backgroundColor: this.getEventColor(event.type),
-            borderColor: this.getEventColor(event.type),
-            extendedProps: {
-              description: event.description,
-              type: event.type,
-              staffName: this.getUser(event.staff)?.name,
-              staffAvatar: this.getUser(event.staff)?.profile == '' ? "./assets/images/profile_pic.png" : this.getUser(event.staff)?.profile,
-            }
-          };
-        });
-        this.cd.markForCheck();
-        this.calendarOptions = {
-          plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-          initialView: 'dayGridMonth',
-          headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-          },
-          selectable: true,
-          editable: true,
-          selectMirror: true,
-          dayMaxEvents: true,
-          eventColor: '#3788d8',
-          eventTextColor: '#ffffff',
-          eventDisplay: 'block',
-          events: this.events,
-          eventContent: (arg) => {
-            const staffName = arg.event.extendedProps.staffName;
-            const staffAvatar = arg.event.extendedProps.staffAvatar;
-            const title = arg.event.title;
-            const type = arg.event.extendedProps.type;
+    if (this.userServices.currentUser.role === 'admin') {
+      this.meetingServices.getAllMeeting().subscribe((res) => {
+        this.meeting = res;
+        if (this.meeting.length > 0) {
+          this.events = this.meeting.map(event => {
+          console.log(new Date(event.start_date).toLocaleDateString('en-CA'));
+
             return {
-              html: `
+              id: event.id,
+              title: event.title,
+              start: `${new Date(event.start_date).toLocaleDateString('en-CA')}T${event.start_time || '00:00:00'}`,
+              end: `${new Date(event.end_date).toLocaleDateString('en-CA')}T${event.end_time || '23:59:59'}`,
+              backgroundColor: this.getEventColor(event.type),
+              borderColor: this.getEventColor(event.type),
+              extendedProps: {
+                description: event.description,
+                type: event.type,
+                staffName: this.getUser(event.staff)?.name,
+                staffAvatar: this.getUser(event.staff)?.profile == '' ? "./assets/images/profile_pic.png" : this.getUser(event.staff)?.profile,
+              }
+            };
+          });
+          this.cd.markForCheck();
+          this.calendarOptions = {
+            plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            },
+            selectable: true,
+            editable: true,
+            selectMirror: true,
+            dayMaxEvents: true,
+            eventColor: '#3788d8',
+            eventTextColor: '#ffffff',
+            eventDisplay: 'block',
+            events: this.events,
+            eventContent: (arg) => {
+              const staffName = arg.event.extendedProps.staffName;
+              const staffAvatar = arg.event.extendedProps.staffAvatar;
+              const title = arg.event.title;
+              const type = arg.event.extendedProps.type;
+              return {
+                html: `
         <div style="display:flex; align-items:center;overflow:hidden;">
-          <img src="${staffAvatar}" style="width:30px; height:30px; border-radius:50%; margin-right:5px; overflow:hidden"  />
+          <img src="${staffAvatar}" style="width:30px; height:30px; border-radius:50%; margin-right:5px;"  />
           <div>
             <div style="font-weight:bold; font-size:12px;text-overflow:ellipsis;">${title}</div>
             <div style="font-size:10px;">${staffName}</div>
@@ -358,26 +360,94 @@ export class MeetingComponent implements OnInit {
           </div>
         </div>
       `
-            };
-          },
-          dateClick: this.onDateClick.bind(this),
-          eventClick: this.onEventClick.bind(this),
-          eventDidMount: (info) => {
-            info.el.setAttribute('title', info.event.title);
-          },
-          eventMouseEnter: (info) => {
-            info.el.style.borderColor = 'yellow';
-            info.el.style.cursor = 'pointer';
-          },
-          eventMouseLeave: (info) => {
-            info.el.style.borderColor = '';
-          },
-          height: 'auto',
-        };
-        this.cd.markForCheck()
-      }
+              };
+            },
+            dateClick: this.onDateClick.bind(this),
+            eventClick: this.onEventClick.bind(this),
+            eventDidMount: (info) => {
+              info.el.setAttribute('title', info.event.title);
+            },
+            eventMouseEnter: (info) => {
+              info.el.style.borderColor = 'yellow';
+              info.el.style.cursor = 'pointer';
+            },
+            eventMouseLeave: (info) => {
+              info.el.style.borderColor = '';
+            },
+            height: 'auto',
+          };
+          this.cd.markForCheck()
+        }
 
-    })
+      })
+    } else if(this.userServices.currentUser.role=='staff') {
+      this.meetingServices.getUserMeeting(this.userServices.currentUser.id).subscribe((res) => {
+        this.meeting = res;
+        if (this.meeting.length > 0) {
+          this.events = this.meeting.map(event => {
+            return {
+              id: event.id,
+              title: event.title,
+              start: `${new Date(event.start_date).toLocaleDateString('en-CA')}T${event.start_time || '00:00:00'}`,
+              end: `${new Date(event.end_date).toLocaleDateString('en-CA')}T${event.end_time || '23:59:59'}`,
+              backgroundColor: this.getEventColor(event.type),
+              borderColor: this.getEventColor(event.type),
+              extendedProps: {
+                description: event.description,
+                type: event.type,
+              }
+            };
+          });
+          this.cd.markForCheck();
+          this.calendarOptions = {
+            plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            },
+            selectable: true,
+            editable: true,
+            selectMirror: true,
+            dayMaxEvents: true,
+            eventColor: '#3788d8',
+            eventTextColor: '#ffffff',
+            eventDisplay: 'block',
+            events: this.events,
+            eventContent: (arg) => {
+              const title = arg.event.title;
+              const type = arg.event.extendedProps.type;
+              return {
+                html: `
+        <div style="display:flex; align-items:center;overflow:hidden;">
+          <div>
+            <div style="font-weight:bold; font-size:12px;text-overflow:ellipsis;">${title}</div>
+            <div style="font-size:10px;">${type}</div>
+          </div>
+        </div>
+      `
+              };
+            },
+            dateClick: this.onDateClick.bind(this),
+            eventClick: this.onEventClick.bind(this),
+            eventDidMount: (info) => {
+              info.el.setAttribute('title', info.event.title);
+            },
+            eventMouseEnter: (info) => {
+              info.el.style.borderColor = 'yellow';
+              info.el.style.cursor = 'pointer';
+            },
+            eventMouseLeave: (info) => {
+              info.el.style.borderColor = '';
+            },
+            height: 'auto',
+          };
+          this.cd.markForCheck()
+        }
+
+      })
+    }
   }
   formatTime = (date: Date) => {
     return date.getHours().toString().padStart(2, '0') + ":" +
@@ -387,5 +457,12 @@ export class MeetingComponent implements OnInit {
     const startDate = new Date(date);
     const endDate = new Date(startDate.getTime() + 1.5 * 60 * 60 * 1000);
     return endDate.toISOString();
+  }
+  getproperdate(x:string){
+    const dateObj = new Date(x);
+const localDate = new Date(dateObj.getTime() - dateObj.getTimezoneOffset() * 60000)
+  .toISOString()
+  .split('T')[0];
+return localDate
   }
 }

@@ -10,6 +10,7 @@ import projectRouter from './router/project.router';
 import timeSheetRouter from './router/timesheet.router';
 import { cloudinaryConnect } from './config/database.config';
 import meetingRouter from './router/meeting.router';
+import dashboardRouter from './router/dashboard.router';
 // config
 dotenv.config();
 cloudinaryConnect()
@@ -31,6 +32,7 @@ app.use("/api/user",userRouter);
 app.use("/api/project",projectRouter);
 app.use("/api/timeSheet",timeSheetRouter);
 app.use("/api/meeting",meetingRouter);
+app.use("/api/dashboard",dashboardRouter);
 // middleware
 app.use(errorHandler);
 

@@ -1,0 +1,25 @@
+.card{
+  background:#fff; border-radius:12px; padding:18px; box-shadow:0 2px 6px rgba(16,24,40,0.03);
+}
+.card h3{ margin:0 0 12px 0; color:#0f172a; }
+.list{ list-style:none; padding:0; margin:0; }
+.list li{ display:flex; align-items:center; justify-content:space-between; padding:8px 0; }
+.dot{ width:10px; height:10px; border-radius:50%; margin-right:12px; display:inline-block; }
+.label{ color:#111827; text-transform: capitalize;}
+.count{ color:#111827; font-weight:700; }
+.completed{
+  background-color: #16a34a;
+}
+.accepted{
+  background-color: aqua;
+}
+.processed{
+  background-color: #2563eb;
+}
+.pending{
+  background-color: #f97316;
+}
+.rejected{
+  background-color: #f91616;
+
+}

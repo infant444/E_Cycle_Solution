@@ -1,1 +1,30 @@
-<p>dashboard works!</p>
+<div class="container">
+  <div class="content">
+    <div class="title">
+      <app-title title="Admin Dashboard" sub_title="Overview of your E-Waste operations"></app-title>
+    </div>
+      <section class="stats-grid">
+    <ng-container *ngFor="let s of state">
+      <app-admin-dashboard-states [title]="s.title" [value]="s.value" [icon]="s.icon" [color]="s.color"></app-admin-dashboard-states>
+    </ng-container>
+  </section>
+    <section class="overview-grid">
+    <app-task-overview [items]="taskOverView"></app-task-overview>
+    <app-inventory-status ></app-inventory-status>
+    <app-client-overview [items]="clientOverView"></app-client-overview>
+  </section>
+<section class="quick-actions">
+    <button class="btn green" (click)="router.navigateByUrl('/task')">Assign Task</button>
+    <button class="btn blue" (click)="router.navigateByUrl('/admin/time-sheet')">Review Timesheets</button>
+    <button class="btn purple" (click)="router.navigateByUrl('/inventory')">Add Inventory</button>
+    <button class="btn orange" (click)="router.navigateByUrl('/client')">Add Client</button>
+    <button class="btn indigo" (click)="router.navigateByUrl('/meeting')">Schedule Collection</button>
+    <button class="btn red" (click)="router.navigateByUrl('/report')">View Reports</button>
+  </section>
+  <section class="bottom-grid">
+    <app-recent-inventory [items]="recentInventory"></app-recent-inventory>
+    <app-top-clients [items]="topClient"></app-top-clients>
+    <app-pending-timesheets [items]="pendingTimesheet"></app-pending-timesheets>
+  </section>
+  </div>
+</div>

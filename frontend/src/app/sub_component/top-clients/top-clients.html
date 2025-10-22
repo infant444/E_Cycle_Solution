@@ -1,0 +1,21 @@
+<div class="card">
+  <h3>Top Clients</h3>
+  <div class="client-list">
+    <div class="client-item" *ngFor="let it of items" (click)="router.navigateByUrl('/client/view/'+it.id)">
+      <div>
+        <div class="c-title">{{it.name}}</div>
+        <div class="c-sub">{{it.type}}|{{it.total_collection||0}}</div>
+      </div>
+      <div class="right">
+        <div class="val">{{it.value||0|currency:'INR'}}</div>
+        <div class="status" [title]="it.is_current_project ? 'Active' : 'Inactive'">
+
+          <span class="dot" [style.background]="it.is_current_project ? '#46ff81' : '#568cf8'">{{ it.is_current_project ? 'Active' : 'Inactive'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+    <ng-template *ngIf="!items.length">
+    <div class="empty">No Client</div>
+  </ng-template>
+</div>
