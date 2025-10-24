@@ -6,6 +6,7 @@
           <button class="edit" (click)="edit(employee.id)">Edit</button>
           <button class="delete" (click)="delete(employee.id)">Delete</button>
           <button [ngClass]="employee.lock?'unlock':'lock'" (click)="lock(employee.id)">{{employee.lock?'unlock':'lock'}}</button>
+          <button class="edit" (click)="reassignPassword(employee.id)">change password</button>
         </div>
   </div>
 

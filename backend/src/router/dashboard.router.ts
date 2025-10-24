@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import { pool } from "../config/postgersql.config";
 import auth from "../middleware/auth.middleware";
 const rout = Router();
-
+rout.use(auth);
 rout.get("/get/states", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
@@ -89,4 +89,27 @@ rout.get("/get/recent-pending-timeSheet",asyncHandler(
         }
     }
 ));
+rout.get("/staff/get/states", asyncHandler(
+    async (req:any, res, next: NextFunction) => {
+        try {
+            const total_hours=await pool.query(`select sum(total_hours) as th from timesheet where date >= (CURRENT_DATE - INTERVAL '7 days') and staff=$1`,[req.user.id]);
+            const complete_task=await pool.query(`select count(*) as count from task where status='completed' and staff=$1`,[req.user.id]);
+            const processed_task=await pool.query(`select count(*) as count from task where status='processed' and staff=$1`,[req.user.id]);
+            const totalClient = await pool.query(`select count(*) as tc from client where is_current_project=true`, []);
+            const inventory =await pool.query(`select count(*) as count from inventory where status='processed' and manager=$1`,[req.user.id]);
+            const project=await pool.query(`select count(*) as count from project WHERE $1 = ANY(team_member)`,[req.user.id])
+            const result={
+                total_hours:total_hours.rows[0].th,
+                complete_task:complete_task.rows[0].count,
+                processed_task:processed_task.rows[0].count,
+                totalClient:totalClient.rows[0].tc,
+                inventory:inventory.rows[0].count,
+                project:project.rows[0].count
+            }
+            res.send(result);
+        }catch(err){
+            next(err);
+        }
+    }
+))
 export default rout;

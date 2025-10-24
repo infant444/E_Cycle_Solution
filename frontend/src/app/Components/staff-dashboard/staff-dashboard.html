@@ -1,9 +1,12 @@
 <div class="container">
   <div class="content">
     <div class="title">
-      <app-title title="Admin Dashboard" sub_title="Overview of your E-Waste operations"></app-title>
+      <app-title title="Welcome Back, {{user.name}}!" sub_title="Track your time and manage your tasks"></app-title>
     </div>
-
-
+      <section class="stats-grid">
+    <ng-container *ngFor="let s of state">
+      <app-admin-dashboard-states [title]="s.title" [value]="s.value" [icon]="s.icon" [color]="s.color"></app-admin-dashboard-states>
+    </ng-container>
+  </section>
   </div>
 </div>

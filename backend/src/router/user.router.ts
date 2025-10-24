@@ -153,7 +153,7 @@ rout.get("/resetPassword/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
 
         try {
-            const user = await pool.query(`select * from user where id=$1`, [req.params.id,]);
+            const user = await pool.query(`select * from staff where id=$1`, [req.params.id,]);
             if (user.rowCount != null && user.rowCount > 0) {
                 const passcode = generatePassCode();
                 let transporter = nodeMailer.createTransport(MailConfig);
@@ -169,7 +169,7 @@ rout.get("/resetPassword/:id", asyncHandler(
                 console.log(passcode);
                 const resultX = await pool.query(`UPDATE staff set password=$1 where id=$2 returning *`, [await bcrypt.hash(passcode, 10), req.params.id]);
                 transporter.sendMail(message).then(() => {
-                    console.log("Successfully send to " + name)
+                    console.log("Successfully send to " + user.rows[0].name)
                 })
                 res.status(200).json({ "message": "successfully send email" })
             }

@@ -24,25 +24,25 @@ export const projectAssignedEmployee = (name: string, companyName: string, proje
 
 export const ProjectAssignedManager = (name: string, project: string, company: string, due: string, staff: string[],) => {
   return {
-   "body": {
-  "name": name,
-  "intro": "You have been officially assigned to oversee the " + project + " for " + company + ".",
-  "dictionary": {
-    "Project Name": project,
-    "Client/Company": company,
-    "Due Date": new Date(due).toISOString().split("T")[0],
-    "Team Members": staff.join(", ")
-  },
-  "action": {
-    "instructions": "You can review the complete project details and requirements by clicking the button below:",
-    "button": {
-      "color": "#22BC66",
-      "text": "View Project Details",
-      "link": "https://localhost:4200/project"
+    "body": {
+      "name": name,
+      "intro": "You have been officially assigned to oversee the " + project + " for " + company + ".",
+      "dictionary": {
+        "Project Name": project,
+        "Client/Company": company,
+        "Due Date": new Date(due).toISOString().split("T")[0],
+        "Team Members": staff.join(", ")
+      },
+      "action": {
+        "instructions": "You can review the complete project details and requirements by clicking the button below:",
+        "button": {
+          "color": "#22BC66",
+          "text": "View Project Details",
+          "link": "https://localhost:4200/project"
+        }
+      },
+      "outro": "If you have any questions or require additional resources, please reach out to the project coordination team."
     }
-  },
-  "outro": "If you have any questions or require additional resources, please reach out to the project coordination team."
-}
 
   }
 
@@ -84,7 +84,7 @@ export const TaskAssignedForStaff = (staffName: string, projectName: string, Tas
 
 }
 
-export const TaskAcceptedReplyMail=(staffName:string, projectName:string, task:string, description:string, due:string, priority:string, estimate_time:string)=> {
+export const TaskAcceptedReplyMail = (staffName: string, projectName: string, task: string, description: string, due: string, priority: string, estimate_time: string) => {
   return {
     body: {
       name: staffName,
@@ -109,9 +109,9 @@ export const TaskAcceptedReplyMail=(staffName:string, projectName:string, task:s
     }
   };
 
-  
+
 }
-export const greatEmployee=(staffName:string,username:string,passcode:string)=>{
+export const greatEmployee = (staffName: string, username: string, passcode: string) => {
   return {
     body: {
       name: staffName,
@@ -139,55 +139,53 @@ export const greatEmployee=(staffName:string,username:string,passcode:string)=>{
 
 }
 
-export const passwordChanged=(name:string)=>{
+export const passwordChanged = (name: string) => {
   return {
-  body: {
-    name: name, // e.g., 'Infant Raj'
-    intro: "Your password has been successfully reset.",
-    action: {
-      instructions:
-        "If you didn’t request this password reset, please secure your account immediately using the button below:",
-      button: {
-        color: '#0d6efd', // Bootstrap primary blue
-        text: 'Secure My Account',
-        link: 'https://yourprojectlink.com/security',
+    body: {
+      name: name, // e.g., 'Infant Raj'
+      intro: "Your password has been successfully reset.",
+      action: {
+        instructions:
+          "If you didn’t request this password reset, please secure your account immediately using the button below:",
+        button: {
+          color: '#0d6efd', // Bootstrap primary blue
+          text: 'Secure My Account',
+          link: 'https://yourprojectlink.com/security',
+        },
       },
+      outro:
+        "If you did request this change, you can safely ignore this email. For your safety, we recommend using a strong and unique password.",
     },
-    outro:
-      "If you did request this change, you can safely ignore this email. For your safety, we recommend using a strong and unique password.",
-  },
-};
+  };
 }
 
-export const resetPassword=(username:string,passcode:string)=>{
-return {
-  body: {
-    name: username,
-    intro: `Your password has been reset by the Admin Team.`,
-    dictionary: [
-      { key: 'Temporary Password', value: passcode }
-    ],
-    action: {
-      instructions:
-        'Use the temporary password to log in and make sure to change it immediately for security.',
-      button: {
-        color: '#0d6efd', // Blue button
-        text: 'Login Now',
-        link: 'http://localhost:4200/login',
+export const resetPassword = (username: string, passcode: string) => {
+  return {
+    body: {
+      name: username,
+      intro: `Your password has been reset by the Admin Team.`,
+      dictionary:{ 'Temporary Password': passcode },
+      action: {
+        instructions:
+          'Use the temporary password to log in and make sure to change it immediately for security.',
+        button: {
+          color: '#0d6efd', // Blue button
+          text: 'Login Now',
+          link: 'http://localhost:4200/login',
+        },
       },
+      outro:
+        'If you did not expect this password reset, please contact your administrator immediately.',
     },
-    outro:
-      'If you did not expect this password reset, please contact your administrator immediately.',
-  },
-};
+  };
 }
 
 
-export const schudeleMeeting=(name:string,title:string,start_date:string,start_time:string,end_time:string,meetingType:string,meetingDescription:string)=>{
-  return   {
-  body: {
-    name: `${name}`,
-    intro: `
+export const schudeleMeeting = (name: string, title: string, start_date: string, start_time: string, end_time: string, meetingType: string, meetingDescription: string) => {
+  return {
+    body: {
+      name: `${name}`,
+      intro: `
       <p style="font-size: 16px; line-height: 1.6; color: #444;">
         You have been scheduled for a meeting titled <b>${title}</b>.
       </p>
@@ -200,16 +198,16 @@ export const schudeleMeeting=(name:string,title:string,start_date:string,start_t
         ${meetingDescription}
       </p>
     `,
-    action: {
-      instructions: "Click the button below to add this meeting to your calendar:",
-      button: {
-        color: "#1a73e8",
-        text: "Add to Calendar",
-        link: "cid:meeting.ics", // not required, optional for look
+      action: {
+        instructions: "Click the button below to add this meeting to your calendar:",
+        button: {
+          color: "#1a73e8",
+          text: "Add to Calendar",
+          link: "cid:meeting.ics", // not required, optional for look
+        },
       },
+      outro: "We look forward to your participation.",
     },
-    outro: "We look forward to your participation.",
-  },
-};
+  };
 
 }

@@ -26,6 +26,7 @@ export const GET_INVENTORY_GROUP=DASHBOARD_BASE_URL+"/get/inventory";
 export const GET_RECENT_PRODUCT=DASHBOARD_BASE_URL+'/get/recent-inventory';
 export const GET_TOP_CLIENT=DASHBOARD_BASE_URL+'/get/recent-client';
 export const GET_PENDING_TIMESHEET=DASHBOARD_BASE_URL+'/get/recent-pending-timeSheet';
+export const GET_STAFF_STATES=DASHBOARD_BASE_URL+"/staff/get/states";
 
 // Client
 export const CLIENT_BASE_URL=BASEURL+"/api/client";

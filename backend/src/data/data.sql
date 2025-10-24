@@ -148,6 +148,7 @@ CREATE TABLE inventory (
     total_value NUMERIC(12, 2) DEFAULT 0.00,
     created_by UUID,
     updated_by UUID,
+    manage UUID NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -248,4 +249,4 @@ $$ LANGUAGE plpgsql;
 -- DROP TABLE project;
 -- Drop TABLE client;
 
--- ALTER TABLE staff RENAME updatedAt  to updated_at; 
+-- ALTER TABLE inventory ADD manager UUID NOT NULL; 

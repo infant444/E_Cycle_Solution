@@ -146,4 +146,9 @@ export class ViewEmployeeComponent implements OnInit {
     })
   }
   }
+  reassignPassword(id:string){
+    this.userServices.resetPassword(id).subscribe((res)=>{
+      this.toastServices.success("successfully reset password");
+    })
+  }
 }
