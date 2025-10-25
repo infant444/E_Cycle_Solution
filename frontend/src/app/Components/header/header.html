@@ -7,9 +7,9 @@
       </div>
     </div>
     <div class="div1" *ngIf="user.email">
-      <div class="notification">
+      <div class="notification" >
         <mat-icon (click)="showNotify()">notifications</mat-icon>
-        <span>{{notifications.count||0}}</span>
+        <span *ngIf="notifications.count>0">{{notifications.count||0}}</span>
       </div>
       <hr>
       <div class="profile">

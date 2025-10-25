@@ -47,12 +47,12 @@
             <p>Total Value</p>
           </div>
           <div class="card">
-            <h3>1</h3>
+            <h3>{{product?.length}}</h3>
             <p>Inventory Items</p>
           </div>
           <div class="card">
-            <h3>1</h3>
-            <p>Scheduled</p>
+            <h3>{{projects?.length}}</h3>
+            <p>projects</p>
           </div>
         </div>
 
@@ -90,7 +90,7 @@
           <div class="section">
             <h4>Recent Collections</h4>
             <table>
-              <tr *ngFor="let item of collection">
+              <tr *ngFor="let item of collection | slice:0:7">
                 <td> <a [routerLink]="'/inventory/view/'+item.id">Collection #{{item.collection_name}}</a></td>
                 <td>{{item.received_date|date:'dd-MM-yyyy'}}</td>
                 <td> <span class="tag">{{item.status}}</span></td>
@@ -113,7 +113,7 @@
         <div class="section">
           <h4>Project Information</h4>
           <table>
-            <tr *ngFor="let x of projects">
+            <tr *ngFor="let x of projects | slice:0:7">
               <td><a [routerLink]="'/project/view/'+x.id">{{x.project_name}}</a></td>
               <td><span [ngClass]="x.status">{{x.status}}</span></td>
               <td>— Due: {{calculateDate(x.due_date)>0?calculateDate(x.due_date)+' days left':'Finished'}}</td>
@@ -124,8 +124,9 @@
         <div class="section">
           <h4>Inventory Items</h4>
           <table>
-            <tr *ngFor="let i of product">
-              <td colspan="2">{{i.product_name}} • Qty: {{i.quantity}}</td>
+            <tr *ngFor="let i of product| slice:0:7">
+              <td colspan="2">{{i.product_name}}</td>
+              <td> • Qty: {{i.quantity|number:'2.0-1'}}</td>
 
               <td>{{i.unit_price|currency:'INR'}}</td>
             </tr>

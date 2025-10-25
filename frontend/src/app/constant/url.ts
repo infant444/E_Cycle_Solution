@@ -92,6 +92,7 @@ export const UPDATE_TIME_SHEET_STATUS=TIME_SHEET+"/update/";
 // Inventory
 export const INVENTORY_BASE_URL=BASEURL+'/api/inventory';
 export const INVENTORY_MAKE_PURCHASE=INVENTORY_BASE_URL+'/add-inventory';
+export const INVENTORY_STATE=INVENTORY_BASE_URL+'/inventory/state';
 
 
 // Meeting

@@ -164,7 +164,7 @@ export const resetPassword = (username: string, passcode: string) => {
     body: {
       name: username,
       intro: `Your password has been reset by the Admin Team.`,
-      dictionary:{ 'Temporary Password': passcode },
+      dictionary: { 'Temporary Password': passcode },
       action: {
         instructions:
           'Use the temporary password to log in and make sure to change it immediately for security.',
@@ -210,4 +210,30 @@ export const schudeleMeeting = (name: string, title: string, start_date: string,
     },
   };
 
+}
+
+export const assginNewCollection = (user: string, inventory_id: string) => {
+  return {
+    body: {
+      name: user, // employee name
+      intro: [
+        'We’re pleased to inform you that you’ve been assigned to manage our new collection project.',
+        'Your role will involve overseeing the process, coordinating with relevant teams, and ensuring timely progress.'
+      ],
+      action: {
+        instructions: 'You can view the project details and start planning by visiting the dashboard below:',
+        button: {
+          color: '#22BC66',
+          text: 'View Project Dashboard',
+          link: 'https://localhost:4200/inventory/view/'+inventory_id,
+        },
+      },
+      outro: [
+        'If you have any questions or need support, feel free to reach out to your reporting manager.',
+        'We’re confident that your leadership and expertise will ensure the project’s success.',
+        'Best regards,',
+        'The Management Team'
+      ],
+    },
+  };
 }

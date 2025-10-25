@@ -8,6 +8,11 @@
         <button class="add scan">Quick Scan</button>
       </div>
     </div>
+    <section class="stats-grid">
+    <ng-container *ngFor="let s of state">
+      <app-admin-dashboard-states [title]="s.title" [value]="s.value" [icon]="s.icon" [color]="s.color"></app-admin-dashboard-states>
+    </ng-container>
+  </section>
   </div>
 </div>
 <app-add-inventory [display]="display" [type]="type" [inventoryX]="edit"></app-add-inventory>

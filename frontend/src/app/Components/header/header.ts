@@ -26,7 +26,7 @@ export class Header implements OnInit {
         this.user = newUser;
 
       })
-      this.notificationService.getAll().subscribe((res)=>{
+      this.notificationService.getCount().subscribe((res)=>{
         this.notifications=res;
         console.log(res);
       })

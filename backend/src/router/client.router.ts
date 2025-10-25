@@ -44,7 +44,7 @@ rout.get("/get/:clientId", asyncHandler(
 rout.get("/get-recent/collection/:clientId",asyncHandler(
     async(req,res,next:NextFunction)=>{
         try{
-            const collection=await pool.query("select * from inventory where client_id=$1 order by received_date DESC limit 5",[req.params.clientId]);
+            const collection=await pool.query("select * from inventory where client_id=$1 order by received_date DESC",[req.params.clientId]);
             res.json(collection.rows);
         }catch(err){
             next(err)
@@ -55,7 +55,7 @@ rout.get("/get-recent/collection/:clientId",asyncHandler(
 rout.get("/get-recent/product/:clientId",asyncHandler(
     async(req,res,next:NextFunction)=>{
         try{
-        const Products= await pool.query(`select * from products where inventory_id in (select id from inventory where client_id=$1) limit 10`,[req.params.clientId]);
+        const Products= await pool.query(`select * from products where inventory_id in (select id from inventory where client_id=$1)`,[req.params.clientId]);
         res.json(Products.rows);
         }catch(err){
             next(err)

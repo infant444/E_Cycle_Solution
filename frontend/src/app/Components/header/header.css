@@ -110,7 +110,7 @@ hr{
 
 .abc{
   width: 350px;
-  height: 100vh;
+  height: 80vh;
   position: fixed;
   background-color: rgb(222, 222, 222);
   z-index: 4;
@@ -119,6 +119,7 @@ hr{
   box-shadow: -2px 4px 10px .5px rgb(79, 79, 79);
   border-radius: .5rem;
   transition: 2s all ease-in-out;
+  overflow: hidden;
 }
 .close{
   text-align: right;

@@ -187,6 +187,8 @@ client?:ClientModel[];
     if(this.inventoryForm.invalid){
       return;
     }
+    this.total_amount=0;
+      this.total_units=0;
     const x=this.inventoryForm.value
     this.productList.map((x)=>{
       this.total_amount+=x.total_value;
