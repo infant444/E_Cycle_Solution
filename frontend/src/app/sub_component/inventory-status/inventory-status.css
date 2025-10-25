@@ -42,3 +42,18 @@
   color: #111827;
   font-weight: 700;
 }
+.Active {
+  background-color: #c8e6c9;
+}
+
+.Processed {
+  background-color: #bbdefb;
+}
+
+.Completed{
+  background-color: #fff9c4;
+}
+
+.Pending {
+  background-color: #d1c4e9;
+}

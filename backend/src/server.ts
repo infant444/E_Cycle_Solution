@@ -11,6 +11,8 @@ import timeSheetRouter from './router/timesheet.router';
 import { cloudinaryConnect } from './config/database.config';
 import meetingRouter from './router/meeting.router';
 import dashboardRouter from './router/dashboard.router';
+import notificationRouter from "./router/notification.router";
+import inventoryRouter from './router/inventory.router';
 // config
 dotenv.config();
 cloudinaryConnect()
@@ -25,6 +27,9 @@ app.use(cors(
 );
 app.use(express.json());
 
+
+
+
 // router   http://localhost:5000/api/client/addClient
 app.use("/api/table",tableRouter);
 app.use("/api/client",clientRouter);
@@ -33,6 +38,8 @@ app.use("/api/project",projectRouter);
 app.use("/api/timeSheet",timeSheetRouter);
 app.use("/api/meeting",meetingRouter);
 app.use("/api/dashboard",dashboardRouter);
+app.use("/api/notification",notificationRouter);
+app.use("/api/inventory",inventoryRouter);
 // middleware
 app.use(errorHandler);
 

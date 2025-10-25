@@ -6,7 +6,9 @@
         "outDir": "./built",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "target": "es2017" ,
+        "downlevelIteration": true
     },
     "include": ["src/**/*"],
 }

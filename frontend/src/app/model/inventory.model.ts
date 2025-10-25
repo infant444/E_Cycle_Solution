@@ -1,18 +1,27 @@
-export class InventoryModel{
-  id!:string;
-  company!:string;
-  stored_location!:string;
-  received_date!:string;
-  processed_date!:string;
+export class InventoryModel {
+  id!: string;
+  collection_name!:string;
+  company!: string;
+  stored_location!: string;
+  received_date!: string;
+  processed_date!: string;
+  manager!: string;
+  client_id!: string;
+  manager_name!: string;
+  product?: Products[];
+  total_items!: number;
+  total_value!: number;
+  created_by!: string;
+  updated_by!: string;
+  status!:string;
 }
-export class Products{
+export class Products {
   id!: string;
   inventory_id!: string;           // Foreign key to InventoryModel
   product_name!: string;
   barcode?: string;                // For scanning and tracking
   category!: string;
   brand?: string;
-  description?: string;
   quantity!: number;
   reorder_level!: number;          // Alert when stock is low
   stock_in_date!: string;

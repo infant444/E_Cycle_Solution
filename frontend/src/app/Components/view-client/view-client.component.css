@@ -3,6 +3,9 @@
         margin: auto;
 
     }
+    a{
+      color: #000;
+    }
     .header {
       display: flex;
       justify-content: space-between;
@@ -39,7 +42,11 @@
       margin-top: .5rem;
       margin-left: 2.2rem;
     }
-    .status_main{
+    tr,td{
+      padding: .25rem;
+      margin: .5rem;
+    }
+        .status_main{
       padding-left:1rem ;
     }
     .status {

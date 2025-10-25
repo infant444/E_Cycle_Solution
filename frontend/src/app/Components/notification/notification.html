@@ -1,0 +1,7 @@
+<div class="container">
+  <div class="notify" *ngFor="let i of notifications" (click)="makeRead(i.id,i.is_read,i.redirect)">
+      <span *ngIf="!i.is_read">🔵</span>
+    <br>
+    {{i.message}}
+  </div>
+</div>

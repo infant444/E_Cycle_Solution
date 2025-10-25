@@ -2,118 +2,142 @@
   <div class="content">
     <div class="header">
 
-  <div class="container">
-    <!-- Header -->
-    <div class="header">
-      <div>
+      <div class="container">
+        <!-- Header -->
+        <div class="header">
+          <div>
 
-        <div class="part1">
-          <div class="back">
-            <a routerLink="/client">
-            <mat-icon color="#000">keyboard_backspace</mat-icon>
-            </a>          </div>
-         <div class="title">
-          <div class="sub">
- <mat-icon>{{client.type=="Individual"?'person':'apartment'}}</mat-icon>
-          <h2>{{client.name}}</h2>
-         </div>
-        <span class="tag">{{client.type}}</span>
+            <div class="part1">
+              <div class="back">
+                <a routerLink="/client">
+                  <mat-icon color="#000">keyboard_backspace</mat-icon>
+                </a>
+              </div>
+              <div class="title">
+                <div class="sub">
+                  <mat-icon>{{client.type=="Individual"?'person':'apartment'}}</mat-icon>
+                  <h2>{{client.name}}</h2>
+                </div>
+                <span class="tag">{{client.type}}</span>
 
-         </div>
+              </div>
+            </div>
+          </div>
+          <div>
+
+            <div class="actions">
+              <button class="edit" (click)="edit(client.id)">Edit</button>
+              <button class="delete" (click)="delete(client.id)">Delete</button>
+            </div>
+          </div>
+        </div>
+        <div class="status_main">
+          <span class="status"
+            [ngClass]="client.is_current_project?'active':'inactive'">{{client.is_current_project?'Active':'Inactive'}}</span>
+
+        </div>
+        <!-- Stats Cards -->
+        <div class="cards">
+          <div class="card">
+            <h3>{{client.total_collection||0}}</h3>
+            <p>Total Collections</p>
+          </div>
+          <div class="card">
+            <h3>{{client.value||0|currency:'INR'}}</h3>
+            <p>Total Value</p>
+          </div>
+          <div class="card">
+            <h3>1</h3>
+            <p>Inventory Items</p>
+          </div>
+          <div class="card">
+            <h3>1</h3>
+            <p>Scheduled</p>
+          </div>
+        </div>
+
+        <!-- Contact + Preferences -->
+        <div class="two-col">
+          <div class="section">
+            <h4>Contact Information</h4>
+            <p><b>Email:</b>{{client.email}}</p>
+            <p><b>Phone:</b>{{client.contact_number}}</p>
+            <p><b>webSite:</b> <a [href]="client.website" target="_blank">{{client.website}}</a></p>
+            <p><b>Contact Person:</b> {{client.contact_person}}</p>
+
+          </div>
+          <div class="section">
+            <h4>Preferences</h4>
+            <p><b>Pickup Time:</b> Morning (8-11 AM)</p>
+            <p><b>Last Collection:</b> {{client.last_collection_date||'Na'|date:'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+
+        <!-- Address + Instructions -->
+        <div class="two-col">
+          <div class="section">
+            <h4>Address</h4>
+            <p>{{client.address}}</p>
+          </div>
+          <div class="section">
+            <h4>Special Instructions</h4>
+            <p>{{client.special_instruction}}</p>
+          </div>
+        </div>
+
+        <!-- Recent Collections + Summary -->
+        <div class="two-col">
+          <div class="section">
+            <h4>Recent Collections</h4>
+            <table>
+              <tr *ngFor="let item of collection">
+                <td> <a [routerLink]="'/inventory/view/'+item.id">Collection #{{item.collection_name}}</a></td>
+                <td>{{item.received_date|date:'dd-MM-yyyy'}}</td>
+                <td> <span class="tag">{{item.status}}</span></td>
+              </tr>
+            </table>
+          </div>
+          <div class="section">
+            <h4>Collection Summary</h4>
+            <p>Completed Task: {{task.completedtask}}</p>
+            <div class="progress">
+              <div class="bar" [style.width.%]="(task.completedtask / task.totaltask) * 100"></div>
+            </div>
+            <p>Complete Scheduled: 1</p>
+            <div class="progress">
+              <div class="bar" style="width:40%"></div>
+            </div>
+            <p><b>Total Value Generated: $12,000</b></p>
+          </div>
+        </div>
+        <div class="section">
+          <h4>Project Information</h4>
+          <table>
+            <tr *ngFor="let x of projects">
+              <td><a [routerLink]="'/project/view/'+x.id">{{x.project_name}}</a></td>
+              <td><span [ngClass]="x.status">{{x.status}}</span></td>
+              <td>— Due: {{calculateDate(x.due_date)>0?calculateDate(x.due_date)+' days left':'Finished'}}</td>
+            </tr>
+          </table>
+        </div>
+        <!-- Inventory -->
+        <div class="section">
+          <h4>Inventory Items</h4>
+          <table>
+            <tr *ngFor="let i of product">
+              <td colspan="2">{{i.product_name}} • Qty: {{i.quantity}}</td>
+
+              <td>{{i.unit_price|currency:'INR'}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="section">
+          <button class="schedule">Schedule Meeting</button>
+          <button class="schedule">Schedule Collection</button>
+          <button class="schedule">View Project</button>
+          <button class="schedule">View Meeting</button>
         </div>
       </div>
-      <div>
-
-        <div class="actions">
-          <button class="edit" (click)="edit(client.id)">Edit</button>
-          <button class="delete" (click)="delete(client.id)">Delete</button>
-        </div>
-      </div>
-    </div>
-    <div class="status_main">
-      <span class="status" [ngClass]="client.is_current_project?'active':'inactive'">{{client.is_current_project?'Active':'Inactive'}}</span>
-
-    </div>
-    <!-- Stats Cards -->
-    <div class="cards">
-      <div class="card">
-        <h3>{{client.total_collection||0}}</h3>
-        <p>Total Collections</p>
-      </div>
-      <div class="card">
-        <h3>{{client.value||0|currency:'INR'}}</h3>
-        <p>Total Value</p>
-      </div>
-      <div class="card">
-        <h3>1</h3>
-        <p>Inventory Items</p>
-      </div>
-      <div class="card">
-        <h3>1</h3>
-        <p>Scheduled</p>
-      </div>
-    </div>
-
-    <!-- Contact + Preferences -->
-    <div class="two-col">
-      <div class="section">
-        <h4>Contact Information</h4>
-        <p><b>Email:</b>{{client.email}}</p>
-        <p><b>Phone:</b>{{client.contact_number}}</p>
-        <p><b>webSite:</b> <a [href]="client.website" target="_blank">{{client.website}}</a></p>
-        <p><b>Contact Person:</b> {{client.contact_person}}</p>
-
-      </div>
-      <div class="section">
-        <h4>Preferences</h4>
-        <p><b>Pickup Time:</b> Morning (8-11 AM)</p>
-        <p><b>Last Collection:</b> {{client.last_collection_date||'Na'}}</p>
-      </div>
-    </div>
-
-    <!-- Address + Instructions -->
-    <div class="two-col">
-      <div class="section">
-        <h4>Address</h4>
-        <p>{{client.address}}</p>
-      </div>
-      <div class="section">
-        <h4>Special Instructions</h4>
-        <p>{{client.special_instruction}}</p>
-      </div>
-    </div>
-
-    <!-- Recent Collections + Summary -->
-    <div class="two-col">
-      <div class="section">
-        <h4>Recent Collections</h4>
-        <p>Collection #col-3 (2024-01-20) <span class="tag">scheduled</span></p>
-      </div>
-      <div class="section">
-        <h4>Collection Summary</h4>
-        <p>Completed Task: 0</p>
-        <div class="progress"><div class="bar" style="width:0%"></div></div>
-        <p>Complete Scheduled: 1</p>
-        <div class="progress"><div class="bar" style="width:40%"></div></div>
-        <p><b>Total Value Generated: $12,000</b></p>
-      </div>
-    </div>
-    <div class="section">
-      <h4>Project Information</h4>
-      <p *ngFor="let x of projects"><a [routerLink]="'/project/view/'+x.id">{{x.project_name}}</a> <span class="tag">{{x.status}}</span> — Due: {{calculateDate(x.due_date)>0?calculateDate(x.due_date)+' days left':'Finished'}}</p>
-    </div>
-    <!-- Inventory -->
-    <div class="section">
-      <h4>Inventory Items</h4>
-      <p>Samsung Galaxy Tab S7 • Qty: 2 <span class="tag">received</span> — $150</p>
-    </div>
-    <div class="section">
-      <button class="schedule">Schedule Meeting</button>
-      <button class="schedule">Schedule Collection</button>
-      <button class="schedule">View Project</button>
-      <button class="schedule">View Meeting</button>
-    </div>
-  </div>
     </div>
   </div>
 </div>

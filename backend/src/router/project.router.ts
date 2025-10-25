@@ -11,7 +11,7 @@ const rout = Router();
 rout.use(auth);
 // Post
 rout.post("/add", asyncHandler(
-    async (req, res, next: NextFunction) => {
+    async (req:any, res, next: NextFunction) => {
         try {
             const { project_name, description, client_id, due_date, manager_id, priority, budget, team_member, tags } = req.body;
 
@@ -44,6 +44,7 @@ rout.post("/add", asyncHandler(
                             },
                         ],
                     }
+                    await pool.query("insert into notifications (receiver_id,redirect,message) values ($1,$2,$3)",[staff.rows[0].id,'/project/myProject/view/'+project.rows[0].id,'You Assigned to a new project is '+project.rows[0].name])
                     transporter.sendMail(message).then(() => {
                         console.log("Successfully send to " + staff.rows[0].name)
                     })
@@ -56,7 +57,7 @@ rout.post("/add", asyncHandler(
                     to: '<' + manager.rows[0].email + '>',
                     subject: "Project Assignment Notification",
                     html: mail,
-                     attachments: [
+                    attachments: [
                         {
                             filename: "meeting.ics",
                             content: Buffer.from(icsContent, "utf-8"),
@@ -263,13 +264,15 @@ rout.post("/task/add", asyncHandler(
             const complete_task = parseInt(project_data.rows[0].completed_task || 0);
             const score = (complete_task / task_count) * 100;
             console.log(score)
-              const result = await pool.query(`insert into meeting (title, type, description, staff, start_date, start_time, end_date, end_time) values ($1,$2,$3,$4,$5,$6,$7,$8) returning *`, [task, 'task', description, staff, due, '00:00:00', due, '18:00:00']);
-                const icsContent = createICSFile(project_name, 'project', description, due, '00:00', due, '18:00')
+            const result = await pool.query(`insert into meeting (title, type, description, staff, start_date, start_time, end_date, end_time) values ($1,$2,$3,$4,$5,$6,$7,$8) returning *`, [task, 'task', description, staff, due, '00:00:00', due, '18:00:00']);
+            const icsContent = createICSFile(project_name, 'project', description, due, '00:00', due, '18:00')
             await pool.query("update project set no_task=$1,completed_task=$2,level_complete=$3,status=$4 where id=$5",
                 [task_count, complete_task, score, 'processed', project]);
 
             const staffX = await pool.query("select * from staff where id=$1", [staff]);
             let transporter = nodeMailer.createTransport(MailConfig);
+                    await pool.query("insert into notifications (receiver_id,redirect,message) values ($1,$2,$3)",[staff,'task/myTask/view/'+tasks.rows[0].id,'You Assigned to a new task is'+task])
+
             if (staffX.rowCount != null && staffX.rowCount > 0) {
                 const mail = mailGenerator.generate(TaskAssignedForStaff(staffX.rows[0].name, project_name, task, description, due, priority, tasks.rows[0].id));
                 let message = {

@@ -8,8 +8,8 @@
     </div>
     <div class="div1" *ngIf="user.email">
       <div class="notification">
-        <mat-icon>notifications</mat-icon>
-        <span>1</span>
+        <mat-icon (click)="showNotify()">notifications</mat-icon>
+        <span>{{notifications.count||0}}</span>
       </div>
       <hr>
       <div class="profile">
@@ -28,6 +28,12 @@
       <div class="logout">
         <mat-icon (click)="logout()">logout</mat-icon>
       </div>
+    </div>
+    <div class="abc"*ngIf="show" >
+      <div class="close" (click)="showNotify()">
+        <mat-icon>close</mat-icon>
+      </div>
+    <app-notification ></app-notification>
     </div>
   </div>
 </div>

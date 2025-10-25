@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS client (
     total_collection NUMERIC,
     value NUMERIC,
     is_current_project BOOLEAN,
+    value_generate NUMERIC DEFAULT 0,
     current_project TEXT,
     last_collection_date DATE,
     special_instruction TEXT,
@@ -136,14 +137,17 @@ CREATE TABLE IF NOT EXISTS meeting (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (staff) REFERENCES staff(id) ON DELETE CASCADE
 );
-CREATE TABLE inventory (
+CREATE TABLE IF NOT EXISTS inventory (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    collection_name TEXT NOT NULL,
     company VARCHAR(150) NOT NULL,
     stored_location VARCHAR(150) NOT NULL,
     received_date DATE NOT NULL,
     processed_date DATE,
     status VARCHAR(50) DEFAULT 'Active',
     remarks TEXT,
+    client_id UUID NOT NULL,
+    manager_name TEXT NOT NULL,
     total_items INT DEFAULT 0,
     total_value NUMERIC(12, 2) DEFAULT 0.00,
     created_by UUID,
@@ -152,14 +156,13 @@ CREATE TABLE inventory (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-CREATE TABLE products (
+CREATE TABLE IF NOT EXISTS products (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     inventory_id UUID REFERENCES inventory(id) ON DELETE CASCADE,
     product_name VARCHAR(150) NOT NULL,
     barcode VARCHAR(100) UNIQUE,
     category VARCHAR(100),
     brand VARCHAR(100),
-    description TEXT,
     quantity INT DEFAULT 0,
     stock_in_date DATE NOT NULL,
     stock_out_date DATE,
@@ -175,7 +178,7 @@ CREATE TABLE products (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE transactions (
+CREATE TABLE IF NOT EXISTS transactions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     product_id UUID REFERENCES products(id) ON DELETE CASCADE,
     type VARCHAR(50) CHECK (type IN ('Purchase', 'Sale', 'Return', 'Damage')),
@@ -184,10 +187,20 @@ CREATE TABLE transactions (
     total_amount NUMERIC(12, 2) GENERATED ALWAYS AS (quantity * unit_price) STORED,
     transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     customer_or_supplier VARCHAR(150),
+    client UUID,
     payment_status VARCHAR(50) CHECK (payment_status IN ('Paid', 'Pending', 'Refunded')),
     remarks TEXT
 );
 
+CREATE TABLE IF NOT EXISTS notifications (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  receiver_id UUID,
+  message TEXT,
+  is_read BOOLEAN DEFAULT false,
+  redirect TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (receiver_id) REFERENCES staff(id) ON DELETE CASCADE
+);
 -- Update Function
 CREATE OR REPLACE FUNCTION set_updated_at()
 RETURNS TRIGGER AS $$
@@ -249,4 +262,6 @@ $$ LANGUAGE plpgsql;
 -- DROP TABLE project;
 -- Drop TABLE client;
 
--- ALTER TABLE inventory ADD manager UUID NOT NULL; 
+-- ALTER TABLE inventory ADD COLUMN collection_name TEXT NOT NULL ; 
+
+-- ALTER TABLE products DROP COLUMN description;

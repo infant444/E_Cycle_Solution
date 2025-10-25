@@ -1,0 +1,135 @@
+<div class="container" [ngStyle]="{'display': display}">
+  <div class="close" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </div>
+  <div class="content">
+    <app-title [h3_title]="type=='edit'?'Edit Inventory':'Add Inventory'"></app-title>
+      <form [formGroup]="inventoryForm">
+    <div class="section">
+      <h4>Inventory Details</h4>
+      <div class="form-grid">
+        <div>
+          <div>
+          <label>Collection Name *</label>
+          <input formControlName="collection_name" class="form-control" />
+        </div>
+          <label>Company *</label>
+          <select formControlName="company" class="form-control" >
+                <option value="" selected>Select Company</option>
+            <option *ngFor="let x of client" [value]="x.id">{{x.name}}</option>
+          </select>
+        </div>
+        <div>
+          <label>Stored Location *</label>
+          <input formControlName="stored_location" class="form-control" />
+        </div>
+        <div>
+          <label>Received Date *</label>
+          <input type="date" formControlName="received_date" class="form-control" />
+        </div>
+        <div>
+          <label>Managed By *</label>
+          <select class="form-control" formControlName="manage">
+            <option value="" selected>Select employee</option>
+            <option *ngFor="let x of user" [value]="x.id">{{x.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Single Product Form -->
+  <div class="section">
+    <h4>Add Product</h4>
+    <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+      <div class="form-grid">
+        <div>
+          <label>Product Name *</label>
+          <input formControlName="product_name" class="form-control" />
+        </div>
+        <div>
+          <label>Category *</label>
+          <input formControlName="category" class="form-control" />
+        </div>
+        <div>
+          <label>Brand</label>
+          <input formControlName="brand" class="form-control" />
+        </div>
+        <div>
+          <label>Barcode</label>
+          <div class="barcode-row">
+            <input formControlName="barcode" class="form-control" />
+            <button type="button" class="btn" (click)="generateBarcode()">Generate</button>
+          </div>
+        </div>
+        <div>
+          <label>Quantity *</label>
+          <input type="number" formControlName="quantity" class="form-control" />
+        </div>
+        <div>
+          <label>Unit Price *</label>
+          <input type="number" formControlName="unit_price" class="form-control" />
+        </div>
+        <div>
+          <label>Stock In Date *</label>
+          <input type="date" formControlName="stock_in_date" class="form-control" />
+        </div>
+        <div>
+          <label>Condition *</label>
+          <select formControlName="condition" class="form-control">
+            <option>New</option>
+            <option>Used</option>
+            <option>Returned</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary">+ Add Product</button>
+    </form>
+  </div>
+
+  <!-- Excel Upload -->
+  <div class="excel-upload">
+    <label>Upload Excel:</label>
+    <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" />
+  </div>
+
+  <!-- Product Table -->
+  <div class="section" *ngIf="productList.length > 0">
+    <h4>Product List</h4>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Brand</th>
+            <th>Barcode</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Total Value</th>
+            <th>Condition</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of productList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ p.product_name }}</td>
+            <td>{{ p.category }}</td>
+            <td>{{ p.brand }}</td>
+            <td>{{ p.barcode }}</td>
+            <td>{{ p.quantity }}</td>
+            <td>{{ p.unit_price | currency:'INR':'symbol' }}</td>
+            <td>{{ p.total_value | currency:'INR':'symbol' }}</td>
+            <td>{{ p.condition }}</td>
+            <td><button type="button" class="btn-danger" (click)="removeProduct(i)">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <button class="btn-submit" (click)="onSubmit()">Submit Inventory</button>
+  </div>
+</div>

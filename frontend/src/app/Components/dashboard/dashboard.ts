@@ -51,6 +51,7 @@ export class Dashboard implements OnInit{
     });
     this.dashboardServices.getInventoryStatus().subscribe((res)=>{
       this.inventoryOverView=res;
+      console.log(res)
       this.cd.markForCheck();
     });
     this.dashboardServices.getTopClient().subscribe((res)=>{

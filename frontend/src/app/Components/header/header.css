@@ -3,6 +3,7 @@
   height: 5rem;
   border-bottom:1px solid gray ;
   overflow: hidden;
+
 }
 .content{
   width: 100%;
@@ -10,6 +11,7 @@
   display: flex;
   justify-content:space-between;
   align-items: center;
+  position: relative;
 }
 .title{
   display: flex;
@@ -104,4 +106,24 @@ hr{
 .logout>mat-icon,.notification>mat-icon,.profile,.title{
   cursor: pointer;
 
+}
+
+.abc{
+  width: 350px;
+  height: 100vh;
+  position: fixed;
+  background-color: rgb(222, 222, 222);
+  z-index: 4;
+  top: 5rem;
+  right: 4px;
+  box-shadow: -2px 4px 10px .5px rgb(79, 79, 79);
+  border-radius: .5rem;
+  transition: 2s all ease-in-out;
+}
+.close{
+  text-align: right;
+  padding: 1rem;
+}
+.close>mat-icon{
+  cursor: pointer;
 }

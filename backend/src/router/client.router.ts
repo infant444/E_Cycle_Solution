@@ -40,6 +40,37 @@ rout.get("/get/:clientId", asyncHandler(
             next(e);
         }
     }
+));
+rout.get("/get-recent/collection/:clientId",asyncHandler(
+    async(req,res,next:NextFunction)=>{
+        try{
+            const collection=await pool.query("select * from inventory where client_id=$1 order by received_date DESC limit 5",[req.params.clientId]);
+            res.json(collection.rows);
+        }catch(err){
+            next(err)
+        }
+    }
+));
+
+rout.get("/get-recent/product/:clientId",asyncHandler(
+    async(req,res,next:NextFunction)=>{
+        try{
+        const Products= await pool.query(`select * from products where inventory_id in (select id from inventory where client_id=$1) limit 10`,[req.params.clientId]);
+        res.json(Products.rows);
+        }catch(err){
+            next(err)
+        }
+    }
+));
+rout.get("/get-task/:clientId",asyncHandler(
+    async(req,res,next:NextFunction)=>{
+        try{
+        const task=await pool.query(`select sum(no_task) as totalTask,sum(completed_task) as completedTask from project where client_id=$1`,[req.params.clientId])
+        res.json(task.rows[0]);
+        }catch(err){
+            next(err)
+        }
+    }
 ))
 
 rout.put("/update/:clientId", asyncHandler(

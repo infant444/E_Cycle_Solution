@@ -32,9 +32,14 @@ export const GET_STAFF_STATES=DASHBOARD_BASE_URL+"/staff/get/states";
 export const CLIENT_BASE_URL=BASEURL+"/api/client";
 export const ADD_CLIENT=CLIENT_BASE_URL+"/addClient";
 export const GET_ALL_CLIENT=CLIENT_BASE_URL+"/getAll";
-export const UPDATE_CLIENT=CLIENT_BASE_URL+"/update/";
 export const GET_CLIENT_BY_ID=CLIENT_BASE_URL+"/get/";
+export const GET_CLIENT_COLLECTION_DETAIL=CLIENT_BASE_URL+"/get-recent/collection/";
+export const GET_CLIENT_PRODUCT_DETAIL=CLIENT_BASE_URL+"/get-recent/product/";
+export const GET_CLIENT_TASK_DETAIL=CLIENT_BASE_URL+"/get-task/";
+
+export const UPDATE_CLIENT=CLIENT_BASE_URL+"/update/";
 export const DELETE_BY_ID_CLIENT=CLIENT_BASE_URL+"/delete/";
+
 
 
 // Project
@@ -85,7 +90,8 @@ export const UPDATE_TIME_SHEET_STATUS=TIME_SHEET+"/update/";
 
 
 // Inventory
-
+export const INVENTORY_BASE_URL=BASEURL+'/api/inventory';
+export const INVENTORY_MAKE_PURCHASE=INVENTORY_BASE_URL+'/add-inventory';
 
 
 // Meeting
@@ -99,3 +105,9 @@ export const GET_BY_MEETING_ID=MEETING_BASE_URL+'/get/meeting/';
 export const UPDATE_MEETING_DETAIL=MEETING_BASE_URL+'/update/all/';
 export const UPDATE_MEETING_STATUS=MEETING_BASE_URL+'/update/status/';
 export const DELETE_BY_ID_MEETING=MEETING_BASE_URL+'/delete/meeting/';
+
+// Notification
+export const NOTIFICATION_BASE_URL=BASEURL+'/api/notification';
+export const GET_ALL_NOTIFICATION=NOTIFICATION_BASE_URL+"/getAll";
+export const GET_NOT_READ_NOTIFICATION=NOTIFICATION_BASE_URL+"/get/notRead";
+export const MAKE_IT_READ=NOTIFICATION_BASE_URL+"/make-read/";

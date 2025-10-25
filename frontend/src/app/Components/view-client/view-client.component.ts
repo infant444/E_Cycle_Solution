@@ -6,10 +6,10 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ClientModel } from '../../model/client.model';
 import { MatIconModule } from '@angular/material/icon';
 import { ProjectModel } from '../../model/project.model';
-
+import { InventoryModel, Products } from '../../model/inventory.model';
 @Component({
   selector: 'app-view-client',
-  imports: [CommonModule, RouterModule, MatIconModule, ],
+  imports: [CommonModule, RouterModule, MatIconModule ],
   templateUrl: './view-client.component.html',
   styleUrl: './view-client.component.css'
 })
@@ -17,6 +17,9 @@ export class ViewClientComponent  implements OnInit{
   client!:ClientModel;
   display='none';
   projects?:ProjectModel[];
+  collection?:InventoryModel[];
+  product?:Products[];
+  task:any;
   constructor(
     private clientService:ClientServices,
     private projectServices:ProjectServices,
@@ -30,6 +33,23 @@ export class ViewClientComponent  implements OnInit{
         this.clientService.getClientById(param.clientId).subscribe((res)=>{
           this.client=res;
           this.getProjectInfo(res.id);
+          this.cd.markForCheck()
+        })
+        this.clientService.getClientCollectionDetail(param.clientId).subscribe((res)=>{
+          this.collection=res;
+          console.log(res);
+          this.cd.markForCheck()
+        })
+          this.clientService.getClientProductDetail(param.clientId).subscribe((res)=>{
+          this.product=res;
+          console.log(res);
+
+          this.cd.markForCheck()
+        })
+          this.clientService.getClientTaskDetail(param.clientId).subscribe((res)=>{
+          this.task=res;
+          console.log(res);
+
           this.cd.markForCheck()
         })
       }

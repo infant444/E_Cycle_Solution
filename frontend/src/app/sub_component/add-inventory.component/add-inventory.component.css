@@ -1,0 +1,128 @@
+.container{
+  width: 100%;
+  height: 100%;
+  background-color: hsla(0, 0%, 0%, 0.534);
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.close{
+  position: absolute;
+  top:1rem;
+  left: 1rem;
+  color: #fff;
+  background-color: black;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+}
+.content{
+  width: 75%;
+  height: 90%;
+  margin: 30px auto;
+  background-color: #ffffff;
+  border: 2px solid rgb(174, 174, 174);
+  border-radius: 1rem;
+  box-shadow: 0px 0px 5px 2px gray;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: .5rem;
+}
+.content::-webkit-scrollbar{
+  width: 0;
+}
+
+/* .content {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+  overflow-y: scroll;
+} */
+
+h2, h4 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.barcode-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn, .btn-primary, .btn-danger, .btn-submit {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-submit {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #28a745;
+  color: white;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f3f3f3;
+  font-weight: 600;
+}
+
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.excel-upload {
+  margin: 15px 0;
+}
