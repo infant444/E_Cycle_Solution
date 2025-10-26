@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule,Location} from '@angular/common';
 import { Component } from '@angular/core';
 import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
@@ -15,4 +15,5 @@ export class UnauthorizedComponent {
     autoplay:true
 
   };
+  constructor(public location:Location){}
 }

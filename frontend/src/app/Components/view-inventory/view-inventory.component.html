@@ -1,0 +1,138 @@
+<div class="project-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="add-back">
+      <div class="back" (click)="location.back()">
+
+        <mat-icon color="#000">keyboard_backspace</mat-icon>
+      </div>
+      <div>
+        <h1>{{inventory.collection_name}}</h1>
+        <div class="tags">
+          <!-- <span class="tag blue">collection</span> -->
+          <span class="tag indigo">{{inventory.status}}</span>
+          <!-- <span class="tag purple">urban</span> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn accepted" (click)="exportX()">Export</button>
+      <button class="btn " (click)="addSales()">Add Sales</button>
+    </div>
+  </div>
+  <section class="stats-grid">
+    <ng-container *ngFor="let s of state">
+      <app-admin-dashboard-states [title]="s.title" [value]="s.value" [icon]="s.icon"
+        [color]="s.color"></app-admin-dashboard-states>
+    </ng-container>
+  </section>
+  <div class="grid">
+    <div class="part1">
+      <div class="card col-2">
+        <h3>Inventory Information</h3>
+        <div class="grid">
+          <p class="info"><b>Collection Name:&nbsp;</b><span>{{inventory.collection_name}}</span></p>
+          <p class="info"><b>Current:&nbsp;</b> {{ (inventory.total_value |currency:'INR') }}</p>
+        </div>
+        <div class="grid">
+          <p class="info"><b>Client:&nbsp;</b><a
+              [routerLink]="'/Client/view/'+inventory.client_id">{{inventory.company}}</a></p>
+          <p class="info"><b>Manager:&nbsp;</b> <a
+              [routerLink]="'/staff/view/'+inventory.manager">{{inventory.manager_name}}</a></p>
+        </div>
+      </div>
+
+    </div>
+    <div class="part2">
+
+      <div class="card">
+        <h3>Progress Overview</h3>
+        <p>Tasks Completed ({{sale}}/{{purchase}})</p>
+        <div class="progress blue">
+          <div class="progress-bar" [style.width.%]="sale/purchase"></div>
+
+        </div>
+          <div class="card">
+      <h3>Team Members</h3>
+      <h5>Created by</h5>
+      <div class="member" >
+               <img [src]="getUser(inventory.created_by)?.profile==null?'./assets/images/profile_pic.png':getUser(inventory.created_by)?.profile" alt="{{getUser(inventory.created_by)?.name}}" class="img"/>
+        <div>
+          <p class="name"><b>{{getUser(inventory.created_by)?.name}}</b></p>
+          <p class="muted">{{getUser(inventory.created_by)?.position||'Na'}}</p>
+        </div>
+      </div>
+         <h5>Last Updated by</h5>
+      <div class="member" >
+               <img [src]="getUser(inventory.updated_by)?.profile==null?'./assets/images/profile_pic.png':getUser(inventory.updated_by)?.profile" alt="{{getUser(inventory.updated_by)?.name}}" class="img"/>
+        <div>
+          <p class="name"><b>{{getUser(inventory.updated_by)?.name}}</b></p>
+          <p class="muted">{{getUser(inventory.updated_by)?.position||'Na'}}</p>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="card">
+    <h3>Inventory Transition</h3>
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Customer or Supplier</th>
+        <th>Purchases</th>
+        <th>Sales</th>
+        <th>Total</th>
+        <th>remark</th>
+      </tr>
+      <tr *ngFor="let item of transaction; let i=index">
+        <td>{{i}}</td>
+        <td>{{getProduct(item.product_id)}}</td>
+        <td>{{item.quantity|number:'2.0'}}</td>
+        <td>{{item.customer_or_supplier}}</td>
+        <td>{{item.type=='Purchase'?item.total_amount:0|currency:'INR'}}</td>
+        <td>{{item.type=='Sale'?item.total_amount:0|currency:'INR'}}</td>
+        <td *ngIf="item.type=='Purchase'">{{total-item.total_amount|currency:'INR'}}</td>
+        <td *ngIf="item.type=='Sale'">{{total+item.total_amount|currency:'INR'}}</td>
+        <td>{{item.remarks}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3> Product Detail</h3>
+ <table>
+      <tr>
+        <th>#</th>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Brand</th>
+        <th>Category</th>
+        <th>Unit Price</th>
+        <th>No of item sold</th>
+        <th>Sales value</th>
+        <th>Returns</th>
+        <th>stock_in</th>
+        <th>stock_out</th>
+        <th>status</th>
+      </tr>
+      <tr *ngFor="let item of inventory.product;">
+        <td>{{item.barcode}}</td>
+        <td>{{item.product_name}}</td>
+        <td>{{item.quantity|number:'2.0'}}</td>
+        <td>{{item.brand}}</td>
+        <td>{{item.category}}</td>
+        <td>{{item.unit_price|currency:'INR'}}</td>
+        <td>{{item.no_item_sold|number:'2.0'}}</td>
+        <td>{{item.product_value||0|currency:'INR'}}</td>
+        <td>{{item.profit_margin||0|currency:'INR'}}</td>
+        <td> {{item.stock_in_date|date:'dd-MM-yyyy'}}</td>
+        <td> {{item.stock_out_date|date:'dd-MM-yyyy'}}</td>
+        <td>{{item.status}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

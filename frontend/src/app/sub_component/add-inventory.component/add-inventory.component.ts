@@ -209,11 +209,14 @@ client?:ClientModel[];
       created_by: '',
       updated_by: '',
       collection_name: x.collection_name,
-      status: ''
+      status: '',
+      sell_quantity: 0,
+      sell_prices: 0
     };
     console.log(inventoryData);
     this.inventoryServices.purchaseProduct(inventoryData).subscribe((res)=>{
-      this.toasterServices.success("Successfully add the inventory")
+      this.toasterServices.success("Successfully add the inventory");
+      this.close();
     })
   }
 

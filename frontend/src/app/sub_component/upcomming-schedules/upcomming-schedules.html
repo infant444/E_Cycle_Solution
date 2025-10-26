@@ -1,0 +1,24 @@
+<div class="card">
+  <h3>Upcoming Schedule</h3>
+  <div class="client-list">
+    <div class="client-item" *ngFor="let it of items" (click)="router.navigateByUrl('/meeting/view/'+it.id)">
+      <div class="left">
+          <lucide-angular [img]="icon"
+          class="stat-icon" ></lucide-angular>
+      <div>
+        <div class="c-title">{{it.title}}</div>
+        <div class="c-sub">{{it.type}}|{{it.start_date|date:'dd-MM-yyyy'}}</div>
+      </div>
+      </div>
+      <div class="right">
+        <div class="val">{{calculateDate(it.start_date)|number:'2.0-1'}} Days</div>
+        <div class="status" >
+          {{it.status}}
+        </div>
+      </div>
+    </div>
+  </div>
+    <ng-template *ngIf="!items.length">
+    <div class="empty">No Client</div>
+  </ng-template>
+</div>

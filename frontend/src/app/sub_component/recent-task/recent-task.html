@@ -1,1 +1,21 @@
-<p>recent-task works!</p>
+<div class="card">
+  <h3>Recent Inventory</h3>
+  <div class="inv-list">
+    <div class="inv-item" *ngFor="let it of items" (click)="router.navigateByUrl('/task/myTask/view/'+it.id)">
+          <div class="left">
+          <lucide-angular [img]="icon"
+          class="stat-icon" ></lucide-angular>
+      <div>
+        <div class="inv-title">{{it.task}}</div>
+        <div class="inv-sub">{{it.description}}</div>
+      </div>
+          </div>
+      <div class="right">
+        <div class="badge" [ngClass]="it.status">{{it.status}}</div>
+      </div>
+    </div>
+  </div>
+    <ng-template *ngIf="!items.length">
+    <div class="empty">No Inventory</div>
+  </ng-template>
+</div>

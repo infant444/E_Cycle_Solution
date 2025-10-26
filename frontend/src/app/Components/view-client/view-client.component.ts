@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClientServices } from '../../Services/client/client';
 import { ProjectServices } from '../../Services/project/project.services';
-import { CommonModule } from '@angular/common';
+import { CommonModule,Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ClientModel } from '../../model/client.model';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +25,8 @@ export class ViewClientComponent  implements OnInit{
     private projectServices:ProjectServices,
     private activateRouter:ActivatedRoute,
     private cd:ChangeDetectorRef,
-    private router:Router
+    private router:Router,
+    public location:Location
   ){}
   ngOnInit(): void {
     this.activateRouter.params.subscribe((param)=>{

@@ -13,6 +13,58 @@
       <app-admin-dashboard-states [title]="s.title" [value]="s.value" [icon]="s.icon" [color]="s.color"></app-admin-dashboard-states>
     </ng-container>
   </section>
+    <div class="filter" style="margin-bottom: .5rem;">
+      <form>
+        <input type="text" [(ngModel)]="name" placeholder="Search" [ngModelOptions]="{ standalone: true }"
+          class="search" (change)="search()">
+        <div class="div1">
+          <p> <span class="icon"><mat-icon style="padding-top:.4rem ;">filter_list</mat-icon></span><span
+              class="text">Filter</span></p>
+          <select [(ngModel)]="active" [ngModelOptions]="{ standalone: true }" (change)="activeChange()">
+            <option value="" selected>All Status</option>
+            <option value="Active">Active</option>
+            <option value="Processed">Processed</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="client-info abc" *ngIf="!inventory?.length">
+      <app-not-found></app-not-found>
+    </div>
+    <section class="collection"  *ngIf="inventory?.length">
+      <div class="inventory-card" *ngFor="let item of inventory">
+  <div class="card-header">
+    <div>
+      <h3>{{ item.collection_name }}</h3>
+      <p class="sub-text">{{ item.company }}</p>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <p><strong>Quantity:</strong> {{ item.total_items }}</p>
+    <p><strong>Value:</strong> {{ item.total_value |currency:'INR'}}</p>
+
+    <div class="info">
+      <div class="info-item">
+        <mat-icon>location_on</mat-icon>
+        <span>{{ item.stored_location }}</span>
+      </div>
+      <div class="info-item">
+        <mat-icon>calendar_today</mat-icon>
+        <span>Received {{ item.received_date|date:'dd-MM-yyyy' }}</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <span class="badge completed">{{item.status}}</span>
+    <mat-icon class="eye" (click)="router.navigateByUrl('/inventory/view/'+item.id)">visibility</mat-icon>
+  </div>
+</div>
+
+    </section>
   </div>
 </div>
 <app-add-inventory [display]="display" [type]="type" [inventoryX]="edit"></app-add-inventory>

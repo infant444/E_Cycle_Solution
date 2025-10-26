@@ -2,10 +2,8 @@
   <!-- Header -->
   <div class="header">
     <div class="add-back">
-      <div class="back">
-        <a routerLink="/project/myProject">
+      <div class="back"  (click)="location.back()">
             <mat-icon color="#000">keyboard_backspace</mat-icon>
-            </a>
       </div>
       <div>
       <h1>{{project.project_name}}</h1>

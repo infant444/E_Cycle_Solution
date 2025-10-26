@@ -93,7 +93,12 @@ export const UPDATE_TIME_SHEET_STATUS=TIME_SHEET+"/update/";
 export const INVENTORY_BASE_URL=BASEURL+'/api/inventory';
 export const INVENTORY_MAKE_PURCHASE=INVENTORY_BASE_URL+'/add-inventory';
 export const INVENTORY_STATE=INVENTORY_BASE_URL+'/inventory/state';
-
+export const GET_ALL_INVENTORY=INVENTORY_BASE_URL+"/get/allCollection";
+export const GET_INVENTORY_BY_ID=INVENTORY_BASE_URL+"/get/inventory/";
+export const GET_PRODUCT_BY_STAFF=INVENTORY_BASE_URL+"/get-recent/productByStaff";
+export const GET_PRODUCT_BY_CLIENT=INVENTORY_BASE_URL+"/get-recent/productByClient/";
+export const PARTICULAR_INVENTORY_STATE=INVENTORY_BASE_URL+'/particular-inventory/state/';
+export const GET_TRANSACTION_FROM_PARTICULAR_INVENTORY=INVENTORY_BASE_URL+"/inventory/get-transaction/";
 
 // Meeting
 export const MEETING_BASE_URL=BASEURL+"/api/meeting";
@@ -102,6 +107,7 @@ export const GET_ALL_MEETING=MEETING_BASE_URL+"/get/all";
 export const GET_ALL_MEETING_UPCOMING=MEETING_BASE_URL+'/get/all/upcoming';
 export const GET_BY_MEETING_STAFF=MEETING_BASE_URL+'/get/user/';
 export const GET_BY_MEETING_STAFF_UPCOMING=MEETING_BASE_URL+'/get/user/upcoming/';
+export const GET_BY_MEETING_MY_UPCOMING=MEETING_BASE_URL+'/get/my/upcoming/';
 export const GET_BY_MEETING_ID=MEETING_BASE_URL+'/get/meeting/';
 export const UPDATE_MEETING_DETAIL=MEETING_BASE_URL+'/update/all/';
 export const UPDATE_MEETING_STATUS=MEETING_BASE_URL+'/update/status/';

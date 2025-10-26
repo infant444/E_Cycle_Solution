@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MeetingService } from '../../Services/meeting/meeting.service';
@@ -22,7 +22,8 @@ export class ViewMeetingComponent implements OnInit {
     private activateRouter: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private router: Router,
-    private userService: UserServices
+    private userService: UserServices,
+    public location:Location
   ) { }
   ngOnInit(): void {
     this.activateRouter.params.subscribe((params) => {

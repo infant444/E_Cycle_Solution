@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule ,Location} from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../model/user.model';
@@ -62,7 +62,8 @@ export class ViewEmployeeComponent implements OnInit {
     private timeSheetServices: TimeSheetService,
     private projectServices: ProjectServices,
     private router: Router,
-    private toastServices:ToastrService
+    private toastServices:ToastrService,
+    public location:Location,
   ) { }
   ngOnInit(): void {
     this.activateRouter.params.subscribe((prams) => {

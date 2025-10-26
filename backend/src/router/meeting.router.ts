@@ -90,6 +90,17 @@ rout.get('/get/user/upcoming/:id', asyncHandler(
     }
   }
 ));
+rout.get("/get/my/upcoming",asyncHandler(
+    async (req:any, res, next: NextFunction) => {
+    try {
+      const now = new Date().toISOString().split('T')[0];
+      const result = await pool.query("select * from meeting where start_date >= $1 and staff=$2 order by start_date", [now, req.user.id]);
+      res.json(result.rows);
+    } catch (err) {
+      next(err)
+    }
+  }
+))
 rout.get('/get/meeting/:id', asyncHandler(
   async (req, res, next: NextFunction) => {
     try {

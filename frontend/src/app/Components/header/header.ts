@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { UserServices } from '../../Services/user/user';
@@ -15,21 +15,26 @@ import { Notification } from "../notification/notification";
 })
 export class Header implements OnInit {
   user!: User;
-  constructor(private router: Router, private userServices: UserServices, private notificationService: NotificationService,) {
+  constructor(private router: Router, private userServices: UserServices, private notificationService: NotificationService, private cd: ChangeDetectorRef) {
 
   }
   notifications!: any;
-  show=false;
+  show = false;
   ngOnInit(): void {
 
-      this.userServices.userObservable.subscribe((newUser) => {
-        this.user = newUser;
+    this.userServices.userObservable.subscribe((newUser) => {
+      this.user = newUser;
+      this.cd.markForCheck();
+      if (this.user.id) {
+        this.notificationService.getCount().subscribe((res) => {
+          this.notifications = res;
+          this.cd.markForCheck();
 
-      })
-      this.notificationService.getCount().subscribe((res)=>{
-        this.notifications=res;
-        console.log(res);
-      })
+          console.log(res);
+        })
+      }
+    })
+
 
 
 
@@ -40,7 +45,7 @@ export class Header implements OnInit {
   logout() {
     this.userServices.logout();
   }
-  showNotify(){
-    this.show=!this.show;
+  showNotify() {
+    this.show = !this.show;
   }
 }

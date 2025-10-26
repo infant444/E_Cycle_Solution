@@ -6,7 +6,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Task } from '../../model/task.model';
 import { ProjectServices } from '../../Services/project/project.services';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule,Location } from '@angular/common';
 import { User } from '../../model/user.model';
 import { UserServices } from '../../Services/user/user';
 import { ProjectModel } from '../../model/project.model';
@@ -28,7 +28,9 @@ export class ViewTaskComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private activateRouter: ActivatedRoute,
     private userService: UserServices,
-    private router: Router
+    private router: Router,
+    public location: Location
+
   ) {
 
   }

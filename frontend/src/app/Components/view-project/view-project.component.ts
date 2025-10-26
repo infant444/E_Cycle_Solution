@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule,Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClientServices } from '../../Services/client/client';
 import { ProjectServices } from '../../Services/project/project.services';
@@ -29,7 +29,8 @@ export class ViewProjectComponent implements OnInit {
     private userServices:UserServices,
     private activateRouter:ActivatedRoute,
     private cd:ChangeDetectorRef,
-    private router:Router
+    public router:Router,
+    public location: Location
   ){}
   ngOnInit(): void {
       this.activateRouter.params.subscribe((params)=>{
@@ -78,6 +79,7 @@ export class ViewProjectComponent implements OnInit {
   getTask(id:string){
     this.projectService.getTask(id).subscribe((res)=>{
       this.task=res;
+            this.cd.markForCheck();
     })
   }
   delete(id:string){

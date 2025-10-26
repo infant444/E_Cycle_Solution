@@ -25,20 +25,24 @@ export const routes: Routes = [
 
   },
   {
-    path: "employee-dashboard",
-    loadComponent: () => import("./Components/employee-dashboard/employee-dashboard.component").then(m => m.EmployeeDashboardComponent),
-    canActivate: [AuthGuard],
-    data: { roles: ['staff'] }
-
-  },
-  {
     path: "login",
     loadComponent: () => import("./Components/login/login").then(m => m.Login),
   },
   {
     path: "inventory",
-    loadComponent: () => import("./Components/inventory/inventory").then(m => m.Inventory),
-    canActivate: [AuthGuard]
+    children: [
+      {
+        path: '',
+        loadComponent: () => import("./Components/inventory/inventory").then(m => m.Inventory),
+        canActivate: [AuthGuard]
+
+      },
+      {
+        path:'view/:id',
+        loadComponent:()=>import("./Components/view-inventory/view-inventory.component").then(m=>m.ViewInventoryComponent),
+        canActivate:[AuthGuard],
+      }
+    ],
 
   },
 

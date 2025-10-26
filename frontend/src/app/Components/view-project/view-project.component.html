@@ -2,10 +2,10 @@
   <!-- Header -->
   <div class="header">
     <div class="add-back">
-      <div class="back">
-        <a routerLink="/project">
+      <div class="back" (click)="location.back()">
+
             <mat-icon color="#000">keyboard_backspace</mat-icon>
-            </a>
+
       </div>
       <div>
       <h1>{{project.project_name}}</h1>
@@ -69,7 +69,7 @@
     </div>
     <div class="card">
       <h3>Project Tasks</h3>
-      <div class="task" *ngFor="let x of task">
+      <div class="task" *ngFor="let x of task" >
         <p>{{x.task}}</p>
         <span class="status" [ngClass]="x.status">{{x.status}}</span>
       </div>

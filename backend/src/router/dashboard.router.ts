@@ -96,7 +96,7 @@ rout.get("/staff/get/states", asyncHandler(
             const complete_task=await pool.query(`select count(*) as count from task where status='completed' and staff=$1`,[req.user.id]);
             const processed_task=await pool.query(`select count(*) as count from task where status='processed' and staff=$1`,[req.user.id]);
             const totalClient = await pool.query(`select count(*) as tc from client where is_current_project=true`, []);
-            const inventory =await pool.query(`select count(*) as count from inventory where status='processed' and manager=$1`,[req.user.id]);
+            const inventory =await pool.query(`select sum(total_items) as count from inventory where status='processed' and manager=$1`,[req.user.id]);
             const project=await pool.query(`select count(*) as count from project WHERE $1 = ANY(team_member)`,[req.user.id])
             const result={
                 total_hours:total_hours.rows[0].th,

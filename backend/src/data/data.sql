@@ -152,7 +152,9 @@ CREATE TABLE IF NOT EXISTS inventory (
     total_value NUMERIC(12, 2) DEFAULT 0.00,
     created_by UUID,
     updated_by UUID,
-    manage UUID NOT NULL,
+    manager UUID NOT NULL,
+    sale_price NUMERIC DEFAULT 0,
+    sale_quantity NUMERIC DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -262,6 +264,6 @@ $$ LANGUAGE plpgsql;
 -- DROP TABLE project;
 -- Drop TABLE client;
 
--- ALTER TABLE inventory ADD COLUMN collection_name TEXT NOT NULL ; 
+-- ALTER TABLE inventory ADD COLUMN sale_quantity NUMERIC DEFAULT 0; 
 
 -- ALTER TABLE products DROP COLUMN description;

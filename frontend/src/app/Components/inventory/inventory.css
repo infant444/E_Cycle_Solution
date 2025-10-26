@@ -41,3 +41,135 @@ margin: .5rem;
   gap:16px;
   margin-bottom:22px;
 }
+form {
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+input,
+select {
+  margin: 0 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.div1 {
+  display: flex;
+}
+.icon {
+  margin-top: 0.4rem;
+}
+
+form > p {
+  display: flex;
+  text-transform: capitalize;
+}
+.search {
+  width: 25rem;
+}
+.collection{
+    width: 100%;
+  margin: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  position: relative;
+
+}
+.abc{
+  height: 300px;
+}
+.inventory-card {
+  width: 320px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+}
+
+.inventory-card:hover {
+  transform: translateY(-3px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.sub-text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #777;
+  cursor: pointer;
+}
+
+.card-body {
+  margin-top: 10px;
+  color: #333;
+}
+
+.info {
+  margin-top: 10px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #444;
+  margin: 3px 0;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.completed {
+  background-color: #e6f7ed;
+  color: #22bc66;
+}
+
+.working {
+  background-color: #eaf2ff;
+  color: #316dff;
+}
+
+.eye {
+  margin-left: auto;
+  color: #666;
+  cursor: pointer;
+}

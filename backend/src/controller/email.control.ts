@@ -115,7 +115,7 @@ export const greatEmployee = (staffName: string, username: string, passcode: str
   return {
     body: {
       name: staffName,
-      intro: `🎉 Congratulations and welcome to E-Cycle Solutions! We’re excited to have you join our team.`,
+      intro: `🎉 Congratulations and welcome to RI Plan It! We’re excited to have you join our team.`,
       action: {
         instructions: 'Here are your login credentials to access your staff portal:',
         button: {
@@ -132,7 +132,7 @@ export const greatEmployee = (staffName: string, username: string, passcode: str
         'Please keep your credentials secure and do not share them with anyone.',
         'We’re thrilled to have you with us — wishing you success and growth ahead!',
         'Warm regards,',
-        'E-Cycle Solutions HR Team'
+        'RI Plan It HR Team'
       ]
     }
   }

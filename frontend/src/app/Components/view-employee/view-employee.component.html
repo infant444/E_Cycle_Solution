@@ -1,6 +1,6 @@
 <div class="employee-detail-container">
   <div class="header">
-  <a class="back-link" routerLink="/employee"><mat-icon>arrow_back</mat-icon> Back to Employees</a>
+  <mat-icon  (click)="location.back()">arrow_back</mat-icon> Back to Employees
 
     <div class="actions">
           <button class="edit" (click)="edit(employee.id)">Edit</button>

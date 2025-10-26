@@ -8,5 +8,17 @@
       <app-admin-dashboard-states [title]="s.title" [value]="s.value" [icon]="s.icon" [color]="s.color"></app-admin-dashboard-states>
     </ng-container>
   </section>
+   <section class="bottom-grid">
+    <app-recent-inventory [items]="product"></app-recent-inventory>
+    <app-recent-task [items]="task"></app-recent-task>
+    <app-upcomming-schedules [items]="meeting"></app-upcomming-schedules>
+  </section>
+  <section class="quick-actions">
+    <button class="btn green" (click)="router.navigateByUrl('/time-sheet')">Add TimeSheet</button>
+    <button class="btn blue" (click)="router.navigateByUrl('/task/myTask')">View Task</button>
+    <button class="btn purple" (click)="router.navigateByUrl('/project/myProject')">View Project</button>
+    <button class="btn orange" (click)="router.navigateByUrl('/meeting')">View Schedule</button>
+    <button class="btn red" (click)="router.navigateByUrl('/time-sheet/report')">View Work report</button>
+  </section>
   </div>
 </div>

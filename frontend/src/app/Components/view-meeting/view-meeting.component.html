@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <div class="header-first">
-        <mat-icon (click)="back()">keyboard_backspace</mat-icon>
+        <mat-icon (click)="location.back()">keyboard_backspace</mat-icon>
         <div class="title">
           <h2>{{meeting.title}}</h2>
           <div class="sub">
@@ -34,7 +34,7 @@
       <div class="user">
         <h3>User Detail</h3>
          <div class="employee">
-        <img [src]="user.profile==null?'./assets/images/profile_pic.png':user.profile" alt="{{user.profile}}" class="img"/>
+        <img [src]="(user.profile==null)?'./assets/images/profile_pic.png':user.profile" alt="{{user.profile}}" class="img"/>
         <div>
           <strong class="name">{{user.name}}</strong><br />
           {{user.position||'Na'}}<br />
