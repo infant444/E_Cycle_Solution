@@ -29,8 +29,8 @@ rout.post("/add-inventory", asyncHandler(
                     const productX = await pool.query("insert into products (inventory_id,product_name,barcode,category,brand,quantity,stock_in_date,unit_price,condition)values ($1,$2,$3,$4,$5,$6,$7,$8,$9) returning *", [inventory.rows[0].id, product[i].product_name, product[i].barcode, product[i].category, product[i].brand, product[i].quantity, product[i].stock_in_date, product[i].unit_price, product[i].condition])
                     await pool.query(
                         `INSERT INTO transactions (
-    product_id, type, quantity, unit_price, customer_or_supplier, payment_status,client
-  ) VALUES ($1, $2, $3, $4, $5, $6,$7)`,
+    product_id, type, quantity, unit_price, customer_or_supplier, payment_status,client,transaction_date
+  ) VALUES ($1, $2, $3, $4, $5, $6,$7,$8)`,
                         [
                             productX.rows[0].id,          // from the inserted product
                             'Purchase',         // type of transaction
@@ -38,7 +38,8 @@ rout.post("/add-inventory", asyncHandler(
                             productX.rows[0].unit_price,
                             company,
                             "Paid",
-                            client_id
+                            client_id,
+                            productX.rows[0].stock_in_date
                         ]
                     );
                 }
@@ -146,27 +147,27 @@ rout.get("/get/inventory/:id", asyncHandler(
         }
     }
 ));
-rout.get("/get-recent/productByClient/:clientId",asyncHandler(
-    async(req,res,next:NextFunction)=>{
-        try{
-        const Products= await pool.query(`select * from products where inventory_id in (select id from inventory where client_id=$1)`,[req.params.clientId]);
-        res.json(Products.rows);
-        }catch(err){
+rout.get("/get-recent/productByClient/:clientId", asyncHandler(
+    async (req, res, next: NextFunction) => {
+        try {
+            const Products = await pool.query(`select * from products where inventory_id in (select id from inventory where client_id=$1)`, [req.params.clientId]);
+            res.json(Products.rows);
+        } catch (err) {
             next(err)
         }
     }
 ));
-rout.get("/get-recent/productByStaff",asyncHandler(
-    async(req:any,res,next:NextFunction)=>{
-        try{
-        const Products= await pool.query(`select * from products where inventory_id in (select id from inventory where manager=$1)`,[req.user.id]);
-        res.json(Products.rows);
-        }catch(err){
+rout.get("/get-recent/productByStaff", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const Products = await pool.query(`select * from products where inventory_id in (select id from inventory where manager=$1)`, [req.user.id]);
+            res.json(Products.rows);
+        } catch (err) {
             next(err)
         }
     }
 ));
-rout.get("/particular-inventory/state/:id",asyncHandler(
+rout.get("/particular-inventory/state/:id", asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
             const total = await pool.query("select sum(quantity) as count from products where inventory_id=$1", [req.params.id]);
@@ -203,13 +204,81 @@ rout.get("/particular-inventory/state/:id",asyncHandler(
         }
     }
 ));
-rout.get("/inventory/get-transaction/:inventoryId",asyncHandler(
-    async(req,res,next:NextFunction)=>{
-        try{
+rout.get("/get/product/:inventoryId", asyncHandler(
+    async (req, res, next: NextFunction) => {
+        try {
+            const product = await pool.query("select * from products where inventory_id=$1 and quantity>0", [req.params.inventoryId]);
+            res.json(product.rows);
+        } catch (err) {
+            next(err);
+        }
+    }
+))
+rout.get("/inventory/get-transaction/:inventoryId", asyncHandler(
+    async (req, res, next: NextFunction) => {
+        try {
             const transaction = await pool.query("select * from transactions where  product_id in(select id from products where inventory_id=$1)", [req.params.inventoryId]);
             res.json(transaction.rows);
-        }catch(err){
+        } catch (err) {
             next(err);
+        }
+    }
+));
+rout.post("/product/add-sales", asyncHandler(
+    async (req: any, res, next: NextFunction) => {
+        try {
+            const data = req.body;
+            for (let i of data) {
+                await pool.query(
+                    `INSERT INTO transactions (
+    product_id, type, quantity, unit_price, customer_or_supplier, payment_status,client,transaction_date
+  ) VALUES ($1, $2, $3, $4, $5, $6,$7,$8) returning *`,
+                    [
+                        i.product_id,          // from the inserted product
+                        'Sale',         // type of transaction
+                        i.quantity,
+                        i.unit_price,
+                        i.customer_or_supplier,
+                        "Paid",
+                        i.client,
+                        i.transaction_date
+                    ]
+                );
+                const product = await pool.query(`select * from products where id=$1`, [i.product_id]);
+                if (product.rowCount != null && product.rowCount > 0) {
+                    const qty = parseInt(product.rows[0].quantity) - parseInt(i.quantity);
+                    var status = 'Available'
+                    if (qty == 0) {
+                        status = 'Sold Out'
+                    }
+                    const no_item_sold = parseInt(product.rows[0].no_item_sold) + parseInt(i.quantity);
+                    const product_value = parseInt(product.rows[0].product_value || 0) + parseInt(i.total_amount)
+                    const profit_margin = parseInt(product.rows[0].profit_margin || 0) + (parseInt(i.total_amount) - (parseInt(i.quantity) * parseInt(product.rows[0].unit_price)));
+                    await pool.query('update products set quantity=$1,status=$2,no_item_sold=$3,product_value=$4,profit_margin=$5,stock_out_date=$6 where id=$7',
+                        [qty, status, no_item_sold, product_value, profit_margin, i.no_item_sold, i.product_id]);
+                    const inventory = await pool.query(`select * from inventory where id=$1`, [product.rows[0].inventory_id]);
+                    if (inventory.rowCount != null && inventory.rowCount > 0) {
+                        var statusX = 'Processed';
+                        const qtyX = parseInt(inventory.rows[0].total_items) - parseInt(i.quantity);
+                        if (qtyX == 0) {
+                            statusX = 'Completed'
+                        }
+                        const total_value = parseInt(inventory.rows[0].total_value) - parseInt(i.total_amount);
+                        const sale_quantity = parseInt(inventory.rows[0].sale_quantity) + parseInt(i.quantity);
+                        const sale_price = parseInt(inventory.rows[0].sale_price) + parseInt(i.total_amount);
+                        await pool.query('update inventory set status=$1,total_items=$2,total_value=$3,sale_quantity=$4,sale_price=$5,updated_by=$6 where id=$7',
+                            [statusX, qtyX, total_value, sale_quantity, sale_price, req.user.id,product.rows[0].inventory_id])
+                        const client = await pool.query('select * from client where id=$1', [i.client]);
+                        const generateValue = parseInt(client.rows[0].value_generate) + parseInt(i.total_amount);
+                        await pool.query('update client set value_generate=$1 where id=$2', [generateValue,i.client]);
+                    }
+
+                }
+                // await pool.query(`select * from inventory where id=$1`,[])
+            }
+            res.json({ message: 'Add a sale successfully completed' })
+        } catch (err) {
+            next(err)
         }
     }
 ))

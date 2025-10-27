@@ -51,8 +51,20 @@ export class Inventory implements OnInit {
       this.edit=new InventoryModel();
     }else{
       this.display='none';
-      this.edit=new InventoryModel();
+      this.reassing()
     }
+  }
+  reassing(){
+    this.inventoryServices.InventoryState().subscribe((res)=>{
+      this.state=this.inventoryServices.getStats(res.totalCollection,res.totalProductPurchase,res.totalProductSales,res.profit,res.totalProduct,res.totalCollectionCompleted);
+      this.cd.markForCheck()
+    })
+    this.inventoryServices.getAll().subscribe((res)=>{
+      this.inventory=res;
+      this.defaultInventory=res;
+      console.log(this.inventory)
+      this.cd.markForCheck()
+    })
   }
   search(){
     if(this.name.length>2){

@@ -1,1 +1,83 @@
-<p>make-sales works!</p>
+<div class="container" *ngIf="disable">
+  <div class="close" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </div>
+  <div class="content">
+    <app-title h3_title="Make A Sales">
+
+    </app-title>
+     <div class="section">
+    <h4>Add Product</h4>
+    <form [formGroup]="productGroup" (ngSubmit)="addProduct()">
+      <div class="form-grid">
+        <div>
+          <label>Product Name</label>
+          <select formControlName="product" class="form-control" (change)="changeQuantity()">
+            <option value="" selected>Select A Product</option>
+            <option *ngFor="let item of product" [value]="item.id">{{item.product_name}}</option>
+          </select>
+        </div>
+        <div>
+          <label>Quantity </label>
+          <input type="number" formControlName="qty" class="form-control" [max]="quantity" min="0"/>
+        </div>
+        <div>
+          <label>Unit Price</label>
+          <input type="number" formControlName="unit_price" class="form-control" min="0"/>
+        </div>
+
+
+        <div>
+          <label>Customer</label>
+         <select formControlName="client" class="form-control">
+            <option value="" selected>Select A Customer</option>
+            <option *ngFor="let item of clients" [value]="item.id">{{item.name}}</option>
+          </select>
+        </div>
+        <div>
+          <label>Stock Out Date </label>
+          <input type="date" formControlName="sale_date" class="form-control" />
+        </div>
+<div>
+          <label>Remark </label>
+          <textarea formControlName="remark" class="form-control" ></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary">+ Add Product</button>
+    </form>
+  </div>
+  <div class="section" *ngIf="transaction.length > 0">
+    <h4>Product List</h4>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th>Consumer</th>
+            <th>Remark</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of transaction; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{getProduct(p.product_id) }}</td>
+            <td>{{ p.quantity }}</td>
+            <td>{{ p.unit_price | currency:'INR':'symbol'}}</td>
+            <td>{{ p.total_amount | currency:'INR':'symbol'}}</td>
+            <td>{{ p.customer_or_supplier }}</td>
+            <td>{{ p.remarks }}</td>
+            <td><button type="button" class="btn-danger" (click)="removeProduct(i)">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <button class="btn-submit" (click)="onSubmit()">Submit Inventory</button>
+  </div>
+</div>

@@ -259,11 +259,27 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+ALTER TABLE inventory
+ALTER COLUMN total_value TYPE NUMERIC(20,2) USING total_value::NUMERIC,
+ALTER COLUMN sale_price TYPE NUMERIC(20,2) USING sale_price::NUMERIC;
+
+-- 🧾 PRODUCTS TABLE
+ALTER TABLE products
+ALTER COLUMN unit_price TYPE NUMERIC(20,2) USING unit_price::NUMERIC,
+ALTER COLUMN total_value TYPE NUMERIC(20,2) USING total_value::NUMERIC,
+ALTER COLUMN profit_margin TYPE NUMERIC(20,2) USING profit_margin::NUMERIC,
+ALTER COLUMN product_value TYPE NUMERIC(20,2) USING product_value::NUMERIC;
+
+-- 💰 TRANSACTIONS TABLE
+
 -- DROP TABLE timeSheet;
 -- DROP TABLE task;
 -- DROP TABLE project;
 -- Drop TABLE client;
 
--- ALTER TABLE inventory ADD COLUMN sale_quantity NUMERIC DEFAULT 0; 
+-- ALTER TABLE products ADD COLUMN status TEXT DEFAULT 'Active'; 
 
 -- ALTER TABLE products DROP COLUMN description;
+
+

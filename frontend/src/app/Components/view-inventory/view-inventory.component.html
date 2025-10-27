@@ -17,7 +17,7 @@
     </div>
 
     <div class="actions">
-      <button class="btn accepted" (click)="exportX()">Export</button>
+      <!-- <button class="btn accepted" (click)="exportX()">Export</button> -->
       <button class="btn " (click)="addSales()">Add Sales</button>
     </div>
   </div>
@@ -50,7 +50,7 @@
         <h3>Progress Overview</h3>
         <p>Tasks Completed ({{sale}}/{{purchase}})</p>
         <div class="progress blue">
-          <div class="progress-bar" [style.width.%]="sale/purchase"></div>
+          <div class="progress-bar" [style.width.%]="(sale/purchase)*100"></div>
 
         </div>
           <div class="card">
@@ -65,7 +65,7 @@
       </div>
          <h5>Last Updated by</h5>
       <div class="member" >
-               <img [src]="getUser(inventory.updated_by)?.profile==null?'./assets/images/profile_pic.png':getUser(inventory.updated_by)?.profile" alt="{{getUser(inventory.updated_by)?.name}}" class="img"/>
+               <img [src]="(getUser(inventory.updated_by)?.profile==null || getUser(inventory.updated_by)?.profile=='')?'./assets/images/profile_pic.png':getUser(inventory.updated_by)?.profile" alt="{{getUser(inventory.updated_by)?.name}}" class="img"/>
         <div>
           <p class="name"><b>{{getUser(inventory.updated_by)?.name}}</b></p>
           <p class="muted">{{getUser(inventory.updated_by)?.position||'Na'}}</p>
@@ -96,8 +96,8 @@
         <td>{{item.customer_or_supplier}}</td>
         <td>{{item.type=='Purchase'?item.total_amount:0|currency:'INR'}}</td>
         <td>{{item.type=='Sale'?item.total_amount:0|currency:'INR'}}</td>
-        <td *ngIf="item.type=='Purchase'">{{total-item.total_amount|currency:'INR'}}</td>
-        <td *ngIf="item.type=='Sale'">{{total+item.total_amount|currency:'INR'}}</td>
+        <td *ngIf="item.type=='Purchase'">{{calPur(item.total_amount)|currency:'INR'}}</td>
+        <td *ngIf="item.type=='Sale'">{{calSal(item.total_amount)|currency:'INR'}}</td>
         <td>{{item.remarks}}</td>
       </tr>
     </table>
@@ -136,3 +136,4 @@
     </table>
   </div>
 </div>
+<app-make-sales [disable]="disable" [inventoryId]="inventory.id"></app-make-sales>

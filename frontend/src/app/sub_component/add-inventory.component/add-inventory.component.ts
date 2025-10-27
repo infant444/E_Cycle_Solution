@@ -99,9 +99,7 @@ client?:ClientModel[];
     this.productForm.get('barcode')?.setValue(barcode);
   }
 
-  generateId(): string {
-    return 'INV-' + Math.random().toString(36).substring(2, 9).toUpperCase();
-  }
+
 
   addProduct(): void {
     if (this.productForm.valid) {

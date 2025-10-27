@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { InventoryModel, Products, Transaction } from '../../model/inventory.model';
 import { Observable } from 'rxjs';
-import { GET_ALL_INVENTORY, GET_INVENTORY_BY_ID, GET_PRODUCT_BY_CLIENT, GET_PRODUCT_BY_STAFF, GET_TRANSACTION_FROM_PARTICULAR_INVENTORY, INVENTORY_MAKE_PURCHASE, INVENTORY_STATE, PARTICULAR_INVENTORY_STATE } from '../../constant/url';
+import { ADD_SALES_ON_INVENTORY, GET_ALL_INVENTORY, GET_INVENTORY_BY_ID, GET_PRODUCT_BY_CLIENT, GET_PRODUCT_BY_STAFF, GET_PRODUCT_FROM_PARTICULAR_INVENTORY, GET_TRANSACTION_FROM_PARTICULAR_INVENTORY, INVENTORY_MAKE_PURCHASE, INVENTORY_STATE, PARTICULAR_INVENTORY_STATE } from '../../constant/url';
 import { CheckLine, Clock, FolderCheck, IndianRupee, Package, Package2, TrendingUp, TriangleAlert, Trophy, UserCheck, Users } from 'lucide-angular';
 
 
@@ -33,6 +33,9 @@ export class InventoryServices {
   purchaseProduct(data:InventoryModel):Observable<InventoryModel>{
     return this.http.post<InventoryModel>(INVENTORY_MAKE_PURCHASE,data);
   }
+  SaleProduct(data:Transaction[]):Observable<any>{
+    return this.http.post<any>(ADD_SALES_ON_INVENTORY,data);
+  }
   InventoryState():Observable<any>{
     return this.http.get<any>(INVENTORY_STATE);
   }
@@ -54,5 +57,8 @@ export class InventoryServices {
   }
 getTransactionForParticularInventory(id:string):Observable<Transaction[]>{
   return this.http.get<Transaction[]>(GET_TRANSACTION_FROM_PARTICULAR_INVENTORY+id);
+}
+getProductForParticularInventory(id:string):Observable<Products[]>{
+  return this.http.get<Products[]>(GET_PRODUCT_FROM_PARTICULAR_INVENTORY+id);
 }
 }
