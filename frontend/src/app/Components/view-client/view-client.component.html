@@ -97,15 +97,15 @@
           </div>
           <div class="section">
             <h4>Collection Summary</h4>
-            <p>Completed Task: {{task.completedtask}}</p>
+            <p>Completed Task: {{task.completedtask||0}}</p>
             <div class="progress">
               <div class="bar" [style.width.%]="(task.completedtask / task.totaltask) * 100"></div>
             </div>
-            <p>Complete Scheduled: 1</p>
+            <!-- <p>Complete Scheduled: 1</p>
             <div class="progress">
               <div class="bar" style="width:40%"></div>
-            </div>
-            <p><b>Total Value Generated: $12,000</b></p>
+            </div> -->
+            <p><b>Total Value Generated: {{client.value_generated||0|currency:'INR'}}</b></p>
           </div>
         </div>
         <div class="section">

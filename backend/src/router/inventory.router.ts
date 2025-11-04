@@ -231,8 +231,8 @@ rout.post("/product/add-sales", asyncHandler(
             for (let i of data) {
                 await pool.query(
                     `INSERT INTO transactions (
-    product_id, type, quantity, unit_price, customer_or_supplier, payment_status,client,transaction_date
-  ) VALUES ($1, $2, $3, $4, $5, $6,$7,$8) returning *`,
+    product_id, type, quantity, unit_price, customer_or_supplier, payment_status,client,transaction_date,remarks
+  ) VALUES ($1, $2, $3, $4, $5, $6,$7,$8,$9) returning *`,
                     [
                         i.product_id,          // from the inserted product
                         'Sale',         // type of transaction
@@ -241,7 +241,8 @@ rout.post("/product/add-sales", asyncHandler(
                         i.customer_or_supplier,
                         "Paid",
                         i.client,
-                        i.transaction_date
+                        i.transaction_date,
+                        i.remarks
                     ]
                 );
                 const product = await pool.query(`select * from products where id=$1`, [i.product_id]);
@@ -253,9 +254,13 @@ rout.post("/product/add-sales", asyncHandler(
                     }
                     const no_item_sold = parseInt(product.rows[0].no_item_sold) + parseInt(i.quantity);
                     const product_value = parseInt(product.rows[0].product_value || 0) + parseInt(i.total_amount)
-                    const profit_margin = parseInt(product.rows[0].profit_margin || 0) + (parseInt(i.total_amount) - (parseInt(i.quantity) * parseInt(product.rows[0].unit_price)));
+                    console.log(parseInt(i.total_amount) - (parseInt(i.quantity) * parseInt(product.rows[0].unit_price)))
+                    console.log(parseInt(i.total_amount) )
+                    // console.log(((parseInt(i.total_amount) - (parseInt(i.quantity) * parseInt(product.rows[0].unit_price)))))
+                    const profit_margin = parseInt(product.rows[0].profit_margin || 0) + ((parseInt(i.total_amount) - (parseInt(i.quantity) * parseInt(product.rows[0].unit_price))));
+                    console.log(profit_margin);
                     await pool.query('update products set quantity=$1,status=$2,no_item_sold=$3,product_value=$4,profit_margin=$5,stock_out_date=$6 where id=$7',
-                        [qty, status, no_item_sold, product_value, profit_margin, i.no_item_sold, i.product_id]);
+                        [qty, status, no_item_sold, product_value, profit_margin, new Date(i.transaction_date), i.product_id]);
                     const inventory = await pool.query(`select * from inventory where id=$1`, [product.rows[0].inventory_id]);
                     if (inventory.rowCount != null && inventory.rowCount > 0) {
                         var statusX = 'Processed';

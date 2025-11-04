@@ -122,12 +122,15 @@ export class ViewInventoryComponent implements OnInit {
     return this.inventory.product?.find(s=>s.id===id)?.product_name;
   }
   calPur(x:number){
-    console.log(x);
     this.total-=parseInt(x.toString());
-    return this.total;
+    console.log(this.total)
+    const y=this.total;
+    return y;
   }
   calSal(x:number){
     this.total+=parseInt(x.toString());
-    return this.total;
+    console.log(this.total)
+      const y=this.total;
+    return y;
   }
 }

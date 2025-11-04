@@ -48,7 +48,7 @@
 
       <div class="card">
         <h3>Progress Overview</h3>
-        <p>Tasks Completed ({{sale}}/{{purchase}})</p>
+        <p>Sales Completed ({{sale}}/{{purchase}})</p>
         <div class="progress blue">
           <div class="progress-bar" [style.width.%]="(sale/purchase)*100"></div>
 
@@ -86,7 +86,7 @@
         <th>Customer or Supplier</th>
         <th>Purchases</th>
         <th>Sales</th>
-        <th>Total</th>
+        <!-- <th>Total</th> -->
         <th>remark</th>
       </tr>
       <tr *ngFor="let item of transaction; let i=index">
@@ -94,10 +94,10 @@
         <td>{{getProduct(item.product_id)}}</td>
         <td>{{item.quantity|number:'2.0'}}</td>
         <td>{{item.customer_or_supplier}}</td>
-        <td>{{item.type=='Purchase'?item.total_amount:0|currency:'INR'}}</td>
-        <td>{{item.type=='Sale'?item.total_amount:0|currency:'INR'}}</td>
-        <td *ngIf="item.type=='Purchase'">{{calPur(item.total_amount)|currency:'INR'}}</td>
-        <td *ngIf="item.type=='Sale'">{{calSal(item.total_amount)|currency:'INR'}}</td>
+        <td class="purches">{{(item.type=='Purchase'?item.total_amount:0)|currency:'INR'}}</td>
+        <td  class="sale">{{(item.type=='Sale'?item.total_amount:0)|currency:'INR'}}</td>
+        <!-- <td *ngIf="item.type=='Purchase'" [ngClass]="total<=0?'purches':'sale'">{{calPur(item.total_amount)|currency:'INR'}}</td>
+        <td *ngIf="item.type=='Sale'"  [ngClass]="total<=0?'purches':'sale'">{{calSal(item.total_amount)|currency:'INR'}}</td> -->
         <td>{{item.remarks}}</td>
       </tr>
     </table>
@@ -127,8 +127,8 @@
         <td>{{item.category}}</td>
         <td>{{item.unit_price|currency:'INR'}}</td>
         <td>{{item.no_item_sold|number:'2.0'}}</td>
-        <td>{{item.product_value||0|currency:'INR'}}</td>
-        <td>{{item.profit_margin||0|currency:'INR'}}</td>
+        <td>{{(item.product_value||0)|currency:'INR'}}</td>
+        <td>{{(item.profit_margin||0)|currency:'INR'}}</td>
         <td> {{item.stock_in_date|date:'dd-MM-yyyy'}}</td>
         <td> {{item.stock_out_date|date:'dd-MM-yyyy'}}</td>
         <td>{{item.status}}</td>

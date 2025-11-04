@@ -88,7 +88,7 @@ rout.get("/getById/:id", asyncHandler(
 rout.post("/register", upload.single('file'), asyncHandler(
     async (req, res, next: NextFunction) => {
         try {
-
+            console.log("Hi")
             const file = req.file as Express.Multer.File;
             const { name, email, dob, contact, role, position } = req.body;
             const user = await pool.query("select * from staff where email=$1", [email]);

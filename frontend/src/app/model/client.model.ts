@@ -14,4 +14,5 @@ export class ClientModel{
   current_project!:string;
   last_collection_date!:string;
   special_instruction!:string;
+  value_generated!:number;
 }

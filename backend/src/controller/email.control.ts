@@ -13,7 +13,7 @@ export const projectAssignedEmployee = (name: string, companyName: string, proje
         "button": {
           "color": "#22BC66",
           "text": "Confirm Assignment",
-          "link": "https://localhost:4200/confirm"
+          "link": "http://localhost:4200/project/myProject"
         }
       },
       "outro": "If you have any questions or need further details, feel free to reach out to your project manager or HR."
@@ -38,7 +38,7 @@ export const ProjectAssignedManager = (name: string, project: string, company: s
         "button": {
           "color": "#22BC66",
           "text": "View Project Details",
-          "link": "https://localhost:4200/project"
+          "link": "http://localhost:4200/project"
         }
       },
       "outro": "If you have any questions or require additional resources, please reach out to the project coordination team."
@@ -65,7 +65,7 @@ export const TaskAssignedForStaff = (staffName: string, projectName: string, Tas
           button: {
             color: '#22BC66', // Green
             text: '✅ Accept Task',
-            link: `https://yourcompany.com/task/accept?id=${projectId}`
+            link: `http://localhost:4200/task/myTask/view/${projectId}`
           }
         },
         {
@@ -73,7 +73,7 @@ export const TaskAssignedForStaff = (staffName: string, projectName: string, Tas
           button: {
             color: '#DC3545', // Red
             text: '❌ Decline Task',
-            link: `https://yourcompany.com/task/decline?id=${projectId}`
+            link: `http://localhost:4200/task/myTask/view/${projectId}`
           }
         }
       ],
@@ -94,7 +94,7 @@ export const TaskAcceptedReplyMail = (staffName: string, projectName: string, ta
         button: {
           color: '#4F46E5',
           text: 'View Task in Dashboard',
-          link: `https://yourapp.com/tasks/${task}`
+          link: `http://localhost:4200/task/myTask/view/${task}`
         }
       },
       dictionary: {
@@ -121,7 +121,7 @@ export const greatEmployee = (staffName: string, username: string, passcode: str
         button: {
           color: '#22BC66',
           text: 'Go to Staff Portal',
-          link: 'https://portal.ecyclesolutions.com/login'
+          link: 'http://localhost:4200/login'
         }
       },
       dictionary: {

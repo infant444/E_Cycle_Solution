@@ -242,3 +242,9 @@ th,tr,td{
   border: 2px solid black;
   padding: .5rem;
 }
+.purches{
+  color: red;
+}
+.sale{
+  color: green;
+}

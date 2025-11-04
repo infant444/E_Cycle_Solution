@@ -92,7 +92,8 @@ export class AddClient implements OnInit,OnChanges {
       current_project: '',
       contact_person: Fx.type == 'Individual' ? '' : Fx.person,
       last_collection_date: '',
-      special_instruction: Fx.special_info
+      special_instruction: Fx.special_info,
+      value_generated: 0
     }
     console.log(sent)
     if(this.type=="edit"){
