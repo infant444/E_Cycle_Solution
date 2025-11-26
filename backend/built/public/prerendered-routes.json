@@ -1,0 +1,13 @@
+{
+  "routes": {
+    "/": {},
+    "/admin": {},
+    "/client": {},
+    "/inventory": {},
+    "/login": {},
+    "/project": {},
+    "/time-sheet": {},
+    "/time-sheet/report": {},
+    "/time-sheet/weak-view": {}
+  }
+}

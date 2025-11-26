@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+toast-notifications {
+    position: fixed;
+    z-index: 1000;
+    top: 80px;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    width: 360px;
+}
+.ngx-toast-notification #overlay {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.ngx-toast-notification #overlay .alert {
+    margin-bottom: 0;
+    position: relative;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+.ngx-toast-notification #overlay .alert .inline {
+    display: inline-block;
+}

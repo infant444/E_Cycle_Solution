@@ -1,0 +1,7 @@
+<div>
+    <button class="btn btn-default" (click)="startToastNotification()">Show</button>
+    <button class="btn btn-default" (click)="hideToastNotification()">Hide All</button>
+</div>
+<ngx-toast-notification (onDestroy)="toastClosed($event)">
+
+</ngx-toast-notification>
